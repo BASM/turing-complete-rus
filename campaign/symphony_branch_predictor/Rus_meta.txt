@@ -1,0 +1,8 @@
+kind = sequential
+title = "Предсказатель прыжка"
+input_labels = [["Instruction"], ["Counter"], ["Jump taken"], ["Jump address"]]
+output_labels = ["Jump", "Jump address", "Store registers", "Restore registers"]
+size = [-256, -256, 255, 255]
+background = 6
+save_solution_as_custom = "Symphony/Allegro/branch"
+dialogue = []

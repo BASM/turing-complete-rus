@@ -1,0 +1,6 @@
+kind = misc
+no_score = true
+size = [-700, -700, 700, 700]
+no_panel = true
+no_controls = true
+no_state_ui = true

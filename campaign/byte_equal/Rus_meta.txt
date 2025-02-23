@@ -1,0 +1,8 @@
+kind = combinational
+title = "Равенство"
+size = [-32, -32, 32, 32]
+unlocks_components = [com_equal]
+background = 4
+dialogue = [
+  (info, "Вывдите [ON], когда оба входа одинаковы.")
+]

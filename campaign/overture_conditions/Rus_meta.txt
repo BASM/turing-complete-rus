@@ -1,0 +1,22 @@
+kind = combinational
+immutable_program = true
+immutable_spec = true
+title = "Условия"
+size = [-48, -48, 49, 49]
+save_solution_as_custom = "Overture/Cond"
+background = 6
+dialogue = [
+  (info, "Этот уровень имеет входное значение и 3 входных бита условий.
+
+Эти 3 бита выбирают условие, как показано ниже. Проверьте значение по выбранному условию и выдайте [ON], если оно выполнено, и [OFF] в противном случае.
+
+Код битов: Включить [ON] когда:[code]
+[OFF] [OFF] [OFF] Никогда
+[OFF] [OFF] [ON] Всегда
+[OFF] [ON] [OFF] Если значение = 0
+[OFF] [ON] [ON] Если значение ≠ 0
+[ON] [OFF] [OFF] Если значение < 0
+[ON] [OFF] [ON] Если значение ≥ 0
+[ON] [ON] [OFF] Если значение ≤ 0
+[ON] [ON] [ON] Если значение > 0[/code]"),
+]

@@ -1,0 +1,43 @@
+kind = sequential
+immutable_program = true
+immutable_spec = true
+no_score = true
+title = "Регистры"
+size = [-43, -45, 43, 45]
+copy_solution_to_level = ["overture_2_alu"]
+dialogue = [
+  (alien_centered, `Время создать свой главный проект, реализующий архитектуру компьютера [color=#e49f44]overture[/color]. Это будет настоящая Тьюринг полная машина, настоящий компьютер во всех отношениях!`),
+  (info, `В этом уровне вам нужно создать схему, которая может копировать данные из [color=#c54d5e]source[/color](источника) в [color=#e49f44]destination[/color](назначение).
+
+Байт инструкции в этом уровне определяет [color=#c54d5e]source[/color](источник) и [color=#e49f44]destination[/color](назначение).
+
+Биты 1, 2 и 3 указывают на [color=#e49f44]destination[/color](назначение). Биты 4, 5 и 6 указывают на [color=#c54d5e]source[/color](источник).`),
+  (info, `[color=#c54d5e]Source[/color](источник) и [color=#e49f44]destination[/color](назначение) могут быть регистром от 1 до 6, мы дали им имя REG(РЕГ) 0 от REG(РЕГ) 5 соответственно.
+  
+Кроме того, эта схема имеет выделенный входной компонент, который может быть [color=#c54d5e]source[/color](источником), и выходной компонент, который может быть [color=#e49f44]destination[/color](назначением).`),
+
+  (info, `Вот битовые шаблоны для каждого [color=#c54d5e]source[/color](источника) и [color=#e49f44]destination[/color](назначения).
+
+[color=#c54d5e]Источник[/color]:
+[OFF] [OFF] [OFF]  REG 0 (РЕГ 0)
+[OFF] [OFF] [ON]  REG 1 (РЕГ 1)
+[OFF] [ON] [OFF]  REG 2 (РЕГ 2)
+[OFF] [ON] [ON]  REG 3 (РЕГ 3)
+[ON] [OFF] [OFF]  REG 4 (РЕГ 4)
+[ON] [OFF] [ON]  REG 5 (РЕГ 5)
+[ON] [ON] [OFF]  INPUT(Ввод)
+[ON] [ON] [ON]  UNUSED(Не используется)
+
+[color=#e49f44]Destination[/color]:
+[OFF] [OFF] [OFF]  REG 0 (РЕГ 0)
+[OFF] [OFF] [ON]  REG 1 (РЕГ 1)
+[OFF] [ON] [OFF]  REG 2 (РЕГ 2)
+[OFF] [ON] [ON]  REG 3 (РЕГ 3)
+[ON] [OFF] [OFF]  REG 4 (РЕГ 4)
+[ON] [OFF] [ON]  REG 5 (РЕГ 5)
+[ON] [ON] [OFF]  OUTPUT(Вывод)
+[ON] [ON] [ON]  UNUSED(Не используется)
+
+Чтобы получить более наглядное представление о требованиях, нажмите на значок [INSTRUCTION] в верхнем левом углу.`),
+  (overture),
+]

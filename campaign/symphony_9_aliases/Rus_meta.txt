@@ -1,0 +1,272 @@
+kind = sequential
+title = "Псевдонимы Инструкций"
+size = [-256, -256, 255, 255]
+immutable_program = true
+no_score = true
+copy_solution_to_level = ["symphony_10_stack"]
+dialogue = [
+    (info, `Этот уровень, как и предыдущие, добавляет новые инструкции. Однако в этом уровне вам не нужно добавлять дополнительное оборудование, а вместо этого изменить спецификацию ассемблера, чтобы повторно использовать уже существующие инструкции для новых инструкций.
+
+Нажмите на "Язык ассемблера" и изучите, как реализованы инструкции. Затем добавьте следующие три новые инструкции:
+
+[code]mov %a(register), %b(register)[/code]
+Копирует значение из регистра %b в регистр %a
+
+[code]neg %a(register), %b(register)[/code]
+Инвертирует регистр %b и сохранить результат в %a
+
+[code]not %a(register), %b(register)[/code]
+Побитовое НЕ(NOT) каждого бита в регистре %b и сохранить результат в %a
+
+После добавления этих инструкций код ассемблера будет работающим, и его выполнение завершит уровень.
+
+Используйте [color=#e63e5b][url=alias]эту подсказку[/url][/color], если будут сложности.`),
+]
+default_isa_spec = `
+[settings]
+name = "Symphony"
+
+[fields]
+
+register
+zr 0000
+r1 0001
+r2 0010
+r3 0011
+r4 0100
+r5 0101
+r6 0110
+r7 0111
+r8 1000
+r9 1001
+r10 1010
+r11 1011
+r12 1100
+r13 1101
+sp 1110
+flags 1111
+
+[instructions]
+
+or %a(register), %b(register), %c(register)
+01000001 aaaabbbb 0000cccc 00000000
+OR %b and %c and store the result in %a.
+
+nand %a(register), %b(register), %c(register)
+01000000 aaaabbbb 0000cccc 00000000
+NAND %b and %c and store the result in %a.
+
+nor %a(register), %b(register), %c(register)
+01000011 aaaabbbb 0000cccc 00000000
+NOR %b and %c and store the result in %a.
+
+and %a(register), %b(register), %c(register)
+01000010 aaaabbbb 0000cccc 00000000
+AND %b and %c and store the result in %a.
+
+add %a(register), %b(register), %c(register)
+01000100 aaaabbbb 0000cccc 00000000
+ADD %b and %c and store the result in %a.
+
+sub %a(register), %b(register), %c(register)
+01000101 aaaabbbb 0000cccc 00000000
+SUB %b and %c and store the result in %a.
+
+xor %a(register), %b(register), %c(register)
+01000110 aaaabbbb 0000cccc 00000000
+XOR %b and %c and store the result in %a.
+
+lsl %a(register), %b(register), %c(register)
+01000111 aaaabbbb 0000cccc 00000000
+LSL %b and %c and store the result in %a.
+
+lsr %a(register), %b(register), %c(register)
+01001000 aaaabbbb 0000cccc 00000000
+LSR %b and %c and store the result in %a.
+
+cmp %a(register), %b(register)
+01001001 1111aaaa 0000bbbb 00000000
+Compares %a and %b and store the resulting flags in r6.
+
+
+or %a(register), %b(register), %c(immediate)
+01010001 aaaabbbb cccccccc cccccccc
+OR %b and %c and store the result in %a.
+
+nand %a(register), %b(register), %c(immediate)
+01010000 aaaabbbb cccccccc cccccccc
+NAND %b and %c and store the result in %a.
+
+nor %a(register), %b(register), %c(immediate)
+01010011 aaaabbbb cccccccc cccccccc
+NOR %b and %c and store the result in %a.
+
+and %a(register), %b(register), %c(immediate)
+01010010 aaaabbbb cccccccc cccccccc
+AND %b and %c and store the result in %a.
+
+add %a(register), %b(register), %c(immediate)
+01010100 aaaabbbb cccccccc cccccccc
+ADD %b and %c and store the result in %a.
+
+sub %a(register), %b(register), %c(immediate)
+01010101 aaaabbbb cccccccc cccccccc
+SUB %b and %c and store the result in %a.
+
+xor %a(register), %b(register), %c(immediate)
+01010110 aaaabbbb cccccccc cccccccc
+XOR %b and %c and store the result in %a.
+
+lsl %a(register), %b(register), %c(immediate)
+01010111 aaaabbbb cccccccc cccccccc
+LSL %b and %c and store the result in %a.
+
+lsr %a(register), %b(register), %c(immediate)
+01011000 aaaabbbb cccccccc cccccccc
+LSR %b and %c and store the result in %a.
+
+cmp %a(register), %b(immediate)
+01011001 1111aaaa bbbbbbbb bbbbbbbb
+Compares %a and %b and store the resulting flags in r6.
+
+
+jmp %a(register)
+10001000 00001111 0000aaaa 00000000
+Jump to %a
+
+
+jmp %a(immediate | label)
+10011000 00001111 aaaaaaaa aaaaaaaa
+Jump to %a
+
+je %a(immediate | label)
+10010001 00001111 aaaaaaaa aaaaaaaa
+Jump to %a if the values were equal (reading results from 'flags').
+
+jne %a(immediate | label)
+10011001 00001111 aaaaaaaa aaaaaaaa
+Jump to %a if the values were not equal (reading results from 'flags').
+
+
+jb %a(immediate | label)
+10010010 00001111 aaaaaaaa aaaaaaaa
+Jump to %a if the first value was below (unsigned) the second (reading results from 'flags').
+
+jae %a(immediate | label)
+10011010 00001111 aaaaaaaa aaaaaaaa
+Jump to %a if the first value was above (unsigned) or euqal to the second (reading results from 'flags').
+
+jbe %a(immediate | label)
+10010011 00001111 aaaaaaaa aaaaaaaa
+Jump to %a if the First value was below (unsigned) or equal to the second (reading results from 'flags').
+
+ja %a(immediate | label)
+10011011 00001111 aaaaaaaa aaaaaaaa
+Jump to %a if the first value was above (unsigned) the second (reading results from 'flags').
+
+
+jl %a(immediate | label)
+10010100 00001111 aaaaaaaa aaaaaaaa
+Jump to %a if the first value was less (signed) than the second (reading results from 'flags').
+
+jge %a(immediate | label)
+10011100 00001111 aaaaaaaa aaaaaaaa
+Jump to %a if the first value was greater (signed) or equal to the second (reading results from 'flags').
+
+jle %a(immediate | label)
+10010101 00001111 aaaaaaaa aaaaaaaa
+Jump to %a if the first value was less (signed) or equal to the second (reading results from 'flags').
+
+jg %a(immediate | label)
+10011101 00001111 aaaaaaaa aaaaaaaa
+Jump to %a if the first value was greater (signed) than the second (reading results from 'flags').
+
+in %a(register)
+00000001 aaaa0000 00000000 00000000
+Loads an input and stores it in %a
+
+out %a(register)
+00000010 00000000 0000aaaa 00000000
+Sends %a to output
+
+keyboard %a(register)
+00001001 aaaa0000 00000000 00000000
+Loads keyboard input and stores it to %a
+
+console %a(register)
+00000011 00000000 0000aaaa 00000000
+Stores the value of %a in the console offset register
+
+console %a(immediate)
+00010011 00000000 0000aaaa 00000000
+Stores the value of %a in the console offset register
+
+time_0 %a(register)
+00000100 aaaa0000 00000000 00000000
+Loads the first two bytes of the time value and stores it to %a
+
+time_1 %a(register)
+00000101 aaaa0000 00000000 00000000
+Loads the second two bytes of the time value and stores it to %a
+
+time_2 %a(register)
+00000110 aaaa0000 00000000 00000000
+Loads the third two bytes of the time value and stores it to %a
+
+time_3 %a(register)
+00000111 aaaa0000 00000000 00000000
+Loads the fourth two bytes of the time value and stores it to %a
+
+counter %a(register)
+00001000 aaaa0000 00000000 00000000
+Loads the counter value and stores it to %a
+
+load %dest(register), [%address(register)]
+11000000 dddd0000 0000aaaa 00000000
+Loads %address from RAM and stores it to %dest
+
+store [%address(register)], %value(register)
+11000001 0000vvvv 0000aaaa 00000000
+Store %value to %address in RAM
+
+load %dest(register), [%address(immediate)]
+11010000 dddd0000 aaaaaaaa aaaaaaaa
+Loads %address from RAM and stores it to %dest
+
+store [%address(immediate)], %value(register)
+11010001 0000vvvv aaaaaaaa aaaaaaaa
+Store %value to %address in RAM
+
+pload %dest(register), [%address(register)]
+11000010 dddd0000 0000aaaa 00000000
+Loads %address from SSD and stores it to %dest
+
+pstore [%address(register)], %value(register)
+11000011 0000vvvv 0000aaaa 00000000
+Store %value to %address in SSD
+
+pload %dest(register), [%address(immediate)]
+11010010 dddd0000 aaaaaaaa aaaaaaaa
+Loads %address from SSD and stores it to %dest
+
+pstore [%address(immediate)], %value(register)
+11010011 0000vvvv aaaaaaaa aaaaaaaa
+Store %value to %address in SSD
+
+nop
+00000000 00000000 00000000 00000000
+Does nothing
+
+
+`
+default_assembly = `
+in r1
+mov r2, r1
+neg r3, r2
+not r4, r2
+store16 r5, r3
+load16 r6, r5
+pstore16 r5, r3
+pload16 r6, r5
+
+`

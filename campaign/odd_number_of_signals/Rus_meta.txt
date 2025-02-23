@@ -1,0 +1,11 @@
+kind = combinational
+title = "Нечётное Количество Сигналов"
+size = [-30, -30, 30, 30]
+tick_past_fail = 16
+output_history_pins = 1
+background = 5
+unlocks_special = ["wire_color", "wire_comments"]
+dialogue = [
+  (alien_centered, "Используя максимум 3 компонента, выводите [ON] только тогда, когда нечетное количество входов [ON]."),
+  (info,  "Этот уровень имеет [color=#e63e5b][url=odd_number]подсказку[/url][/color], если будут сложности.")
+]

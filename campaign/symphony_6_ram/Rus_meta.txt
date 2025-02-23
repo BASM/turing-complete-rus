@@ -1,0 +1,1309 @@
+kind = sequential
+title = "ОЗУ"
+size = [-256, -256, 255, 255]
+immutable_program = true
+immutable_spec = true
+no_score = true
+copy_solution_to_level = ["symphony_7_ssd"]
+unlocks_components = [com_pin_load, com_pin_store]
+add_components = [com_pin_load: -1, com_pin_store: -1]
+dialogue = [
+    (info, `Замените ассемблерную ОЗУ на компонент быстрой ОЗУ и добавьте к ней дополнительные выводы для загрузки и хранения. Эти компоненты можно найти в меню компонентов как отдельные элементы. Наличие двух выводов для чтения и одного для записи позволит нам добавлять инструкции, которые могут читать и записывать в ту же память, в которой хранится наш ассемблерный код.
+
+Верхний вход будет использоваться для новой возможности чтения памяти, поэтому установите его ширину на 16. Установите ширину второго вывода на 32, так как он будет использоваться для чтения инструкций.`),
+    (info, `Очередной раз [color=#ff9800]Режимы[/color] [color=#e49f44]Symphony[/color]:
+
+[code]0 Ввод/Вывод
+1 АЛУ
+2 Переход 
+3 ОЗУ[/code]
+
+И кодирование выглядит следующим образом:
+[code][color=#ff9800]M[/color] = Режим 
+[color=#ff6680]O[/color] = Код операции
+[color=#9966ff]I[/color] = Бит явного числа
+[color=#ffe666]D[/color] = Регистр назначения
+[color=#66ff99]A[/color] = Аргумент A
+[color=#66ccff]B[/color] = Аргумент B
+[color=#bbbbbb]0[/color] = Не используется / ноль[/code]
+
+[code][color=#ff9800]MM[/color][color=#bbbbbb]O[/color][color=#9966ff]I[/color][color=#ff6680]OOOO[/color] [color=#ffe666]DDDD[/color][color=#66ff99]AAAA[/color] [color=#bbbbbb]0000[/color][color=#66ccff]BBBB[/color] [color=#bbbbbb]00000000[/color][/code]
+
+В этом уровне мы реализуем режим ОЗУ. В этом режиме есть два кода операций:
+[code]0 загрузка 
+1 сохранение[/code]
+
+Инструкция 'загрузки' должна загружать значение по адресу [color=#66ccff]аргумент B[/color] и сохранять результат в [color=#ffe666]регистр назначения[/color].
+
+Инструкция 'сохранения' должна сохранять [color=#66ccff]аргумент A[/color] по адресу [color=#66ccff]аргумент B[/color].
+`),
+]
+default_isa_spec = `
+
+[settings]
+name = "Symphony"
+
+[fields]
+
+регистр
+zr 0000
+r1 0001
+r2 0010
+r3 0011
+r4 0100
+r5 0101
+r6 0110
+r7 0111
+r8 1000
+r9 1001
+r10 1010
+r11 1011
+r12 1100
+r13 1101
+sp 1110
+flags 1111
+
+[instructions]
+
+or %a(регистр), %b(регистр), %c(регистр)
+01000001 aaaabbbb 0000cccc 00000000
+ИЛИ(OR) %b и %c и сохранить результат в %a.
+
+nand %a(регистр), %b(регистр), %c(регистр)
+01000000 aaaabbbb 0000cccc 00000000
+ИСКЛ-ИЛИ(NAND) %b и %c и сохранить результат в %a.
+
+nor %a(регистр), %b(регистр), %c(регистр)
+01000011 aaaabbbb 0000cccc 00000000
+ИЛИ-НЕ(NOR) %b и %c и сохранить результат в %a.
+
+and %a(регистр), %b(регистр), %c(регистр)
+01000010 aaaabbbb 0000cccc 00000000
+И(AND) %b и %c и сохранить результат в %a.
+
+add %a(регистр), %b(регистр), %c(регистр)
+01000100 aaaabbbb 0000cccc 00000000
+СЛОЖИТЬ %b + %c и сохранить результат в %a.
+
+sub %a(регистр), %b(регистр), %c(регистр)
+01000101 aaaabbbb 0000cccc 00000000
+ВЫЧЕСТЬ %b - %c и сохранить результат в %a.
+
+xor %a(регистр), %b(регистр), %c(регистр)
+01000110 aaaabbbb 0000cccc 00000000
+ИСКЛ-ИЛИ(XOR) %b и %c и сохранить результат в %a.
+
+lsl %a(регистр), %b(регистр), %c(регистр)
+01000111 aaaabbbb 0000cccc 00000000
+ЛОГИЧЕСКИЙ СДВИГ ВЛЕВО %b на %c и сохранить результат в %a.
+
+lsr %a(регистр), %b(регистр), %c(регистр)
+01001000 aaaabbbb 0000cccc 00000000
+ЛОГИЧЕСКИЙ СДВИГ ВПРАВО %b на %c и сохранить результат в %a.
+
+cmp %a(регистр), %b(регистр)
+01001001 1111aaaa 0000bbbb 00000000
+Сравнивает %a и %b и сохраняет результат сравнения в r6.
+
+or %a(регистр), %b(регистр), %c(явное число)
+01010001 aaaabbbb cccccccc cccccccc
+ИЛИ(OR) %b и %c и сохранить результат в %a.
+
+nand %a(регистр), %b(регистр), %c(явное число)
+01010000 aaaabbbb cccccccc cccccccc
+И-НЕ(NAND) %b и %c и сохранить результат в %a.
+
+nor %a(регистр), %b(регистр), %c(явное число)
+01010011 aaaabbbb cccccccc cccccccc
+И-НЕ(NOR) %b и %c и сохранить результат в %a.
+
+and %a(регистр), %b(регистр), %c(явное число)
+01010010 aaaabbbb cccccccc cccccccc
+И %b и %c и сохранить результат в %a.
+
+add %a(регистр), %b(регистр), %c(явное число)
+01010100 aaaabbbb cccccccc cccccccc
+СЛОЖЕНИЕ(ADD) %b и %c и сохранить результат в %a.
+
+sub %a(регистр), %b(регистр), %c(явное число)
+01010101 aaaabbbb cccccccc cccccccc
+ВЫЧЕСТЬ %b - %c и сохранить результат в %a.
+
+xor %a(регистр), %b(регистр), %c(явное число)
+01010110 aaaabbbb cccccccc cccccccc
+ИСКЛ-ИЛИ(XOR) %b и %c и сохранить результат в %a.
+
+lsl %a(регистр), %b(регистр), %c(явное число)
+01010111 aaaabbbb cccccccc cccccccc
+ЛОГИЧЕСКИЙ СДВИГ ВЛЕВО %b и %c и сохранить результат в %a.
+
+lsr %a(регистр), %b(регистр), %c(явное число)
+01011000 aaaabbbb cccccccc cccccccc
+ЛОГИЧЕСКИЙ СДВИГ ВПРАВО %b и %c и сохранить результат в %a.
+
+cmp %a(регистр), %b(явное число)
+01011001 1111aaaa bbbbbbbb bbbbbbbb
+Сравнивает %a и %b и сохраняет результат сравнения в r6.
+
+jmp %a(регистр)
+10001000 00001111 0000aaaa 00000000
+Переход к %a.
+
+jmp %a(явное число | метка)
+10011000 00001111 aaaaaaaa aaaaaaaa
+Переход к %a
+
+je %a(явное число | метка)
+10010001 00001111 aaaaaaaa aaaaaaaa
+Переход к %a, если значения были равны (чтение результатов из 'flags').
+
+jne %a(явное число | метка)
+10011001 00001111 aaaaaaaa aaaaaaaa
+Переход к %a, если значения не были равны (чтение результатов из 'flags').
+
+jb %a(явное число | метка)
+10010010 00001111 aaaaaaaa aaaaaaaa
+Переход к %a, если первое значение было меньше (беззнаковое сравнение) второго (чтение результатов из 'flags').
+
+jae %a(явное число | метка)
+10011010 00001111 aaaaaaaa aaaaaaaa
+Переход к %a, если первое значение было больше (беззнаковое сравнение) или равно второму (чтение результатов из 'flags').
+
+jbe %a (явное число | метка)
+10010011 00001111 aaaaaaaa aaaaaaaa
+Переход к %a, если первое значение было меньше (беззнаковое сравнение) или равно второму (чтение результатов из 'flags').
+
+ja %a (явное число | метка)
+10011011 00001111 aaaaaaaa aaaaaaaa
+Переход к %a, если первое значение было больше (беззнаковое сравнение) второго (чтение результатов из 'flags').
+
+jl %a (явное число | метка)
+10010100 00001111 aaaaaaaa aaaaaaaa
+Переход к %a, если первое значение было меньше (знаковое сравнение) второго (чтение результатов из 'flags').
+
+jge %a (явное число | метка)
+10011100 00001111 aaaaaaaa aaaaaaaa
+Переход к %a, если первое значение было больше (знаковое сравнение) или равно второму (чтение результатов из 'flags').
+
+jle %a (явное число | метка)
+10010101 00001111 aaaaaaaa aaaaaaaa
+Переход к %a, если первое значение было меньше (знаковое сравнение) или равно второму (чтение результатов из 'flags').
+
+jg %a (явное число | метка)
+10011101 00001111 aaaaaaaa aaaaaaaa
+Переход к %a, если первое значение было больше (знаковое сравнение) второго (чтение результатов из 'flags').
+
+in %a(регистр)
+00000001 aaaa0000 00000000 00000000
+Загружает входные данные и сохраняет их в %a
+
+out %a(регистр)
+00000010 00000000 0000aaaa 00000000
+Отправляет %a на выход
+
+load %dest(регистр), [%address(регистр)]
+11000000 dddd0000 0000aaaa 00000000
+Загружает %address из ОЗУ и сохраняет его в %dest
+
+store [%address (регистр)], %value (регистр)
+11000001 0000vvvv 0000aaaa 00000000
+Сохраняет %value в %address в ОЗУ
+
+load %dest(регистр), [%address(явное число)]
+11010000 dddd0000 aaaaaaaa aaaaaaaa
+Загружает %address из ОЗУ и сохраняет его в %dest
+
+store [%address(явное число)], %value(регистр)
+11010001 0000vvvv aaaaaaaa aaaaaaaa
+Сохраняет %value в %address в ОЗУ
+
+nop
+00000000 00000000 00000000 00000000
+Ничего не делает
+
+`
+default_assembly = `cmp r8, r5
+store [4380], r4
+load r10, [4380]
+add sp, sp, 45544
+load r13, [3830]
+jmp label_6
+jmp label_7
+jle label_8
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_9:
+nand r1, zr, r1
+jle label_9
+label_8:
+label_7:
+label_6:
+store [3832], r10
+load r10, [4380]
+store [3832], r3
+load zr, [3832]
+store [4882], zr
+store [4882], r4
+store [3832], sp
+lsr r8, r5, 31927
+load r9, [4380]
+load sp, [3832]
+xor r4, r9, 60002
+load zr, [3832]
+store [3830], zr
+cmp r7, r5
+load r3, [3832]
+load r13, [3830]
+load zr, [3832]
+store [3830], sp
+store [4380], r8
+jmp label_33
+store [3830], r3
+label_33:
+cmp sp, r9
+store [4380], r11
+xor r12, r13, 55450
+store [4882], sp
+load r3, [4380]
+store [4380], r12
+load r3, [3832]
+store [4882], r12
+store [3830], r5
+store [4380], r9
+load flags, [4380]
+load r11, [4882]
+store [3830], r5
+load r13, [3832]
+lsl r2, r1, flags
+store [4380], r8
+lsl r13, flags, 43634
+store [3830], r4
+store [4882], r7
+cmp r8, r12
+store [3832], r3
+store [4380], r7
+store [3830], r7
+store [4380], r1
+store [4882], zr
+load r6, [4380]
+store [3832], r7
+cmp r9, r5
+store [4882], flags
+load sp, [3830]
+load r8, [3830]
+jmp label_67
+nor r2, flags, r2
+label_67:
+jge label_70
+store [3830], r5
+label_70:
+store [4380], r10
+jmp label_74
+jmp label_75
+store [3830], r7
+label_75:
+label_74:
+store [3832], flags
+load r13, [4882]
+store [4882], r2
+store [4882], zr
+cmp r13, r4
+jmp label_84
+load r3, [3832]
+label_84:
+load flags, [3830]
+store [4380], r5
+lsr r11, r3, sp
+store [4882], r1
+store [4882], r13
+jmp label_92
+store [3830], r11
+label_92:
+store [3832], r12
+store [3832], r13
+jmp label_97
+store [4380], r1
+label_97:
+store [3832], flags
+store [3832], r8
+load sp, [3832]
+store [3832], r13
+jmp label_104
+nor r11, r8, r5
+label_104:
+store [3830], flags
+load r12, [4882]
+store [3830], zr
+jmp label_110
+store [4882], zr
+label_110:
+cmp r1, r2
+store [4882], r13
+load r13, [3830]
+store [3830], r12
+load r4, [4882]
+load flags, [3830]
+lsl r4, r12, r4
+store [3832], r11
+cmp r6, r10
+store [4882], r3
+store [4882], r11
+load sp, [3832]
+load r9, [4380]
+load flags, [4380]
+store [4380], r4
+store [3830], r1
+je label_129
+store [4380], r9
+label_129:
+cmp zr, r9
+or zr, r12, r12
+je label_134
+store [3832], r2
+label_134:
+store [3830], r13
+store [3830], r4
+cmp r10, r13
+jmp label_140
+jmp label_141
+store [3830], r7
+label_141:
+label_140:
+store [4882], r9
+jmp label_146
+store [4380], r13
+label_146:
+store [3832], r6
+store [4882], sp
+store [4380], r4
+lsl r3, flags, r10
+store [3830], r1
+cmp r8, flags
+or r10, r3, r2
+store [3830], sp
+je label_157
+store [4380], r3
+label_157:
+cmp sp, r6
+jle label_161
+load r2, [3830]
+label_161:
+store [3832], r5
+jmp label_165
+store [3832], r13
+label_165:
+load r2, [3832]
+store [4882], r13
+load r1, [3830]
+cmp r6, r11
+jmp label_172
+store [4882], r5
+label_172:
+cmp r1, r1
+load r1, [3832]
+store [3830], r13
+store [3830], sp
+store [4882], r6
+store [4882], r7
+jmp label_181
+load sp, [3832]
+label_181:
+load r9, [4882]
+and r1, r2, r4
+load r6, [3830]
+load zr, [4380]
+load r13, [3830]
+store [3830], flags
+store [3832], r12
+store [3832], r4
+jmp label_192
+load r2, [4380]
+label_192:
+jmp label_195
+store [3830], r8
+label_195:
+store [4380], r2
+store [4882], r8
+store [3832], r5
+jmp label_201
+nor r3, r5, 55574
+label_201:
+store [4882], r9
+store [4882], r8
+sub r1, r2, 58304
+store [3832], flags
+load r4, [4882]
+jae label_209
+store [3830], r6
+label_209:
+store [3832], r13
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_213:
+nand r1, zr, r1
+jg label_213
+jmp label_215
+store [4380], r12
+label_215:
+store [4380], r8
+store [4882], r4
+load r1, [4882]
+cmp r2, r13
+store [4380], r2
+store [3832], r10
+store [4380], r8
+lsr r9, r4, r5
+cmp r1, r11
+cmp r4, r2
+lsr r12, flags, 52402
+store [3832], r8
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_230:
+nand r1, zr, r1
+jbe label_230
+store [4882], r6
+lsl r2, r1, r2
+store [3832], r9
+xor r13, r7, 64158
+store [4882], r12
+jne label_237
+and flags, r3, r7
+label_237:
+store [4882], r1
+store [4882], r11
+store [4380], r12
+xor zr, r10, 57974
+store [4380], r9
+load r3, [4380]
+store [3832], r12
+load r4, [3832]
+store [4882], r2
+jbe label_249
+store [4380], r9
+label_249:
+load r5, [3830]
+store [4380], r12
+load r11, [4882]
+load r7, [4380]
+store [4882], zr
+or r10, r13, 7150
+load r10, [4380]
+store [3832], sp
+store [4380], r3
+cmp zr, r1
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_262:
+nand r1, zr, r1
+jae label_262
+store [4882], r8
+store [3832], r5
+store [4882], r9
+jmp label_267
+jmp label_268
+load r9, [3832]
+label_268:
+label_267:
+jle label_272
+load flags, [4380]
+label_272:
+load r4, [3832]
+store [4882], flags
+nand r9, r1, r3
+store [3830], r11
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_279:
+nand r1, zr, r1
+jl label_279
+store [4380], r3
+store [4380], r3
+jmp label_283
+store [4380], flags
+label_283:
+load r9, [3830]
+load r12, [3830]
+store [4882], flags
+store [4882], r5
+store [4380], r10
+load sp, [4882]
+cmp r10, r6
+store [3830], flags
+load r9, [3830]
+store [4882], r9
+load r13, [4380]
+store [3830], flags
+store [4882], r2
+store [3832], r6
+xor r4, r10, 47984
+nand r5, r12, 31572
+store [4882], r9
+load r4, [3832]
+store [3832], r3
+or flags, r1, zr
+store [4380], r12
+store [4380], r5
+store [3832], r10
+store [3832], r6
+store [3830], r9
+load r2, [3832]
+store [3832], r9
+store [3830], r13
+store [3832], r13
+store [3832], sp
+store [4882], flags
+cmp r13, r6
+store [3830], r5
+store [3832], r5
+store [3830], r11
+store [4380], flags
+store [4882], sp
+store [3830], r13
+nor r12, r6, flags
+load zr, [3830]
+store [3830], r11
+load sp, [3832]
+load flags, [3830]
+store [4882], sp
+store [4380], zr
+store [4882], r13
+store [3832], r8
+store [3832], r13
+store [3832], r7
+nand r3, sp, r11
+store [3830], r13
+store [3832], r11
+store [4380], r8
+store [3832], sp
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_340:
+nand r1, zr, r1
+jmp label_340
+store [4882], r3
+jmp label_343
+jmp label_344
+store [3830], r9
+label_344:
+label_343:
+store [4380], r12
+jbe label_349
+nand r4, r12, 28625
+label_349:
+jle label_352
+load r11, [4882]
+label_352:
+store [3830], r4
+store [3830], r6
+load r13, [4882]
+load r7, [3832]
+store [4882], zr
+cmp r4, zr
+store [4882], r2
+store [3830], r6
+jmp label_363
+load r12, [3830]
+label_363:
+load r5, [4380]
+load zr, [4882]
+cmp r4, r12
+store [3832], r6
+store [4882], sp
+jmp label_371
+load r1, [4882]
+label_371:
+store [4882], r11
+store [4380], flags
+load r12, [4380]
+store [3832], zr
+load r6, [3830]
+store [4882], r8
+load r7, [4380]
+jmp label_381
+jmp label_382
+store [3830], r6
+label_382:
+label_381:
+store [3830], r11
+store [3830], r6
+store [4882], r8
+load r11, [3830]
+lsr r9, r1, r12
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_391:
+nand r1, zr, r1
+jge label_391
+jg label_393
+jae label_394
+load r1, [4882]
+label_394:
+label_393:
+cmp r9, r1
+store [3830], r4
+load r12, [4882]
+store [3832], r10
+and r5, r3, 21799
+load r6, [3832]
+store [3832], zr
+store [4882], r8
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_406:
+nand r1, zr, r1
+jge label_406
+jmp label_408
+store [4882], r1
+label_408:
+load r13, [4380]
+store [3832], r4
+store [3832], r2
+store [3830], sp
+jmp label_415
+store [4380], sp
+label_415:
+load r4, [3832]
+jg label_419
+cmp r12, r12
+label_419:
+load r13, [4882]
+cmp r9, r10
+lsl r2, r8, r9
+store [3832], r10
+store [3830], r2
+load r11, [3830]
+load r2, [3832]
+jmp label_429
+load r2, [4380]
+label_429:
+store [3832], r11
+sub r5, r10, r12
+jmp label_434
+load r10, [3832]
+label_434:
+store [4882], r13
+store [4882], r1
+store [3830], r4
+store [4882], r4
+store [4380], r4
+store [3830], sp
+store [4882], zr
+store [4380], r4
+jmp label_445
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_446:
+nand r1, zr, r1
+jge label_446
+label_445:
+jmp label_449
+store [4380], zr
+label_449:
+store [4882], flags
+load zr, [3832]
+jmp label_454
+load r3, [3832]
+label_454:
+load r3, [4882]
+jmp label_458
+store [4380], r13
+label_458:
+store [3830], r11
+store [4882], r12
+cmp r7, r6
+store [4380], r5
+store [4380], sp
+ja label_466
+jmp label_467
+jbe label_468
+store [3830], r7
+label_468:
+label_467:
+label_466:
+store [3830], sp
+load r2, [3830]
+store [4882], r13
+store [4882], r5
+store [4380], r2
+load r2, [3830]
+store [3830], r1
+load r8, [3830]
+load r4, [4882]
+jmp label_482
+store [4882], r10
+label_482:
+store [4380], r13
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_486:
+nand r1, zr, r1
+jge label_486
+jmp label_488
+store [4380], r1
+label_488:
+load sp, [3832]
+jle label_492
+load r4, [4882]
+label_492:
+store [4882], flags
+load r1, [3830]
+load r8, [3830]
+store [4380], flags
+cmp r12, r13
+load r8, [3830]
+load sp, [3830]
+store [3830], r4
+jmp label_503
+store [3832], r7
+label_503:
+store [3830], r8
+load zr, [4380]
+store [3832], r13
+load r13, [4380]
+load r11, [4380]
+store [3832], flags
+store [3832], zr
+cmp flags, zr
+store [4882], r10
+cmp r7, r4
+load sp, [3830]
+load r13, [3830]
+jmp label_518
+jae label_519
+store [3830], r7
+label_519:
+label_518:
+nand r9, r1, r10
+load r2, [4882]
+jge label_525
+lsr r9, r10, r4
+label_525:
+store [3832], sp
+load flags, [4380]
+store [3832], flags
+jmp label_531
+store [3830], zr
+label_531:
+load r1, [4380]
+store [3832], r9
+store [4882], r2
+lsl r8, r9, r11
+store [3832], r10
+store [4380], r13
+store [4882], r7
+store [4882], r8
+store [3830], r13
+cmp r11, r7
+store [4380], r12
+store [4380], r13
+store [4882], r11
+store [4882], r1
+nor r7, r8, r11
+cmp r13, r6
+load r12, [3832]
+cmp flags, r5
+store [4882], r13
+store [4380], r2
+load r4, [4380]
+and r4, r7, 1979
+jmp label_556
+jmp label_557
+add r10, r11, r12
+label_557:
+label_556:
+store [3832], r2
+store [4882], r10
+load r2, [3832]
+cmp r12, r4
+store [4380], r2
+store [4882], r12
+store [3830], flags
+store [3830], r6
+store [3830], r9
+cmp r12, r9
+load r10, [4882]
+cmp sp, r3
+store [3832], sp
+jb label_574
+load flags, [3830]
+label_574:
+cmp r10, r11
+store [4380], r1
+store [4882], r9
+store [4380], r8
+load r8, [4882]
+load r5, [3830]
+ja label_583
+store [3830], r4
+label_583:
+store [3832], sp
+load r13, [3830]
+store [3832], r12
+store [3832], r13
+store [4380], r8
+cmp r7, r4
+store [4380], r12
+jmp label_593
+load r6, [3832]
+label_593:
+cmp r13, r12
+store [3832], r11
+store [4882], zr
+store [4882], r12
+load r3, [4882]
+jae label_601
+jge label_602
+store [4380], r11
+label_602:
+label_601:
+store [3832], r5
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_607:
+nand r1, zr, r1
+jl label_607
+store [4882], r9
+jmp label_610
+load zr, [3830]
+label_610:
+store [4380], r2
+load r1, [4882]
+store [3832], r7
+store [3830], r12
+store [3830], r7
+load r2, [3832]
+load zr, [3830]
+load r4, [4380]
+load r5, [3832]
+store [4380], r1
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_623:
+nand r1, zr, r1
+jge label_623
+store [3830], r12
+load r13, [3830]
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_627:
+nand r1, zr, r1
+je label_627
+load sp, [4882]
+jmp label_630
+cmp r12, r1
+label_630:
+xor zr, r4, 51006
+load r9, [4882]
+store [4380], r13
+jmp label_636
+nand r13, r12, r10
+label_636:
+load r6, [3832]
+store [3832], r6
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_641:
+nand r1, zr, r1
+jb label_641
+store [3830], r13
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_644:
+nand r1, zr, r1
+je label_644
+load r2, [3830]
+jmp label_647
+store [4380], r6
+label_647:
+load zr, [3830]
+cmp sp, r5
+store [4882], sp
+and r11, r1, 17251
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_654:
+nand r1, zr, r1
+ja label_654
+store [3830], r2
+store [4882], r4
+jmp label_658
+jmp label_659
+load r5, [3832]
+label_659:
+label_658:
+store [4380], r1
+store [4380], r9
+load r4, [3832]
+store [4380], r12
+store [3832], sp
+load r6, [3832]
+load r13, [4882]
+jmp label_670
+load r10, [3830]
+label_670:
+load r4, [4380]
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_674:
+nand r1, zr, r1
+jbe label_674
+jmp label_676
+store [4882], r1
+label_676:
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_679:
+nand r1, zr, r1
+jmp label_679
+load flags, [3832]
+nand zr, r12, 10633
+load r9, [3832]
+jmp label_684
+store [3830], r8
+label_684:
+store [4882], r9
+load r6, [4380]
+store [3830], r10
+store [3830], r9
+sub sp, r10, r9
+load sp, [3832]
+nor flags, flags, r5
+cmp sp, r5
+jl label_695
+jmp label_696
+store [3830], sp
+label_696:
+label_695:
+store [4380], r10
+jmp label_701
+store [4380], r5
+label_701:
+cmp zr, flags
+load flags, [4380]
+jmp label_706
+load zr, [3832]
+label_706:
+cmp r1, r6
+jmp label_710
+load r2, [4882]
+label_710:
+lsr r6, r10, 50284
+load r12, [3830]
+store [4882], r7
+store [4882], r8
+jmp label_717
+store [3830], sp
+label_717:
+store [3832], r10
+store [4380], zr
+load r13, [4882]
+store [3830], sp
+load r1, [4380]
+store [4380], r11
+store [3830], flags
+store [4882], r2
+store [3830], r4
+cmp flags, r2
+load r2, [3830]
+store [3830], r6
+store [3830], r12
+load r8, [3832]
+jmp label_734
+load r10, [4380]
+label_734:
+store [4380], r5
+load r8, [3832]
+store [3832], r3
+and r5, r13, 8749
+store [4380], r11
+store [3832], r6
+load r3, [3830]
+cmp r3, r13
+store [3830], r3
+store [4380], r13
+load r9, [4380]
+cmp r9, r8
+load r2, [3832]
+load r1, [3832]
+jmp label_751
+load sp, [4380]
+label_751:
+load r7, [4380]
+store [3832], r12
+cmp r3, r7
+load sp, [3832]
+store [4882], r3
+load r8, [3830]
+sub r10, r10, r12
+store [4380], r5
+store [3832], r4
+load r2, [3832]
+je label_764
+lsl r13, r4, r9
+label_764:
+store [3832], r4
+store [4380], zr
+load sp, [4882]
+store [4882], r8
+jmp label_771
+jl label_772
+store [3832], r7
+label_772:
+label_771:
+load r11, [3832]
+store [4380], r1
+store [3832], r2
+load r1, [3830]
+store [3830], r7
+load zr, [4882]
+cmp r6, flags
+jmp label_783
+jl label_784
+store [4380], r11
+label_784:
+label_783:
+load r7, [3830]
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_789:
+nand r1, zr, r1
+jmp label_789
+store [4882], r7
+load r11, [4882]
+store [3830], r6
+store [3832], r4
+store [4882], r10
+store [3830], r13
+ja label_797
+store [3832], r9
+label_797:
+cmp r11, r12
+store [3832], r3
+jmp label_802
+load r12, [3832]
+label_802:
+jmp label_805
+load r11, [3830]
+label_805:
+load r5, [4380]
+store [3832], r11
+cmp r13, r10
+jle label_811
+store [4380], r12
+label_811:
+lsl r12, r13, 33891
+load r9, [3830]
+store [3832], r10
+load r1, [4380]
+load r9, [3832]
+load r10, [4380]
+store [3832], r11
+store [3830], zr
+cmp r7, r5
+load sp, [4380]
+store [4380], sp
+store [3830], r9
+load r12, [4882]
+store [4380], r8
+store [4882], r12
+store [4882], zr
+load r8, [4882]
+store [3832], r1
+jmp label_832
+cmp r8, r3
+label_832:
+load r4, [3832]
+store [3830], zr
+load r5, [3830]
+store [3830], r12
+jmp label_839
+store [4380], r9
+label_839:
+jl label_842
+store [4882], r11
+label_842:
+jmp label_845
+store [4882], r7
+label_845:
+jmp label_848
+store [4380], r7
+label_848:
+load r12, [3832]
+store [3830], r5
+store [3832], r11
+and r7, r2, r10
+store [4882], r13
+load flags, [4882]
+store [4380], r4
+store [4882], r1
+load r3, [4380]
+jmp label_860
+store [4882], r10
+label_860:
+nand r9, r9, r7
+store [4882], r11
+jmp label_865
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_866:
+nand r1, zr, r1
+jbe label_866
+label_865:
+store [3832], r6
+store [3830], r9
+load r7, [3832]
+lsr flags, r5, 31924
+load r6, [3830]
+jb label_874
+cmp r2, r8
+label_874:
+load r5, [3832]
+store [3830], r4
+jmp label_879
+store [3830], r11
+label_879:
+jne label_882
+sub r5, r12, 21909
+label_882:
+store [4380], flags
+load r3, [4380]
+load r3, [4380]
+store [4882], r7
+ja label_889
+cmp r3, r3
+label_889:
+nand r2, r2, 65300
+xor r1, r1, 27053
+cmp sp, r7
+cmp r2, r7
+store [3832], r13
+load sp, [3832]
+add r8, r12, r1
+store [4380], r2
+store [4380], r3
+load zr, [4380]
+load r10, [3832]
+lsr r8, r4, r10
+store [4380], r7
+cmp r2, r3
+load sp, [4380]
+store [3830], r6
+store [4882], zr
+store [4380], r2
+store [3830], r3
+load r9, [4380]
+store [4882], r8
+load r11, [4882]
+load r7, [4882]
+load r5, [4882]
+jmp label_916
+ja label_917
+store [4380], r3
+label_917:
+label_916:
+load r6, [3830]
+load r1, [3830]
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_923:
+nand r1, zr, r1
+jl label_923
+store [4882], r6
+store [4882], r8
+store [4882], r5
+jmp label_928
+store [3832], flags
+label_928:
+ja label_931
+store [4882], r5
+label_931:
+store [3830], r12
+store [4882], flags
+load r6, [4882]
+ja label_937
+load r9, [3832]
+label_937:
+store [4882], r2
+cmp r8, r3
+store [4882], r2
+store [3832], r2
+load r6, [3832]
+store [4380], r5
+store [4380], r10
+store [4882], r7
+lsr r8, r13, 4937
+load r6, [4882]
+store [4882], r10
+load r6, [4380]
+store [4882], r1
+cmp r2, r2
+store [3830], r13
+store [3832], r9
+store [3830], zr
+load r13, [3830]
+load r3, [4380]
+store [4380], r6
+store [4380], r11
+jle label_961
+store [3832], r11
+label_961:
+jmp label_964
+store [4882], r10
+label_964:
+jmp label_967
+load r4, [3830]
+label_967:
+load r10, [4380]
+store [3830], r9
+nand r12, r1, r13
+store [3832], r8
+cmp r5, r1
+jmp label_975
+load zr, [4882]
+label_975:
+sub r12, r13, r13
+lsl r1, r2, 12466
+store [3832], r7
+load sp, [3830]
+load r12, [4882]
+load r10, [3830]
+jb label_984
+store [3832], r7
+label_984:
+store [4882], r12
+store [3830], r2
+load r12, [4380]
+load sp, [4882]
+cmp sp, r9
+store [4882], r4
+store [3832], r9
+cmp r10, r6
+load r6, [3830]
+store [4882], sp
+load r2, [4380]
+store [4882], r5
+load r12, [4380]
+store [4380], r13
+`

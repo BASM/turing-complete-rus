@@ -1,0 +1,8 @@
+kind = combinational
+title = "Байтовая Константа"
+size = [-32, -32, 32, 32]
+unlocks_components = [com_constant]
+background = 4
+dialogue = [
+  (info, "Создайте схему, которая всегда будет выводить число 164.")
+]

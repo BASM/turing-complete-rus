@@ -1,0 +1,14 @@
+kind = sequential
+immutable_program = true
+immutable_spec = true
+no_score = true
+title = "Явные Числа"
+size = [-43, -45, 43, 45]
+copy_solution_to_level = ["overture_4_program"]
+unlocks_components = [com_punch_card]
+dialogue = [
+  (info, "Нам нужен способ записывать числа из нашей программы прямо в регистры. Для этого мы используем режим immediate(явное число) (два старших бита [OFF][OFF]).
+
+Когда мы находимся в режиме immediate(явное число), весь байт интерпретируется числом, которое мы должны [STORE] в REG(РЕГ) 0. Это означает, что мы можем [STORE] любое значение от 0 до 63."),
+  (overture),
+]

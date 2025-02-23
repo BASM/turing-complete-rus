@@ -1,0 +1,31 @@
+kind = combinational
+title = "Декодер Инструкций"
+size = [-48, -48, 49, 49]
+save_solution_as_custom = "Symphony/DEC"
+input_labels = [["Инструкция"]]
+output_labels = ["Режим", "Опкод", "Назначение", "Арг A", "Арг B", "Явное число", "Числовое значение"]
+background = 6
+components_available = [com_static_indexer: 7]
+unlocks_components = [com_static_indexer, com_static_indexer_config]
+dialogue = [
+  (info, `Создайте схему, которая разделяет инструкции Symphony на различные части. Это будет очень полезно позже.
+
+Существует два кодирования для инструкций Symphony, в зависимости от того, используем ли мы явные числа или нет:
+
+[code][color=#ff9800]M[/color] = Mode (режим)
+[color=#ff6680]O[/color] = Opcode (покод)
+[color=#9966ff]I[/color] = Immediate bit (бит явного числа)
+[color=#ffe666]D[/color] = Destination register (регистр назначения)
+[color=#66ff99]A[/color] = Argument A (аргумент А)
+[color=#66ccff]B[/color] = Argument B (аргумент B, может быть явным числом)
+[color=#bbbbbb]0[/color] = Не используется / ноль[/code]
+
+[code][color=#ff9800]MM[/color][color=#bbbbbb]00[/color][color=#ff6680]OOOO[/color] [color=#ffe666]DDDD[/color][color=#66ff99]AAAA[/color] [color=#bbbbbb]0000[/color][color=#66ccff]BBBB[/color] [color=#bbbbbb]00000000[/color][/code]
+
+[code][color=#bbbbbb]OOO[/color][color=#9966ff]I[/color][color=#ff6680]OOOO[/color] [color=#bbbbbb]0[/color][color=#ffe666]DDD[/color][color=#bbbbbb]0[/color][color=#66ff99]AAA[/color] [color=#66ccff]BBBBBBBB BBBBBBBB[/color][/code]
+  `),
+  (info, `Используйте компонент Разделитель Байта, чтобы решить этот уровень.
+
+Компонент Разделитель Байта это специальный компонент, который позволяет вам байт разбивать на биты из провода без задержек или затрат на логические элементы.j Изменение числа на компоненте сдвинет биты (положительное число сдвигает вправо). Затем нажмите на компонент, чтобы установить ширину
+выхода.`),
+]

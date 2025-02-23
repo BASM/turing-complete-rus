@@ -1,0 +1,21 @@
+kind = combinational
+title = "Арифметико-Логическое Устройство (ALU) 2"
+size = [-48, -48, 49, 49]
+copy_solution_to_level = ["symphony_alu"]
+save_solution_as_custom = "Overture/ALU"
+output_labels = ["Вывод"]
+unlocks_pages = ["Component factory"]
+input_labels = [["КОД"], ["Вход 1"], ["Вход 2"]]
+background = 6
+next_level = "component_factory"
+dialogue = [
+  (info, "Добавьте сложение и вычитание к вашей схеме.
+
+Инстуркции:
+[code][color=#87a8c8]0 И-НЕ(NAND)
+1 ИЛИ(OR)
+2 И(AND)
+3 ИЛИ-НЕ(NOR)
+4 СЛОЖЕНИЕ(ADD)
+5 ВЫЧИТАНИЕ(SUB)[/color][/code]"),
+]

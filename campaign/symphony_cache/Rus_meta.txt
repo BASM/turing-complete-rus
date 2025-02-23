@@ -1,0 +1,16 @@
+kind = sequential
+title = "Кеширование"
+size = [-48, -48, 49, 49]
+background = 6
+save_solution_as_custom = "Symphony/Allegro/cache"
+input_labels = [["Load"], ["Store"], ["Address"], ["Value"]]
+output_labels = ["Miss", "Value"]
+add_components = [com_probe_memory_word: -1]
+dialogue = [
+    (alien_center, `
+
+Игнорируйте нижние 3 бита адреса
+
+
+    `),
+]

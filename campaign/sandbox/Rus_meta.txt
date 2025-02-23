@@ -1,0 +1,4 @@
+kind = architecture
+background = 4
+title = "Песочница"
+size = [-256, -256, 255, 255]

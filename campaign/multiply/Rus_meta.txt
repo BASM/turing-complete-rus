@@ -1,0 +1,7 @@
+kind = combinational
+title = "Умножение"
+size = [-55, -55, 55, 55]
+unlocks_components = [com_mul]
+dialogue = [
+  (alien_centered, "Умножьте два числа. Если результат не помещается в 8 бит, отбросьте биты, которые не помещаются."),
+]

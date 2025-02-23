@@ -1,0 +1,8 @@
+kind = combinational
+title = "Побитовй ИСКЛ-ИЛИ(XOR)"
+size = [-32, -32, 32, 32]
+unlocks_components = [com_xor_word, com_xnor_word]
+background = 4
+dialogue = [
+  (info, "Создайте схему, которая выполняет побитовое ИСКЛ-ИЛИ(XOR) двух байтов.")
+]

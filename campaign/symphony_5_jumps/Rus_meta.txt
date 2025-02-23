@@ -1,0 +1,1379 @@
+kind = sequential
+title = "Переходы"
+size = [-256, -256, 255, 255]
+immutable_program = true
+immutable_spec = true
+copy_solution_to_level = ["symphony_6_ram"]
+no_score = true
+dialogue = [
+  (info, `Это [code][color=#ff9800]Режимы[/color] [color=#e49f44]Symphony[/color]:
+
+[code]0 Ввод/Вывод
+1 АЛУ
+2 Переход
+3 ОЗУ[/code]
+
+В этом уровне мы реализуем режим JUMP(перехода). Как всегда, кодирование инструкции выглядит следующим образом:
+
+[code][color=#ff9800]M[/color] = Режим
+[color=#ff6680]O[/color] = Код операции
+[color=#9966ff]I[/color] = Бит явного числа
+[color=#ffe666]D[/color] = Регистр назначения
+[color=#66ff99]A[/color] = Аргумент A
+[color=#66ccff]B[/color] = Аргумент B
+[color=#bbbbbb]0[/color] = Не используется / ноль[/code]
+
+[code][color=#ff9800]MM[/color][color=#bbbbbb]O[/color][color=#9966ff]I[/color][color=#ff6680]OOOO[/color] [color=#ffe666]DDDD[/color][color=#66ff99]AAAA[/color] [color=#bbbbbb]0000[/color][color=#66ccff]BBBB[/color] [color=#bbbbbb]00000000[/color][/code]
+
+В режиме JUMP(перехода) [color=#66ff99]аргумент A[/color] это флаги, которые должны быть сравнимы с условием, которым является [color=#ff6680]код операции[/color]. Для их сравнения используйте пользовательский компонент "cond"(условие), который вы создали ранее.
+
+Если флаги совпадают с условием, перезапишите значение счетчика с помощью [color=#66ccff]аргумента B[/color].`)]
+
+default_isa_spec = `
+
+[settings]
+name = "Symphony"
+
+[fields]
+
+регистр
+zr 0000
+r1 0001
+r2 0010
+r3 0011
+r4 0100
+r5 0101
+r6 0110
+r7 0111
+r8 1000
+r9 1001
+r10 1010
+r11 1011
+r12 1100
+r13 1101
+sp 1110
+flags 1111
+
+[instructions]
+
+or %a(регистр), %b(регистр), %c(регистр)
+01000001 aaaabbbb 0000cccc 00000000
+ИЛИ(OR) %b и %c и сохранить результат в %a.
+
+nand %a(регистр), %b(регистр), %c(регистр)
+01000000 aaaabbbb 0000cccc 00000000
+ИСКЛ-ИЛИ(NAND) %b и %c и сохранить результат в %a.
+
+nor %a(регистр), %b(регистр), %c(регистр)
+01000011 aaaabbbb 0000cccc 00000000
+ИЛИ-НЕ(NOR) %b и %c и сохранить результат в %a.
+
+and %a(регистр), %b(регистр), %c(регистр)
+01000010 aaaabbbb 0000cccc 00000000
+И(AND) %b и %c и сохранить результат в %a.
+
+add %a(регистр), %b(регистр), %c(регистр)
+01000100 aaaabbbb 0000cccc 00000000
+СЛОЖИТЬ %b + %c и сохранить результат в %a.
+
+sub %a(регистр), %b(регистр), %c(регистр)
+01000101 aaaabbbb 0000cccc 00000000
+ВЫЧЕСТЬ %b - %c и сохранить результат в %a.
+
+xor %a(регистр), %b(регистр), %c(регистр)
+01000110 aaaabbbb 0000cccc 00000000
+ИСКЛ-ИЛИ(XOR) %b и %c и сохранить результат в %a.
+
+lsl %a(регистр), %b(регистр), %c(регистр)
+01000111 aaaabbbb 0000cccc 00000000
+ЛОГИЧЕСКИЙ СДВИГ ВЛЕВО %b на %c и сохранить результат в %a.
+
+lsr %a(регистр), %b(регистр), %c(регистр)
+01001000 aaaabbbb 0000cccc 00000000
+ЛОГИЧЕСКИЙ СДВИГ ВПРАВО %b на %c и сохранить результат в %a.
+
+cmp %a(регистр), %b(регистр)
+01001001 1111aaaa 0000bbbb 00000000
+Сравнивает %a и %b и сохраняет результат сравнения в r6.
+
+or %a(регистр), %b(регистр), %c(явное число)
+01010001 aaaabbbb cccccccc cccccccc
+ИЛИ(OR) %b и %c и сохранить результат в %a.
+
+nand %a(регистр), %b(регистр), %c(явное число)
+01010000 aaaabbbb cccccccc cccccccc
+И-НЕ(NAND) %b и %c и сохранить результат в %a.
+
+nor %a(регистр), %b(регистр), %c(явное число)
+01010011 aaaabbbb cccccccc cccccccc
+И-НЕ(NOR) %b и %c и сохранить результат в %a.
+
+and %a(регистр), %b(регистр), %c(явное число)
+01010010 aaaabbbb cccccccc cccccccc
+И %b и %c и сохранить результат в %a.
+
+add %a(регистр), %b(регистр), %c(явное число)
+01010100 aaaabbbb cccccccc cccccccc
+СЛОЖЕНИЕ(ADD) %b и %c и сохранить результат в %a.
+
+sub %a(регистр), %b(регистр), %c(явное число)
+01010101 aaaabbbb cccccccc cccccccc
+ВЫЧЕСТЬ %b - %c и сохранить результат в %a.
+
+xor %a(регистр), %b(регистр), %c(явное число)
+01010110 aaaabbbb cccccccc cccccccc
+ИСКЛ-ИЛИ(XOR) %b и %c и сохранить результат в %a.
+
+lsl %a(регистр), %b(регистр), %c(явное число)
+01010111 aaaabbbb cccccccc cccccccc
+ЛОГИЧЕСКИЙ СДВИГ ВЛЕВО %b и %c и сохранить результат в %a.
+
+lsr %a(регистр), %b(регистр), %c(явное число)
+01011000 aaaabbbb cccccccc cccccccc
+ЛОГИЧЕСКИЙ СДВИГ ВПРАВО %b и %c и сохранить результат в %a.
+
+cmp %a(регистр), %b(явное число)
+01011001 1111aaaa bbbbbbbb bbbbbbbb
+Сравнивает %a и %b и сохраняет результат сравнения в r6.
+
+jmp %a(регистр)
+10001000 00001111 0000aaaa 00000000
+Переход к %a.
+
+jmp %a(явное число | метка)
+10011000 00001111 aaaaaaaa aaaaaaaa
+Переход к %a
+
+je %a(явное число | метка)
+10010001 00001111 aaaaaaaa aaaaaaaa
+Переход к %a, если значения были равны (чтение результатов из 'flags').
+
+jne %a(явное число | метка)
+10011001 00001111 aaaaaaaa aaaaaaaa
+Переход к %a, если значения не были равны (чтение результатов из 'flags').
+
+jb %a(явное число | метка)
+10010010 00001111 aaaaaaaa aaaaaaaa
+Переход к %a, если первое значение было меньше (беззнаковое сравнение) второго (чтение результатов из 'flags').
+
+jae %a(явное число | метка)
+10011010 00001111 aaaaaaaa aaaaaaaa
+Переход к %a, если первое значение было больше (беззнаковое сравнение) или равно второму (чтение результатов из 'flags').
+
+jbe %a (явное число | метка)
+10010011 00001111 aaaaaaaa aaaaaaaa
+Переход к %a, если первое значение было меньше (беззнаковое сравнение) или равно второму (чтение результатов из 'flags').
+
+ja %a (явное число | метка)
+10011011 00001111 aaaaaaaa aaaaaaaa
+Переход к %a, если первое значение было больше (беззнаковое сравнение) второго (чтение результатов из 'flags').
+
+jl %a (явное число | метка)
+10010100 00001111 aaaaaaaa aaaaaaaa
+Переход к %a, если первое значение было меньше (знаковое сравнение) второго (чтение результатов из 'flags').
+
+jge %a (явное число | метка)
+10011100 00001111 aaaaaaaa aaaaaaaa
+Переход к %a, если первое значение было больше (знаковое сравнение) или равно второму (чтение результатов из 'flags').
+
+jle %a (явное число | метка)
+10010101 00001111 aaaaaaaa aaaaaaaa
+Переход к %a, если первое значение было меньше (знаковое сравнение) или равно второму (чтение результатов из 'flags').
+
+jg %a (явное число | метка)
+10011101 00001111 aaaaaaaa aaaaaaaa
+Переход к %a, если первое значение было больше (знаковое сравнение) второго (чтение результатов из 'flags').
+
+in %a(регистр)
+00000001 aaaa0000 00000000 00000000
+Загружает входное значение и сохраняет его в %a
+
+out %a(регистр)
+00000010 00000000 0000aaaa 00000000
+Отправляет %a на выход
+
+nop
+00000000 00000000 00000000 00000000
+Ничего не делает
+
+`
+default_assembly = `
+xor r5, r5, r12
+lsr r2, r10, r12
+or sp, flags, r2
+and r3, r6, 61888
+jmp label_5
+jmp label_6
+and r6, r7, 63410
+label_6:
+label_5:
+jmp label_10
+lsr r12, r4, r3
+label_10:
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_13:
+nand r1, zr, r1
+je label_13
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_15:
+nand r1, zr, r1
+jne label_15
+sub zr, r4, 34276
+jb label_18
+lsr r9, r8, 29359
+label_18:
+cmp r5, r10
+xor r5, r3, r2
+xor r4, r9, 60002
+or zr, r10, 39662
+and r5, r7, 14395
+nand r10, zr, 16925
+lsr sp, zr, r5
+or sp, r6, 32656
+jmp label_29
+nor r13, r3, 10201
+label_29:
+cmp r9, r12
+or r11, r8, r12
+nand r10, zr, 41125
+cmp r13, r1
+xor r13, r3, r12
+cmp r2, r3
+and r12, r1, r6
+add r5, r2, r12
+cmp r9, r13
+nor r12, r1, 58961
+nor r7, r5, r8
+sub r13, r13, r1
+and r9, r8, r8
+lsl r13, flags, 43634
+jmp label_46
+and r4, flags, 48509
+label_46:
+jmp label_49
+add r12, r9, 58110
+label_49:
+jae label_52
+sub r7, r4, 49175
+label_52:
+jle label_55
+lsl sp, r5, r6
+label_55:
+sub r12, zr, 14630
+jb label_59
+nand r12, r1, 61817
+label_59:
+xor r3, r4, r8
+jmp label_63
+cmp r10, r2
+label_63:
+lsl r6, r2, r12
+lsl flags, r3, 36738
+lsr r10, r4, sp
+lsr r11, r7, 16359
+jg label_70
+xor r13, r13, 16050
+label_70:
+sub r10, r8, 19776
+and r4, r4, r11
+xor r3, sp, r2
+nand r13, flags, r5
+lsr r11, r3, sp
+nor r1, r1, 35113
+jl label_79
+lsl r3, r11, r9
+label_79:
+jmp label_82
+or r9, r10, 60901
+label_82:
+cmp r11, r12
+cmp r6, r12
+or r6, r9, r8
+xor sp, r10, 5350
+and r3, r1, r11
+jge label_90
+nor r11, flags, 19967
+label_90:
+and flags, r1, 15296
+nor r9, r9, r1
+nor r12, r5, 8525
+or r13, r3, 5465
+jmp label_97
+and r13, r4, 7081
+label_97:
+jb label_100
+lsl r4, r12, r4
+label_100:
+jge label_103
+jmp label_104
+nor r10, r8, r9
+label_104:
+label_103:
+and r13, r1, 7128
+or r10, zr, 43593
+lsr r1, flags, zr
+cmp r8, r4
+cmp r12, r7
+jl label_113
+jge label_114
+jg label_115
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_116:
+nand r1, zr, r1
+jne label_116
+label_115:
+label_114:
+label_113:
+sub r12, r6, r7
+cmp r4, r8
+cmp sp, r2
+cmp r1, r11
+nand r4, r11, r2
+lsr r1, r3, 64474
+jb label_127
+lsr r9, r1, r9
+label_127:
+add r7, r10, r6
+cmp r2, r5
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_132:
+nand r1, zr, r1
+jb label_132
+jge label_134
+cmp r3, flags
+label_134:
+nand r4, r11, 24993
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_138:
+nand r1, zr, r1
+jae label_138
+or r10, r3, r2
+add r3, sp, 6325
+jg label_142
+je label_143
+jmp label_144
+nor r2, r9, r11
+label_144:
+label_143:
+label_142:
+jmp label_149
+cmp r8, r11
+label_149:
+add r3, r7, sp
+sub sp, r2, r4
+cmp r13, r13
+xor r1, flags, r6
+jne label_156
+lsr r12, r13, 52775
+label_156:
+sub sp, r7, 20418
+lsl r7, r13, 9876
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_161:
+nand r1, zr, r1
+jae label_161
+nand r6, r10, 45545
+jmp label_164
+or r1, sp, r5
+label_164:
+xor r1, zr, r1
+nor r4, r11, 40902
+nor r10, zr, r9
+jb label_170
+ja label_171
+jmp label_172
+jmp label_173
+and r12, zr, 60162
+label_173:
+label_172:
+label_171:
+label_170:
+or r5, r9, r4
+nor r8, r11, r7
+sub r2, r12, 945
+or r3, r6, 6276
+nor r3, r5, 55574
+sub r1, r9, 15155
+nor r1, flags, 60002
+jne label_186
+add flags, r1, r4
+label_186:
+xor r7, r3, r6
+lsl r8, r9, r13
+or r13, r9, r4
+lsl r3, r1, r8
+add r9, r4, 35730
+lsl flags, r2, 5449
+jae label_195
+jb label_196
+jne label_197
+cmp r8, r4
+label_197:
+label_196:
+label_195:
+jmp label_202
+lsl r6, r5, 8065
+label_202:
+jae label_205
+lsl flags, r12, 33749
+label_205:
+or r10, sp, r1
+add r5, r10, 42102
+lsl r2, r1, r2
+add sp, r9, r9
+xor flags, sp, sp
+and r10, r13, r7
+sub r3, r4, 20332
+or r1, r13, 8225
+lsr r6, r12, r2
+lsr r10, r13, r12
+xor r9, r2, r3
+sub sp, r2, r5
+lsr r2, r9, r13
+nor r2, zr, 45251
+jge label_222
+jg label_223
+jmp label_224
+jae label_225
+and r11, r5, r1
+label_225:
+label_224:
+label_223:
+label_222:
+nor sp, r6, 26176
+or r10, r13, 7150
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_233:
+nand r1, zr, r1
+jb label_233
+jmp label_235
+add r2, sp, r3
+label_235:
+nand r6, zr, 13221
+nor flags, r2, 10840
+lsl r2, r5, 32539
+xor sp, r9, 60602
+and r9, r10, r13
+or r2, flags, r9
+or sp, r12, 51761
+and r2, r9, 32724
+jl label_246
+nand r2, r2, zr
+label_246:
+nor r3, zr, r8
+jmp label_250
+sub r9, r4, 12360
+label_250:
+lsr r7, zr, r12
+jbe label_254
+lsl r2, r10, 37045
+label_254:
+nand r8, r10, flags
+or r6, r10, r7
+or flags, zr, 36393
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_260:
+nand r1, zr, r1
+jge label_260
+nor r1, r11, 40464
+jle label_263
+add r8, r13, r11
+label_263:
+add r6, flags, r4
+sub zr, r8, r5
+and r4, r13, r9
+xor flags, r4, r4
+lsr r3, r10, flags
+cmp r2, zr
+lsr r12, r12, 42093
+xor r3, r8, r10
+lsr sp, r6, 60467
+nor r12, r7, r6
+sub r10, r9, 23631
+jmp label_277
+cmp r6, r13
+label_277:
+lsr r2, sp, r10
+jle label_281
+lsl r4, r12, 62469
+label_281:
+jb label_284
+xor r5, r3, 42689
+label_284:
+je label_287
+nand r5, sp, 11516
+label_287:
+nand r12, r4, r6
+jmp label_291
+and r3, r7, 58755
+label_291:
+je label_294
+jmp label_295
+lsr zr, flags, 47353
+label_295:
+label_294:
+cmp r1, sp
+add zr, zr, r11
+nor r11, r6, r8
+lsr sp, r13, r6
+or r11, zr, 29038
+and r4, r5, 53149
+jmp label_305
+add r11, r12, r8
+label_305:
+add r10, sp, r5
+lsl r9, r7, 14803
+sub flags, r10, 60857
+cmp sp, zr
+jmp label_312
+and flags, r4, r1
+label_312:
+lsl r1, r6, r5
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_316:
+nand r1, zr, r1
+jg label_316
+or r4, flags, r3
+cmp r2, r13
+nor r13, r2, 58914
+add r5, zr, 40052
+xor r4, r1, r4
+sub r6, sp, 43872
+jmp label_324
+lsr sp, r5, r12
+label_324:
+lsr r9, zr, r12
+lsl r2, r6, 8647
+jae label_329
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_330:
+nand r1, zr, r1
+je label_330
+label_329:
+nand r7, r1, 58508
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_334:
+nand r1, zr, r1
+je label_334
+and r12, r12, 21797
+or r5, r13, r3
+jge label_338
+nor r13, r7, r10
+label_338:
+jmp label_341
+sub r11, r6, 50202
+label_341:
+jae label_344
+sub r6, r6, 63849
+label_344:
+or flags, r11, 1822
+jmp label_348
+ja label_349
+jl label_350
+and r8, r5, 24623
+label_350:
+label_349:
+label_348:
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_355:
+nand r1, zr, r1
+je label_355
+nor r10, r9, 55797
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_358:
+nand r1, zr, r1
+jge label_358
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_360:
+nand r1, zr, r1
+jae label_360
+add r12, r6, r8
+nand r3, r9, 59079
+add r10, r3, sp
+nor r5, r13, r6
+sub r8, r10, r5
+jmp label_367
+sub flags, r1, r4
+label_367:
+add r10, r2, 48428
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_371:
+nand r1, zr, r1
+jg label_371
+lsr r12, sp, r6
+add r4, r9, 37414
+nand r13, r1, 41569
+xor r10, r4, r2
+xor r9, r1, 58782
+lsr flags, r3, r1
+and r3, r8, 26098
+jmp label_380
+and r7, r2, r7
+label_380:
+lsl r11, sp, 17285
+nand r12, sp, r2
+cmp r2, sp
+jbe label_386
+add r1, r1, 35909
+label_386:
+xor r3, r9, 61316
+jg label_390
+add r7, r7, r7
+label_390:
+add zr, r2, r4
+sub r3, r4, r2
+lsl r12, zr, 50599
+jbe label_396
+lsl r6, zr, 51723
+label_396:
+sub sp, r2, 5429
+lsl r13, r12, 49359
+je label_401
+add r1, r12, r7
+label_401:
+sub r10, r4, 12195
+sub sp, r6, 64540
+sub r11, r7, 25452
+jmp label_407
+cmp flags, sp
+label_407:
+jmp label_410
+lsl r11, sp, 18841
+label_410:
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_413:
+nand r1, zr, r1
+jmp label_413
+nand r10, r10, r2
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_416:
+nand r1, zr, r1
+ja label_416
+cmp r4, r12
+cmp r1, flags
+nor flags, sp, r4
+sub r5, r10, 3194
+add r4, r13, flags
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_423:
+nand r1, zr, r1
+jmp label_423
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_425:
+nand r1, zr, r1
+jg label_425
+or sp, r10, 10017
+xor r1, r4, 14587
+lsl flags, r13, 27361
+or r5, r8, 43167
+add flags, r6, r13
+xor r8, r7, r3
+sub flags, r5, 57940
+cmp r10, sp
+jmp label_435
+lsr r4, r7, r1
+label_435:
+lsr r4, r3, 50978
+jg label_439
+lsl flags, r8, 32244
+label_439:
+nand r2, flags, sp
+nand r10, flags, r10
+cmp r13, r10
+jne label_445
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_446:
+nand r1, zr, r1
+je label_446
+label_445:
+nor r6, r13, 29955
+jmp label_450
+jmp label_451
+add r4, r7, 14313
+label_451:
+label_450:
+jae label_455
+nand r3, r7, r13
+label_455:
+nor r2, r7, r9
+add r4, r2, 37750
+cmp sp, r10
+lsr r10, r9, flags
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_462:
+nand r1, zr, r1
+jg label_462
+or r1, r2, 21940
+nand r6, r9, 46693
+or r6, r5, r9
+or flags, r7, r10
+je label_468
+and zr, r13, 6292
+label_468:
+lsr r8, r10, r11
+lsr r11, r7, 48051
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_473:
+nand r1, zr, r1
+jmp label_473
+sub r13, flags, r1
+nor r9, r9, 33156
+jmp label_477
+or r8, r11, r13
+label_477:
+and r12, r12, r11
+sub r9, r6, 64621
+cmp r3, zr
+xor flags, r4, r5
+lsr r7, flags, 27311
+sub r9, r10, 9610
+jmp label_486
+sub r10, r2, 41161
+label_486:
+nand r8, r11, r6
+jg label_490
+add r12, r2, r9
+label_490:
+jb label_493
+jge label_494
+nor flags, r6, flags
+label_494:
+label_493:
+jne label_498
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_499:
+nand r1, zr, r1
+jg label_499
+label_498:
+nand r13, r3, r3
+nand sp, sp, r2
+sub sp, flags, 44964
+add r12, r1, r1
+sub r13, r9, r11
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_507:
+nand r1, zr, r1
+jb label_507
+sub r9, r1, 28613
+cmp r6, r9
+lsl r3, r7, sp
+or sp, r8, 22221
+and r12, r6, r8
+nor r13, r5, r12
+cmp r7, r7
+ja label_516
+and r4, r10, 62534
+label_516:
+lsl r13, r12, zr
+ja label_520
+nor zr, r1, 2705
+label_520:
+jmp label_523
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_524:
+nand r1, zr, r1
+jbe label_524
+label_523:
+nor r13, r8, r2
+jmp label_528
+jmp label_529
+sub r13, r6, 29389
+label_529:
+label_528:
+xor r13, r11, 11353
+lsl r2, zr, 24834
+xor r2, r3, r1
+add r12, r6, 58623
+jne label_537
+nand r3, r7, 19047
+label_537:
+nand r5, r10, r11
+or r4, zr, 39983
+lsr sp, r7, r1
+or r1, r8, r7
+jb label_544
+lsl zr, r13, 50768
+label_544:
+jle label_547
+add r12, r1, 21424
+label_547:
+jmp label_550
+and r3, r9, 27505
+label_550:
+nor r13, r12, r5
+or r8, r10, 44764
+nand sp, r7, r6
+xor sp, r3, r3
+nand flags, r13, r12
+jg label_558
+nand r12, r6, r8
+label_558:
+nand r5, sp, 11102
+sub sp, zr, r11
+nand r3, r7, 35329
+add r11, r2, 62490
+add r13, r4, 62496
+or sp, r12, r1
+lsr r12, r9, r7
+jmp label_568
+sub r5, r8, r11
+label_568:
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_571:
+nand r1, zr, r1
+jg label_571
+xor r6, r10, 23653
+lsl r13, r1, 25210
+jb label_575
+cmp r12, r7
+label_575:
+and r7, r13, 13823
+jmp label_579
+xor r2, r5, r4
+label_579:
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_582:
+nand r1, zr, r1
+jg label_582
+cmp zr, zr
+and r9, r7, 15833
+sub r13, r3, 5848
+jle label_587
+add sp, r6, zr
+label_587:
+sub r10, r10, 61191
+add r1, sp, r12
+jmp label_592
+or sp, sp, 15636
+label_592:
+nand r2, r5, sp
+nand r7, sp, 19426
+jb label_597
+lsr r8, r10, 19551
+label_597:
+ja label_600
+lsr flags, r5, 21007
+label_600:
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_603:
+nand r1, zr, r1
+jmp label_603
+jle label_605
+or r6, sp, r2
+label_605:
+nor r6, sp, r10
+lsl r13, r9, flags
+lsl r9, r7, r6
+nand r3, flags, 56435
+xor r1, r6, r8
+lsl zr, r8, 64029
+and r9, r11, r10
+add r4, r12, r8
+lsr r1, flags, 36561
+jmp label_617
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_618:
+nand r1, zr, r1
+jb label_618
+label_617:
+nand r4, sp, 39362
+jmp label_622
+sub r11, r7, 20471
+label_622:
+nand r5, flags, r4
+nor r6, r8, 23381
+cmp zr, r13
+lsl r5, r6, 8184
+jge label_629
+or r3, r2, 41997
+label_629:
+jg label_632
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_633:
+nand r1, zr, r1
+jge label_633
+label_632:
+nand r10, r6, 9086
+nand r9, r3, 6364
+jmp label_638
+add r13, r6, r13
+label_638:
+xor r9, r4, 64233
+and r11, r2, r9
+or r2, sp, r3
+lsr r1, r11, 25488
+cmp r5, r6
+xor r3, r7, 38623
+nor r12, r9, 46883
+xor r8, flags, 54316
+or r8, r12, r5
+lsl r2, r2, r4
+or r2, r6, flags
+lsl r13, r13, zr
+lsl r11, r2, r1
+lsl zr, r7, 52942
+nor r3, r1, flags
+add r8, r11, r2
+xor sp, r11, r13
+jne label_658
+lsr r6, r2, 31045
+label_658:
+jg label_661
+and r7, r5, zr
+label_661:
+nor r6, flags, 61000
+jle label_665
+jl label_666
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_667:
+nand r1, zr, r1
+jge label_667
+label_666:
+label_665:
+nand r4, sp, 37371
+or r1, r8, 54593
+lsr r3, r6, sp
+and r11, r11, 30010
+add r3, r13, 20193
+and r4, r10, 6899
+or r11, r12, r3
+sub r13, r12, r10
+xor r11, r3, r7
+jmp label_680
+sub r11, r8, 40826
+label_680:
+jmp label_683
+cmp sp, r8
+label_683:
+lsl r12, r8, r12
+lsl r3, r12, r9
+add r7, r6, r6
+lsl r4, zr, 33177
+lsl r13, r10, r10
+cmp sp, r11
+sub r7, zr, r7
+add r8, sp, r2
+cmp r4, sp
+nor flags, r9, r11
+jmp label_696
+or r8, r2, 11137
+label_696:
+and r3, r1, r12
+sub r5, r2, 182
+jae label_701
+ja label_702
+jmp label_703
+add flags, zr, 43399
+label_703:
+label_702:
+label_701:
+je label_708
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_709:
+nand r1, zr, r1
+ja label_709
+label_708:
+lsl sp, r8, 15872
+cmp r13, r6
+lsl r11, r7, 18011
+or r11, flags, 17232
+lsr r8, r12, r1
+jge label_717
+jle label_718
+and r2, r7, r6
+label_718:
+label_717:
+xor r2, r9, 12074
+or r1, r6, r8
+jmp label_724
+sub r13, r1, 31419
+label_724:
+lsl r6, r5, 36093
+nand r11, r9, 14684
+lsr r6, r5, 21478
+or r1, r4, 57454
+jle label_731
+sub r6, r4, 18858
+label_731:
+jl label_734
+cmp r3, r4
+label_734:
+cmp r10, r6
+jl label_738
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_739:
+nand r1, zr, r1
+jg label_739
+label_738:
+add r3, r5, r4
+cmp r11, r4
+jne label_744
+and r2, r10, 46839
+label_744:
+lsl r12, r13, 52739
+jbe label_748
+and r3, zr, r10
+label_748:
+nand r1, zr, 32487
+lsr r11, sp, 5059
+nand r2, r2, 65300
+xor r1, r1, 27053
+and r7, r10, r7
+jge label_756
+jg label_757
+and sp, r3, r12
+label_757:
+label_756:
+jmp label_761
+lsl r11, r4, r3
+label_761:
+or r3, r2, zr
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_765:
+nand r1, zr, r1
+jbe label_765
+sub r6, r11, r4
+nand r11, r7, r7
+sub r3, r13, 54910
+jb label_770
+lsr sp, sp, 20128
+label_770:
+nor r12, r2, r6
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_774:
+nand r1, zr, r1
+jge label_774
+jb label_776
+nor r5, r8, r1
+label_776:
+or r5, r13, 53801
+xor r5, r5, 45524
+cmp r10, r5
+lsl r3, r2, r6
+lsr r12, r1, 49369
+jbe label_784
+jl label_785
+add r13, r8, r8
+label_785:
+label_784:
+or r7, r3, 36514
+add r5, r4, sp
+xor flags, flags, 43788
+nor r9, flags, r13
+ja label_793
+or r3, r2, 3942
+label_793:
+nor r9, r2, 48440
+lsr r11, r13, r10
+cmp sp, r2
+or r6, r10, 23820
+nand r3, r5, r10
+sub r1, r7, r3
+jmp label_802
+cmp r3, r9
+label_802:
+and r6, r1, r11
+and r9, r2, r4
+nand r5, r1, r2
+lsr r11, r3, 19278
+jb label_809
+lsr flags, zr, 59857
+label_809:
+jae label_812
+nor zr, r1, 20804
+label_812:
+add r6, r4, 17937
+lsl r12, r9, r11
+nand r11, r1, r5
+or r4, r3, r6
+xor flags, zr, 41497
+nand r12, r1, r13
+sub r6, r8, r5
+sub r10, r8, r9
+sub r12, r13, r13
+lsl r1, r2, 12466
+nand r10, r7, r5
+or r7, r11, r13
+or r10, r11, r4
+add r13, r6, 42659
+nor r12, r8, r3
+sub r11, r12, r11
+sub r5, sp, r9
+jle label_832
+jmp label_833
+sub r13, r10, r8
+label_833:
+label_832:
+lsr r11, r1, 28749
+sub sp, r2, r2
+lsr r5, r4, 18140
+lsl r4, r12, 60895
+lsl r11, sp, 47188
+cmp r4, r7
+xor r3, r3, 56773
+jmp label_844
+and r12, r5, 34263
+label_844:
+add r12, r13, 44654
+add r12, r10, 27672
+nor r11, r13, 52639
+nor r12, r4, 24870
+or r13, r13, 18677
+nand r2, r4, r9
+ja label_853
+nor r12, r8, 15
+label_853:
+lsl r13, r7, r4
+lsr r1, sp, 11630
+lsr r12, r1, r1
+nand zr, r12, r3
+or flags, r11, r9
+jg label_861
+or r6, sp, flags
+label_861:
+cmp r9, r9
+add sp, r3, 13739
+lsl r3, r7, r4
+add r6, flags, r13
+xor r8, r9, 60964
+or r13, zr, 2835
+lsl r12, r9, 35712
+nand r13, zr, r8
+jmp label_872
+or r3, flags, r8
+label_872:
+jmp label_875
+sub r12, r3, 60596
+label_875:
+nand r12, r7, 206
+sub r8, r3, 53253
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_880:
+nand r1, zr, r1
+jb label_880
+nor r9, r13, r8
+xor r8, zr, 53624
+nor zr, r6, r7
+jge label_885
+jmp label_886
+nand r13, r1, r7
+label_886:
+label_885:
+or r10, zr, r3
+xor r3, r5, r5
+jl label_892
+lsr r10, r9, 14580
+label_892:
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_895:
+nand r1, zr, r1
+jmp label_895
+xor r10, r7, 62212
+or r1, r5, r4
+jae label_899
+nor r9, r2, r7
+label_899:
+and flags, r4, 8746
+or flags, r6, r12
+add r2, r6, sp
+lsl flags, sp, 11055
+add r7, r12, 42272
+and r11, r7, 37228
+jmp label_908
+xor r8, r6, 39889
+label_908:
+lsr r8, r9, 5236
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_912:
+nand r1, zr, r1
+jg label_912
+jge label_914
+jmp label_915
+nand r7, r11, 31943
+label_915:
+label_914:
+nand r4, r5, 21628
+cmp r13, sp
+or sp, r9, 13612
+jmp label_922
+lsl r13, r11, 58944
+label_922:
+jae label_925
+add r5, r3, r8
+label_925:
+xor r1, r11, 9161
+add sp, r9, r11
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_930:
+nand r1, zr, r1
+jl label_930
+lsl r8, r4, 24993
+sub r11, r2, r10
+or r3, r13, r10
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_935:
+nand r1, zr, r1
+jge label_935
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_937:
+nand r1, zr, r1
+jge label_937
+and r4, r11, zr
+or r7, r12, 29903
+or r8, sp, r8
+add r1, r12, r5
+nand r4, r13, 47957
+jmp label_944
+nand r2, r2, 4308
+label_944:
+add r8, r6, 24430
+nor sp, flags, 38606
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_949:
+nand r1, zr, r1
+jmp label_949
+nand r4, sp, 1104
+xor zr, r6, 54865
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_953:
+nand r1, zr, r1
+jle label_953
+cmp r8, r10
+and r7, zr, 17962
+add zr, flags, 15816
+or r1, zr, 0
+or r2, zr, 1
+cmp r1, r2
+label_958:
+nand r1, zr, r1
+je label_958
+add r8, r1, 35184
+xor r7, r9, r3
+and r13, zr, 27376
+and r7, r12, r10
+lsl zr, r13, 35359
+sub r6, r7, r6
+or r7, r7, 2961
+and r2, r3, r13
+nor flags, r10, 31658
+and r5, r2, 60339
+nor r1, r4, r10
+lsl r8, r11, r3
+je label_972
+nor r10, flags, r8
+label_972:
+lsl r9, r4, 41324
+lsr r6, r5, r6
+jmp label_977
+jl label_978
+cmp r1, r8
+label_978:
+label_977:
+or r5, r7, 51824
+and r11, r7, 52765
+xor r13, r8, 34085
+add r8, r4, 50773
+lsl r9, r6, 57817
+xor flags, flags, 21929
+cmp r4, r8
+jmp label_989
+add r6, r11, 37776
+label_989:
+jle label_992
+add r11, r8, 12519
+label_992:
+lsl r5, r13, 56357
+lsl r1, r3, r8
+jne label_997
+add r11, r5, 12596
+label_997:
+jb label_1000
+nand sp, r12, r12
+label_1000:
+`
