@@ -1,0 +1,13 @@
+kind = misc
+no_score = true
+title = "Грубое Пробуждение"
+size = [-30, -30, 30, 30]
+no_controls = true
+background = 4
+next_level = "nand_gate"
+dialogue = [
+  (alien_centered, "Поздравляем, вас похитили!"),
+  (alien_centered, "Мы протестируем вас.
+
+Правила просты, постройте работающий компьютер, иначе вас съедят. Удачи."),
+]

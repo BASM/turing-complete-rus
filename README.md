@@ -19,6 +19,10 @@ Language file "Z:\games\steam\steamapps\common\Turing Complite\translations\Rus.
 перезаписывать Russian.txt который уже есть в каталоге translations\ нельзя! Steam это уведет и перезапишет его
 обратно. Называйте Rus.txt.
 
+Если используется версия save\_braker 0.1403 или больше необходимо дополнительно скопировать содержимое campaign
+в каталог "Z:\games\steam\steamapps\common\Turing Complite\campaign", в противном случае часть диалогов в уровнях останутся
+на английском яызке.
+
 После чего снова набрать:
 ```
 language Rus
