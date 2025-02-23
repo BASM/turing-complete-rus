@@ -1,0 +1,17 @@
+kind = combinational
+title = "Байтовый И-НЕ(NAND)"
+size = [-30, -30, 30, 30]
+unlocks_components = [com_nand_word]
+background = 5
+dialogue = [
+  (alien_centered, "Вы, вероятно, считаете неэтичным есть всех землян, которые не проходят испытание?"),
+  (alien_centered, "Но это нормально для них, они привыкли жить в дикой природе, где для хорошей жизни не стоит позволять мясу пропадать."),
+  (info, "Сделайте И-НЕ(NAND) для каждого бита из входных байтов и выведите результат.
+
+Пример:
+[code]
+ВВОД 1 [ON][ON][OFF][OFF][OFF][ON][OFF][OFF]
+ВВОД 2 [OFF][OFF][OFF][OFF][ON][ON][OFF][OFF]
+ВЫВОД  [ON][ON][ON][ON][ON][OFF][ON][ON][/code]
+"),
+]

@@ -1,0 +1,10 @@
+kind = combinational
+title = "ИСКЛ-ИЛИ-НЕ(XNOR) Вентиль"
+size = [-30, -30, 30, 30]
+unlocks_components = [com_xnor_bit]
+tick_past_fail = 4
+output_history_pins = 1
+background = 1
+dialogue = [
+  (info, "Создайте инвертированный логический элемент ИСКЛ-ИЛИ(XOR), известный как ИСКЛ-ИЛИ-НЕ(XNOR)."),
+]

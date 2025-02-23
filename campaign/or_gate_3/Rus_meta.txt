@@ -1,0 +1,9 @@
+kind = combinational
+title = "Большой ИЛИ(OR) Вентиль"
+size = [-30, -30, 30, 30]
+unlocks_components = [com_or_3_bit]
+tick_past_fail = 8
+output_history_pins = 1
+dialogue = [
+  (info, "Создайте логический элемент ИЛИ(OR) с 3 входами."),
+]

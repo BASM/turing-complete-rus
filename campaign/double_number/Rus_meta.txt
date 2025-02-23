@@ -1,0 +1,13 @@
+kind = combinational
+no_score = true
+title = "Задвоение Числа"
+size = [-30, -30, 30, 30]
+unlocks_components = [com_splitter_bit_2, com_splitter_bit_4, com_splitter_bit_8, com_maker_bit_2, com_maker_bit_4, com_maker_bit_8]
+components_available = [com_splitter_bit_8: -1, com_maker_bit_8: -1]
+unlocks_pages = ["Bytes"]
+background = 5
+dialogue = [
+  (info, "Этот уровень вводит байтовые значения, которые представлены как числа от 0 до 255. Байты состоят из 8 бит, каждый бит является двоичным разрядом числа. Вам предоставлены два новых компонента: один из них принимает байт и разбивает его на биты, а другой выполняет обратную операцию.
+
+Используя эти компоненты, выясните, как удвоить входное число (до 127)."),
+]

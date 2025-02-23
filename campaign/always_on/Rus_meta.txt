@@ -1,0 +1,16 @@
+kind = combinational
+no_score = true
+title = "Всегда ВКЛ"
+size = [-30, -30, 30, 30]
+unlocks_components = [com_on, com_off]
+tick_past_fail = 2
+output_history_pins = 1
+unlocks_pages = ["De Morgan's laws"]
+dialogue = [
+  (info, "Создайте схему всегда [ON]."),
+]
+post_mortem = [  
+    (info, `Этот уровень открывает вашу первую страницу руководства. Это важно, убедитесь, что вы ее понимаете.`),
+    (manual, "De Morgan's laws"),
+  ]
+

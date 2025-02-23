@@ -1,0 +1,15 @@
+kind = sequential
+no_score = true
+title = "Линии Задержки"
+size = [-30, -30, 30, 30]
+unlocks_components = [com_delay_line_bit]
+components_available = [com_delay_line_bit: -1]
+tick_past_fail = 14
+output_history_pins = 1
+background = 1
+dialogue = [
+  (info, "В этом уровне добавлен компонент Линия Задержки. Он принимает на вход сигнал и выводит его с задержкой в 1 такт
+
+[img]dialogue/delay_line.png[/img]"),
+  (info, "Составьте схему, которая выводит то же самое, что и вход, но с задержкой в 2 такта."),
+]

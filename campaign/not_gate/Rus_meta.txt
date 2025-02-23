@@ -1,0 +1,22 @@
+kind = combinational
+title = "НЕ(NOT) Вентиль"
+size = [-30, -30, 30, 30]
+unlocks_components = [com_not_bit]
+tick_past_fail = 2
+output_history_pins = 1
+background = 4
+unlocks_special = ["level_map"]
+dialogue = [
+  (alien_centered, "Теперь когда вы разблокировали И-НЕ(NAND) вентиль, время создать первую схему."),
+  (alien_centered, "На последнем уровне вы создали таблицу, которая описывала схему. В этом уровне вы собираете схему, которая соответствует таблице."),
+  (info, "Используя вентили И-НЕ(NAND), постройте НЕ вентиль.
+
+Используя: [b]NAND вентиль[/b]
+[code]ВХОД 1: [OFF][ON][OFF][ON]
+ВХОД 2: [OFF][OFF][ON][ON]
+ВЫХОД:  [ON][ON][ON][OFF][/code]
+
+Создайте: [b]НЕ(NOT) вентиль[/b]
+[code]ВХОД 1: [ON][OFF]
+ВЫХОД:  [OFF][ON][/code]")
+]
