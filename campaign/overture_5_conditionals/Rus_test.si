@@ -1,0 +1,295 @@
+const INPUT  = <U8> 0b110_000
+const OUTPUT = <U8> 0b000_110
+
+const IMM    = <U8> 0b0000_0000
+const CALC   = <U8> 0b0100_0000
+const MOVE   = <U8> 0b1000_0000
+const COND   = <U8> 0b1100_0000
+
+const NAND = <U8> 0
+const OR   = <U8> 1
+const AND  = <U8> 2
+const NOR  = <U8> 3
+const ADD  = <U8> 4
+const SUB  = <U8> 5
+
+const NEVER  = <U8> 0
+const ALWAYS = <U8> 1
+const EQ     = <U8> 2
+const NE     = <U8> 3
+const LT     = <U8> 4
+const GE     = <U8> 5
+const LE     = <U8> 6
+const GT     = <U8> 7
+
+const NOOP   = COND | NEVER
+
+var registers = [0,0,0,0,0,0]
+var counter   = 0
+
+def on_reset($scratch_space: [Int], test: Int) {
+
+    .counter = 0
+    var h = 0
+    while h < 6 {
+        .registers[h] = 0
+        h += 1
+    }
+
+    // Test against 0
+
+    ram_push(COND | NEVER)
+
+    ram_push(<U8> .program_length + 3)
+    ram_push(COND | EQ)
+    ram_push(NOOP)
+
+    ram_push(COND | LT)
+
+    ram_push(<U8> .program_length + 3)
+    ram_push(COND | LE)
+    ram_push(NOOP)
+
+    ram_push(<U8> .program_length + 3)
+    ram_push(COND | ALWAYS)
+    ram_push(NOOP)
+
+    ram_push(COND | NE)
+
+    ram_push(<U8> .program_length + 3)
+    ram_push(COND | GE)
+    ram_push(NOOP)
+
+    ram_push(COND | GT)
+
+
+    // Test against 1
+
+    ram_push(1)
+    ram_push(MOVE | 0 | 3)
+
+    ram_push(COND | NEVER)
+    ram_push(COND | EQ)
+    ram_push(COND | LT)
+    ram_push(COND | LE)
+
+    ram_push(<U8> .program_length + 3)
+    ram_push(COND | ALWAYS)
+    ram_push(NOOP)
+
+    ram_push(<U8> .program_length + 3)
+    ram_push(COND | NE)
+    ram_push(NOOP)
+
+    ram_push(<U8> .program_length + 3)
+    ram_push(COND | GE)
+    ram_push(NOOP)
+
+    ram_push(<U8> .program_length + 3)
+    ram_push(COND | GT)
+    ram_push(NOOP)
+
+
+    // Test against -1
+
+    ram_push(MOVE | (<U8> 3 << 3) | 2)
+    ram_push(CALC | SUB)
+
+    ram_push(COND | NEVER)
+    ram_push(COND | EQ)
+
+    ram_push(<U8> .program_length + 3)
+    ram_push(COND | LT)
+    ram_push(NOOP)
+
+    ram_push(<U8> .program_length + 3)
+    ram_push(COND | LE)
+    ram_push(NOOP)
+
+    ram_push(<U8> .program_length + 3)
+    ram_push(COND | ALWAYS)
+    ram_push(NOOP)
+
+    ram_push(<U8> .program_length + 3)
+    ram_push(COND | NE)
+    ram_push(NOOP)
+
+    ram_push(COND | GE)
+    ram_push(COND | GT)
+
+    var imm = <U8> 0
+    while imm < 64 {
+        ram_push(imm)
+        imm += 1
+    }
+
+    var alu_opp = <U8> 0
+    while alu_opp < 6 {
+        ram_push(MOVE | INPUT | 1)
+        ram_push(MOVE | INPUT | 2)
+        ram_push(CALC | alu_opp)
+        ram_push(MOVE | <U8> 3 << 3 | OUTPUT)
+        alu_opp += 1
+    }
+
+    var s = <U8> 0
+    var d = <U8> 0
+    ram_push(MOVE | INPUT | OUTPUT)
+    ram_push(MOVE | INPUT | 0)
+    ram_push(MOVE | INPUT | 1)
+    ram_push(MOVE | INPUT | 2)
+    ram_push(MOVE | INPUT | 3)
+    ram_push(MOVE | INPUT | 4)
+    ram_push(MOVE | INPUT | 5)
+
+    while s <= 6 {
+        d = 0
+        ram_push(MOVE | INPUT | s)
+        while d <= 6 {
+            ram_push(MOVE | (s << 3) | d)
+            d += 1
+        }
+        s += 1
+    }
+}
+
+def get_input($scratch_space: [Int], tick: Int, $inputs: [Int]) {
+    inputs[0] = random(256)
+}
+
+def check_output($scratch_space: [Int], tick: Int, inputs: [Int], outputs: [Int]) TestResult {
+
+    if !has_counter_component() {
+        set_error("Добавьте компонент Счётчик.")
+        return fail
+    }
+
+    if !has_ram() {
+        set_error("Добавьте компонент RAM(память).")
+        return fail
+    }
+
+    let instruction = get_program_output() & 0xff
+
+    let opcode = instruction >> 6
+
+    switch <U8> opcode
+        IMM {
+            .registers[0] = instruction
+            .counter += 1
+        }
+        CALC >> 6 {
+            let alu_code = instruction & 0b111
+            let r1 = .registers[1]
+            let r2 = .registers[2]
+
+            switch <U8> alu_code
+                OR {
+                    .registers[3] = r1 | r2
+                }
+                NAND {
+                    .registers[3] = ~(r1 & r2) & 0xff
+                }
+                NOR {
+                    .registers[3] = ~(r1 | r2) & 0xff
+                }
+                AND {
+                    .registers[3] = r1 & r2
+                }
+                ADD {
+                    .registers[3] = (r1 + r2) & 0xff
+                }
+                SUB {
+                    .registers[3] = (r1 - r2) & 0xff
+                }
+
+            .counter += 1
+
+        }
+        MOVE >> 6 {
+
+            let from   = (instruction >> 3) & 0b111
+            let to     = instruction & 0b111
+
+            var value = 0
+            if from <= 5 {
+                value = .registers[from]
+            } elif from == 6 {
+                value = inputs[0]
+            }
+
+            if to <= 5 {
+                .registers[to] = value
+            } elif to == 6 {
+                if (outputs[2] & 1) != 1 {
+                    set_error("Выход не включён.")
+                    return fail    
+                }
+                if outputs[1] != value {
+                    set_error(`Expected output: {value}.`)
+                    return fail
+                }    
+            }
+
+            .counter += 1
+        }
+        COND >> 6 {
+            let cond = instruction & 0b111
+
+            let equal = .registers[3] == 0
+            let less  = .registers[3] > 127
+
+            var set_counter = false
+
+            switch <U8> cond
+                NEVER {}
+                ALWAYS {
+                    set_counter = true
+                }
+                EQ {
+                    set_counter = equal
+                }
+                NE {
+                    set_counter = !equal
+                }
+                LT {
+                    set_counter = less
+                }
+                GE {
+                    set_counter = !less
+                }
+                LE {
+                    set_counter = less || equal
+                }
+                GT {
+                    set_counter = !less && !equal
+                }
+
+            
+            if set_counter {
+                .counter = .registers[0]
+            } else {
+                .counter += 1
+            }
+        }
+
+    var reg_i = 0
+    while reg_i < 6 {
+        let value = get_level_memory(`reg {reg_i}`) & 0xff
+        if value != Z_STATE && .registers[reg_i] != value {
+            set_error(`Регистр {reg_i} должен иметь значение {.registers[reg_i]}.`)
+            return fail
+        }
+
+        reg_i += 1
+    }
+
+    if get_counter_value() != .counter {
+        set_error(`Счётчик должен быть {.counter}.`)
+        return fail
+    }
+
+    if tick == .program_length - 1 {
+        return win
+    }
+}

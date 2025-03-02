@@ -16,15 +16,15 @@ name = "Overture"
 
 [fields]
 
-Регистры
+register
 r0 000
 r1 001
 r2 010
 r3 011
 r4 100
 r5 101
-in 110  ;in  - ввод
-out 110 ;out - вывод
+in 110
+out 110
 
 [instructions]
 

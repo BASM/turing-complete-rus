@@ -24,7 +24,7 @@ name = "Symphony"
 
 [fields]
 
-регистр
+register
 zr 0000
 r1 0001
 r2 0010

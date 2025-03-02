@@ -1,0 +1,189 @@
+const INPUT  = <U8> 0b110_000
+const OUTPUT = <U8> 0b000_110
+
+const IMM    = <U8> 0b0000_0000
+const CALC   = <U8> 0b0100_0000
+const MOVE   = <U8> 0b1000_0000
+const COND   = <U8> 0b1100_0000
+
+var instructions = array(256, 0)
+var registers    = [0,0,0,0,0,0]
+
+const NAND = <U8> 0
+const OR   = <U8> 1
+const AND  = <U8> 2
+const NOR  = <U8> 3
+const ADD  = <U8> 4
+const SUB  = <U8> 5
+
+var tests = 0
+
+def on_reset($scratch_space: [Int], test: Int) {
+
+    var h = 0
+    while h < 6 {
+        .registers[h] = 0
+        h += 1
+    }
+
+    var alu_opp = <U8> 0
+    var i = 0
+    while alu_opp < 6 {
+        .instructions[i] = MOVE | INPUT | 1
+        i += 1
+        .instructions[i] = MOVE | INPUT | 2
+        i += 1
+        .instructions[i] = CALC | alu_opp
+        i += 1
+        .instructions[i] = MOVE | <U8> 3 << 3 | OUTPUT
+        i += 1
+        alu_opp += 1
+    }
+
+    var s = <U8> 0
+    var d = <U8> 0
+    .instructions[i] = MOVE | INPUT | OUTPUT
+    i += 1
+    .instructions[i] = MOVE | INPUT | 0
+    i += 1
+    .instructions[i] = MOVE | INPUT | 1
+    i += 1
+    .instructions[i] = MOVE | INPUT | 2
+    i += 1
+    .instructions[i] = MOVE | INPUT | 3
+    i += 1
+    .instructions[i] = MOVE | INPUT | 4
+    i += 1
+    .instructions[i] = MOVE | INPUT | 5
+    i += 1
+    
+    while s <= 6 {
+        d = 0
+        .instructions[i] = MOVE | INPUT | s
+        i += 1
+        while d <= 6 {
+            .instructions[i] = MOVE | (s << 3) | d
+            i += 1
+            d += 1
+        }
+        s += 1
+    }
+
+    .tests = i - 1
+}
+
+def get_input($scratch_space: [Int], tick: Int, $inputs: [Int]) {
+    let instruction = .instructions[tick]
+
+    let opcode      = instruction & 0b1100_0000
+    let operands    = instruction & 0b0011_1111
+
+    switch <U8> opcode
+        IMM {
+            set_custom_input_text(`imm {operands}`) 
+        }
+        MOVE { 
+            let src = operands >> 3
+            let dst = <U8> (operands & 0b111)
+
+            if src == 0b110 && dst == OUTPUT {
+                set_custom_input_text(`mov in, out`) 
+            } elif src == 0b110 {
+                set_custom_input_text(`mov in, r{dst}`)
+            } elif dst == OUTPUT {
+                set_custom_input_text(`mov r{src} out`) 
+            } else {
+                set_custom_input_text(`mov r{src}, r{dst}`)
+            }
+        }
+        CALC {
+            let opp = instruction & 0b111
+
+            switch <U8> opp 
+                OR   { set_custom_input_text("or r1, r2") }
+                NAND { set_custom_input_text("nand r1, r2") }
+                NOR  { set_custom_input_text("nor r1, r2") }
+                AND  { set_custom_input_text("and r1, r2") }
+                ADD  { set_custom_input_text("add r1, r2") }
+                SUB  { set_custom_input_text("sub r1, r2") }
+
+        }
+
+    inputs[0] = instruction
+    inputs[1] = random(256)
+}
+
+def check_output($scratch_space: [Int], tick: Int, inputs: [Int], outputs: [Int]) TestResult {
+
+    let instruction = inputs[0]
+    let opcode = <U8> (instruction >> 6)
+
+    switch opcode << 6
+        CALC {
+            let alu_code = instruction & 0b111
+            let r1 = .registers[1]
+            let r2 = .registers[2]
+
+            switch <U8> alu_code
+                OR {
+                    .registers[3] = r1 | r2
+                }
+                NAND {
+                    .registers[3] = ~(r1 & r2) & 0xff
+                }
+                NOR {
+                    .registers[3] = ~(r1 | r2) & 0xff
+                }
+                AND {
+                    .registers[3] = r1 & r2
+                }
+                ADD {
+                    .registers[3] = (r1 + r2) & 0xff
+                }
+                SUB {
+                    .registers[3] = (r1 - r2) & 0xff
+                }
+
+        }
+        MOVE {
+
+            let from = (instruction >> 3) & 0b111
+            let to   = instruction & 0b111
+
+            var value = 0
+            if from <= 5 {
+                value = .registers[from]
+            } elif from == 6 {
+                value = inputs[1]
+            }
+
+            if to <= 5 {
+                .registers[to] = value
+            } elif to == 6 {
+                if (outputs[2] & 1) != 1 {
+                    set_error("Выход не включён.")
+                    return fail    
+                }
+                if outputs[1] != value {
+                    set_error(`Expected output: {value}.`)
+                    return fail
+                }    
+            }
+        }
+
+    var reg_i = 0
+    while reg_i < 6 {
+        let value = get_level_memory(`reg {reg_i}`) & 0xff
+        if value != Z_STATE && .registers[reg_i] != value {
+            set_error(`Регистр {reg_i} должен иметь значение {.registers[reg_i]}.`)
+            return fail
+        }
+
+        reg_i += 1
+    }
+
+
+    if tick == .tests {
+        return win
+    }
+}
