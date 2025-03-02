@@ -35,6 +35,7 @@ dialogue = [
 
 `),
 ]
+
 default_isa_spec = `
 
 [settings]
@@ -62,1022 +63,1021 @@ flags 1111
 
 [instructions]
 
-nand %a(регистр), %b(регистр), %c(регистр)
+nand %a(register), %b(register), %c(register)
 01000000 aaaabbbb 0000cccc 00000000
-ИСКЛ-ИЛИ(NAND) %b и %c и сохранить результат в %a.
+NAND %b and %c and store the result in %a.
 
-in %a(регистр)
+in %a(register)
 00000001 aaaa0000 00000000 00000000
-Загружает входные данные и сохраняет их в %a
+Loads an input and stores it in %a
 
-out %a(регистр)
+out %a(register)
 00000010 00000000 0000aaaa 00000000
-Отправляет %a на выход
+Sends %a to output
 
 nop
 00000000 00000000 00000000 00000000
-Ничего не делает
+Does nothing
 
 `
-default_assembly = `nand flags, r8, r5
-nand r5, zr, r12
-nand r4, flags, r2
-nand r10, r4, r12
-nand r10, sp, sp
+default_assembly = `nand r8, r5, r5
+nand r12, r4, flags
+in r4
+in sp
 nand flags, r8, r2
-nand r4, r13, r3
-nand r6, r3, zr
-nand r3, r5, r13
-nand r11, r6, r7
-nand r13, r2, r10
+out r3
+out zr
+nand r5, r13, r11
+nand r7, r13, r2
 nand r10, r4, r10
-nand r12, r12, r4
-nand r6, r3, flags
-nand r8, zr, r2
+nand r12, r4, r6
+nand flags, r8, zr
 nand r13, r5, r1
-nand zr, zr, r4
-nand r5, r4, r8
-nand flags, sp, sp
-nand r5, r9, r8
-nand r5, flags, r7
+nand zr, r4, r5
+in flags
+in r5
+nand r8, r5, flags
 nand r5, r10, r9
-nand r8, r5, r3
-nand sp, r2, r11
-nand r13, r4, r9
-nand r9, r2, r8
-nand r7, zr, r10
-nand r13, sp, flags
-nand zr, r5, r7
-nand r5, r11, r13
-nand r3, r10, zr
-nand r13, r13, r7
-nand r1, sp, zr
-nand r6, r5, flags
-nand r7, sp, r6
-nand r3, zr, r8
-nand flags, flags, r13
-nand r3, r3, r9
-nand sp, r9, r12
-nand r5, r8, r11
-nand r8, r4, r12
-nand r13, r7, r10
-nand zr, flags, r5
-nand sp, r13, r1
-nand r3, r4, r13
-nand r3, r12, r12
-nand r8, r2, r3
-nand r6, r10, r12
-nand r1, r12, r6
-nand r3, r3, r5
-nand r2, r2, r12
-nand r9, r9, r13
-nand flags, r4, r12
-nand r1, r11, r1
-nand r9, flags, r7
-nand r5, r12, r8
-nand r13, r6, r13
-nand r13, r2, r1
-nand r6, flags, r9
-nand r8, r8, r8
-nand zr, zr, r13
-nand flags, r9, r2
-nand r9, zr, r7
-nand r4, flags, r3
-nand r13, r7, r4
-nand r8, r12, r9
-nand r7, sp, r3
-nand flags, r4, r8
-nand r7, r7, r4
-nand r11, r7, r8
-nand r8, r8, r1
-nand r5, sp, r5
-nand zr, r6, r2
-nand r6, r12, zr
-nand r7, r6, r7
-nand r13, r9, r5
-nand r7, r12, r1
-nand flags, r9, r13
-nand sp, r3, r4
-nand zr, r8, r7
-nand flags, r10, r2
-nand r2, flags, r6
-nand r2, zr, r12
-nand flags, r12, flags
-nand r3, r5, r2
-nand sp, r4, r10
-nand r4, r10, sp
-nand sp, r7, r11
-nand r7, r7, r7
-nand r10, sp, flags
-nand r5, r9, r13
-nand r13, flags, r2
-nand r9, r2, r10
-nand r8, r9, zr
-nand r3, r13, r4
-nand r4, r12, r11
-nand r5, r10, r3
-nand sp, r12, r2
-nand flags, r7, r13
-nand flags, zr, r5
-nand r13, r11, r11
-nand r3, sp, sp
-nand r8, r9, r1
-nand r1, r1, r9
-nand r9, r13, r4
-nand zr, r1, r3
-nand r11, r2, r9
-nand sp, r12, r10
-nand r9, r10, r13
-nand r5, zr, r11
-nand r12, r1, r6
-nand r12, r6, flags
-nand r6, r9, sp
-nand r8, r11, r2
-nand sp, r10, r3
-nand r6, r10, r13
-nand r3, r1, r6
-nand r11, r8, r10
-nand r5, r11, r7
-nand r11, flags, r11
-nand flags, r12, r1
-nand flags, r1, r3
-nand zr, r13, r1
-nand r9, r9, zr
-nand r1, r1, r2
-nand r12, r5, r9
-nand r13, r13, r6
-nand r13, r3, r1
-nand r9, flags, r12
-nand r5, r13, r4
-nand r1, r9, r2
-nand flags, r11, r8
-nand zr, r4, r12
-nand r2, r4, r13
-nand r10, r6, r11
-nand r9, r6, r10
-nand r8, sp, r9
-nand r3, r4, r13
-nand r1, r11, r8
-nand r4, sp, r10
-nand zr, flags, r9
-nand zr, r7, r1
-nand flags, zr, zr
-nand r11, r8, r4
-nand r13, r12, r7
-nand r1, r2, r13
-nand r13, r8, r11
-nand r4, r9, sp
-nand zr, r9, r1
-nand r6, zr, r12
-nand r6, r12, r7
-nand r11, r4, r8
-nand r2, sp, r2
-nand r7, r1, r11
-nand r13, r9, r4
-nand r11, r4, r2
-nand r10, r13, r1
-nand r3, r3, r10
-nand r7, r7, r10
-nand flags, r1, r9
-nand r1, sp, r9
-nand r8, r13, r7
-nand r10, r6, r6
-nand r11, r2, r5
-nand sp, zr, r8
-nand r8, r4, r12
-nand r3, r3, flags
-nand r4, r10, r4
-nand r11, r11, r1
-nand r3, r8, flags
-nand r2, sp, r10
-nand r3, r12, r2
-nand r13, r7, r3
-nand sp, r9, r5
-nand r10, r4, r1
-nand zr, r3, flags
-nand sp, r6, r2
-nand r2, r9, r12
-nand r11, r2, r11
-nand r8, r11, r2
-nand r5, r3, r7
-nand r6, sp, r13
-nand r9, sp, r2
-nand r6, r4, sp
-nand r13, r13, r10
-nand r2, r1, flags
-nand r8, r6, r11
-nand r5, r2, r6
-nand r6, r12, r13
-nand r5, r7, r1
-nand r1, sp, r7
-nand r1, r2, r12
-nand r2, r7, r13
-nand r11, r4, r11
-nand sp, r4, r12
-nand r9, r6, r10
-nand r3, r9, r7
-nand r1, sp, r1
-nand sp, sp, r5
-nand r9, r9, r1
-nand zr, zr, r1
-nand r2, r12, r4
-nand r11, r9, r6
-nand r3, r2, r10
-nand zr, r4, r9
-nand r9, r13, r3
-nand sp, r13, r3
-nand flags, sp, r11
-nand sp, r12, zr
-nand r9, r2, r4
-nand zr, r5, r9
-nand r2, r4, r5
-nand zr, r8, r11
+out r3
+in r11
+nand r4, r9, r9
 nand r8, r7, zr
-nand r8, r2, r12
-nand r3, r1, r8
-nand r5, r3, r6
-nand r5, r4, r1
-nand r11, r3, r5
-nand r11, r6, flags
-nand r5, r1, r9
-nand r9, r3, r13
-nand r8, r1, flags
-nand r1, r2, r13
-nand zr, r2, r10
-nand r2, flags, r1
-nand zr, r4, r9
-nand r8, r7, r3
-nand r8, r6, r3
-nand r6, r8, r9
-nand r6, r13, r1
-nand r12, r13, r9
-nand r8, r4, zr
-nand r12, r3, r1
-nand r12, r8, sp
-nand r3, r9, r4
-nand r11, r2, r1
-nand r5, flags, r2
-nand r13, r9, r11
-nand r8, r2, r4
-nand r3, r10, r10
-nand r9, r5, r12
-nand r8, r4, zr
-nand r9, r4, r6
-nand r5, r3, r1
-nand r11, r11, r4
-nand r2, r10, flags
-nand r12, flags, r5
-nand r2, r7, r10
-nand sp, r8, r1
-nand r4, r10, r5
-nand r10, r9, r6
-nand r3, r8, r2
-nand r1, r4, r2
-nand r9, flags, sp
-nand r9, r6, r9
-nand r13, r7, flags
-nand sp, zr, sp
-nand r9, r12, r10
-nand r13, r10, r7
-nand r13, flags, r3
-nand r4, r7, r12
-nand r8, r13, r1
-nand r13, r13, r1
-nand r11, r4, r6
-nand r12, r12, r2
-nand r13, zr, r10
-nand r13, r6, r12
-nand flags, r8, r9
-nand r2, r12, r3
-nand r8, r4, sp
-nand r2, r12, r5
-nand r4, r4, r2
-nand r9, r2, r13
-nand r2, r4, r2
-nand zr, r3, r3
-nand r12, r9, zr
-nand r12, r5, flags
-nand r7, sp, r8
-nand r12, r4, zr
-nand r11, r5, r12
-nand r1, r7, zr
-nand sp, r6, r5
-nand zr, flags, r5
-nand r10, r13, r7
-nand sp, r8, r12
-nand r10, r12, r10
-nand r1, r2, sp
-nand r2, r3, r4
-nand r3, r6, zr
-nand r1, r5, r7
-nand r3, flags, r2
-nand r13, r8, r6
-nand r1, r2, r5
-nand r3, r11, r1
-nand r9, sp, r9
-nand r3, r10, r9
-nand r2, r9, r10
-nand r12, r13, r10
-nand r11, r2, flags
-nand r8, r9, zr
-nand r4, sp, r12
-nand flags, r1, flags
-nand r11, r2, r9
-nand r1, r4, r3
-nand r10, r7, r3
-nand r11, r2, r2
-nand r6, zr, r8
-nand r8, r3, zr
-nand zr, r8, r3
-nand r3, r10, r9
-nand r4, flags, r8
-nand r3, r9, r7
-nand zr, r4, r12
-nand r11, r7, r10
-nand r5, flags, r2
-nand r10, r9, r5
-nand r11, r12, r8
-nand r10, zr, flags
-nand sp, r5, r6
-nand r10, r6, r7
-nand sp, r3, flags
-nand zr, r11, r9
-nand r7, r1, r10
-nand r9, r9, r1
-nand r11, r13, zr
-nand r7, zr, r7
-nand flags, r9, r8
-nand r13, r2, r11
-nand r12, r2, r6
-nand flags, zr, r4
-nand r10, r1, zr
-nand r8, r12, r5
-nand r12, r5, r4
-nand r13, r6, r9
-nand r9, r11, flags
-nand r4, sp, r4
-nand r7, r2, r3
-nand r10, r6, flags
-nand r1, r2, zr
-nand r4, r1, r12
-nand r12, r11, r13
-nand r8, r5, r3
-nand r8, sp, r10
-nand r11, flags, sp
-nand r6, r1, r3
-nand flags, r9, r12
-nand r7, r2, r6
-nand flags, sp, r10
-nand r9, r11, flags
-nand flags, r13, r1
-nand r4, r6, r13
-nand zr, r9, r2
-nand sp, sp, r10
-nand r1, flags, r10
-nand r13, r6, r4
-nand r12, flags, r5
-nand r10, r10, r6
-nand r5, r4, r5
-nand r3, r11, r1
-nand r5, r12, flags
-nand r5, r2, r5
-nand sp, r1, r12
-nand r7, r13, r12
-nand r4, r12, r6
-nand r4, flags, r8
-nand r11, zr, r3
-nand r7, r5, r3
-nand r11, zr, r12
-nand sp, r2, r1
-nand zr, flags, r3
-nand r9, r3, r1
-nand sp, r13, r11
-nand zr, zr, zr
-nand r11, r13, r13
-nand r11, r6, sp
-nand r8, r2, r9
-nand sp, r13, r4
-nand r6, r6, r7
-nand r11, zr, r3
-nand sp, r12, r11
-nand r4, r5, r11
-nand r13, flags, sp
-nand r6, r11, r12
-nand r2, r8, r8
-nand r2, r10, sp
-nand sp, r5, flags
-nand r4, r9, r7
-nand r9, r3, r9
-nand zr, flags, r10
-nand r11, r9, r4
-nand sp, zr, r12
-nand r4, zr, r12
-nand r3, flags, r4
-nand r12, r1, r1
-nand r2, r1, r6
-nand r8, r5, r11
-nand r9, r8, r11
-nand flags, r4, flags
-nand r2, r3, r6
-nand r2, r13, r13
-nand r9, r13, r2
-nand r7, r2, r9
-nand zr, r5, zr
-nand r1, r4, zr
-nand r8, r4, r1
-nand r2, r4, zr
-nand r11, r6, sp
-nand r7, zr, r12
-nand r11, r7, sp
-nand r5, zr, r12
-nand sp, zr, r9
-nand zr, r4, r12
-nand r3, r3, r2
-nand r6, r7, r7
-nand r9, sp, r5
-nand r4, r11, r1
-nand r1, r13, r7
-nand r1, r11, r12
-nand r3, r12, flags
-nand r7, zr, r12
-nand r12, flags, r5
-nand r6, zr, r5
-nand r13, r6, r3
-nand r4, r1, r9
-nand r8, r9, r13
-nand r7, zr, r10
-nand zr, r8, r13
-nand r11, r6, r7
-nand r10, flags, r11
-nand r13, r12, flags
-nand r6, r6, r3
-nand r9, r8, r12
-nand flags, r11, flags
-nand sp, r12, r9
-nand r1, r6, r12
-nand r12, r8, r10
-nand r9, r8, r5
-nand r5, flags, r5
-nand sp, r1, r1
-nand r9, r10, r9
-nand r1, r5, r1
-nand flags, r4, r12
-nand flags, r12, r5
-nand r5, r12, r6
-nand r10, r8, flags
-nand r5, r3, r9
-nand r7, r7, r11
-nand r6, r10, r3
-nand r8, sp, zr
-nand r5, r5, r13
-nand r8, r6, sp
-nand r5, r8, r10
-nand r12, r5, r1
-nand zr, flags, r13
-nand r4, flags, r1
-nand r2, r4, r10
-nand r10, r10, r2
-nand r9, r12, r7
-nand sp, r2, r1
-nand r11, r12, sp
-nand zr, r6, r4
-nand r6, r4, r9
-nand r7, r6, r12
-nand r12, r13, r1
-nand r13, r1, r2
-nand r9, r10, r4
-nand r2, r2, r8
-nand r8, r9, r1
-nand r13, sp, r10
-nand r9, flags, r3
-nand r2, r1, r10
-nand r11, r3, r8
-nand r7, r2, r2
-nand r2, flags, r7
-nand r2, r4, r7
-nand r5, r6, r11
-nand sp, r11, r5
-nand r10, r6, r12
-nand sp, r12, r2
-nand r10, r2, sp
-nand r1, r13, r13
-nand r4, r9, r1
-nand r1, r7, r5
-nand r11, r4, r3
-nand r9, r1, r4
-nand r4, zr, zr
-nand r4, r4, r7
-nand r7, sp, r7
-nand flags, r1, zr
-nand r2, r12, r4
-nand r4, r3, r3
-nand r4, sp, r2
-nand r9, zr, r12
-nand zr, r3, r7
-nand r9, flags, sp
-nand r6, zr, r6
-nand zr, r3, r11
-nand r3, sp, sp
-nand r2, r3, r5
-nand flags, r11, r13
-nand r12, r13, flags
-nand r8, r3, r11
-nand r9, r2, r1
-nand r12, sp, r7
-nand r6, r10, r10
-nand r4, r5, r3
-nand r6, r4, sp
-nand r6, r7, r12
-nand r5, r9, r11
-nand r7, r9, r12
-nand r11, r7, r5
-nand r6, flags, sp
-nand r2, zr, r2
-nand r11, sp, flags
-nand r9, r13, r3
-nand r8, r13, r5
-nand r10, r10, zr
-nand r2, r1, r9
-nand r2, r3, r4
-nand r12, r11, r1
-nand flags, zr, r8
-nand flags, sp, r12
-nand r4, r9, r3
-nand r5, r10, r9
-nand r10, r8, r11
-nand r4, r13, r6
-nand flags, r11, r10
-nand r1, r2, r12
-nand r1, r12, sp
-nand sp, r10, r7
-nand r1, flags, r9
-nand r1, r4, r5
-nand r11, r4, r5
-nand flags, r13, r11
-nand r1, r3, r11
-nand r5, r8, r7
-nand flags, r11, r4
-nand flags, r6, r12
-nand r13, r2, r9
-nand r8, r7, r4
-nand r3, sp, r11
-nand flags, r5, flags
-nand r4, r3, r10
-nand sp, r2, r7
-nand r7, r4, r7
-nand r8, r1, r10
-nand zr, r4, r3
-nand r5, r2, r13
-nand r7, r4, r13
-nand r8, flags, r8
-nand r11, r4, r7
-nand r11, r2, flags
-nand r6, sp, r10
-nand zr, r10, flags
-nand zr, r10, r2
-nand r13, r10, r13
-nand r7, r4, sp
-nand r10, sp, r7
-nand r1, r6, r13
-nand r11, r3, zr
-nand r8, r8, r7
-nand r4, r7, r7
-nand r9, sp, r9
-nand r1, r4, r10
-nand r3, r7, r2
-nand r13, r9, sp
-nand r2, r7, r6
-nand r9, r10, r12
-nand r4, r2, r7
-nand r6, sp, sp
-nand r10, flags, r4
-nand r10, r9, r2
-nand flags, sp, r11
-nand zr, r7, zr
-nand r1, r2, r1
-nand r4, r5, r5
-nand r6, r9, r11
-nand r5, r9, r2
-nand r6, r5, r8
-nand r9, r10, r11
-nand flags, r7, sp
-nand r10, r5, r13
-nand r12, r13, flags
-nand zr, r13, r7
-nand r4, r13, r5
-nand r8, r10, r10
-nand r11, r13, r1
-nand r11, r7, r13
-nand r3, r8, r12
-nand r6, r11, r12
-nand r13, flags, r10
-nand r1, r11, r10
-nand r9, r9, r1
-nand r4, r8, r7
-nand r8, r8, r11
-nand r10, r13, r6
-nand zr, r12, r12
-nand r6, r11, flags
-nand r5, r9, r6
-nand r13, r13, r12
-nand r3, zr, r2
-nand r7, flags, r4
-nand r12, r5, r9
-nand r4, r7, flags
-nand r11, flags, r5
-nand r5, r9, r10
-nand r11, r10, r12
-nand flags, r1, r10
-nand r2, r7, r9
-nand r5, r10, r8
-nand r11, r2, r6
-nand r11, r12, r4
-nand r1, r11, r12
-nand r2, r4, r9
-nand r9, r12, sp
-nand r5, r11, flags
-nand sp, r12, flags
-nand r6, r10, flags
-nand r7, r9, r10
-nand r12, r9, r5
-nand sp, r10, r13
-nand r3, sp, r3
-nand r1, r8, sp
-nand sp, r8, r2
-nand sp, r9, sp
-nand flags, r7, r4
-nand r10, r11, r12
-nand r1, r4, r1
-nand sp, r9, r13
-nand r9, zr, r11
-nand r12, r8, flags
-nand zr, r8, r9
-nand r1, r9, r5
-nand r7, r6, r9
-nand r2, zr, r3
-nand r7, r4, sp
-nand r8, r10, sp
-nand r8, r3, r13
-nand r3, r12, r12
-nand r6, r12, r8
-nand r10, r10, r13
-nand r5, r12, r12
-nand r8, r7, r7
-nand r4, r4, r10
-nand zr, r12, r4
-nand r10, r9, r6
-nand sp, sp, r13
-nand r12, r6, zr
-nand r10, r11, r12
-nand r13, r9, zr
-nand r1, r1, r1
-nand r12, r2, r5
-nand r3, r9, r8
-nand r8, r12, r13
-nand r8, zr, r2
-nand r3, zr, r11
-nand r5, r13, r6
-nand r5, r13, r12
-nand r11, r13, r11
-nand r13, r9, r1
-nand r3, r2, zr
-nand r7, r2, r2
-nand r12, r2, r3
-nand r12, r1, r1
-nand r2, r12, r6
-nand r7, flags, r10
-nand r7, r12, zr
-nand sp, r3, r7
-nand r9, r7, r2
-nand r10, r5, r10
-nand zr, r11, r3
-nand r12, r4, zr
-nand r7, flags, r5
-nand sp, sp, r7
-nand zr, r1, sp
-nand r8, r1, r8
-nand r4, r7, r12
-nand sp, r9, r13
-nand flags, zr, r13
-nand r7, zr, r2
-nand sp, r9, r6
-nand zr, r12, r1
-nand r3, zr, zr
-nand r4, flags, sp
-nand r6, r3, r9
-nand r5, r1, r1
-nand r12, r13, r12
-nand zr, r5, r13
-nand r12, r8, r10
-nand r3, r12, r6
-nand sp, sp, r7
-nand sp, r6, r7
-nand r2, sp, r3
-nand r6, r3, r13
-nand r13, flags, r13
-nand r2, r12, r2
-nand r11, flags, r5
-nand sp, r12, r6
-nand zr, r8, zr
-nand r11, r5, sp
-nand r5, sp, r10
+nand r13, sp, flags
+out r7
+nand r11, r13, r3
+nand zr, r13, r13
 nand r1, sp, zr
-nand r2, r11, r1
-nand r5, r3, r7
-nand r1, r1, r1
-nand r5, r11, r2
-nand flags, r10, r13
-nand r4, r13, r4
-nand r1, zr, r5
-nand r10, sp, r12
-nand r8, r1, zr
-nand r2, r12, r9
-nand r2, r7, r4
-nand r6, r10, r5
-nand r8, r12, r11
-nand r6, r6, sp
-nand r4, r9, r6
-nand r10, r5, r5
-nand r13, r1, r13
-nand r1, r11, r10
-nand flags, r11, r9
-nand r4, r12, r7
-nand r5, r13, r7
-nand r13, r3, flags
-nand r8, r13, r1
-nand r2, r5, zr
-nand r4, r4, flags
-nand r10, r11, zr
-nand zr, r12, r1
-nand r9, r7, r1
-nand r9, r2, r13
-nand r13, r3, r3
-nand r8, r9, r2
-nand r13, r9, r9
-nand sp, r6, r4
-nand zr, r5, flags
-nand r10, r10, flags
-nand r7, r9, r6
-nand r1, sp, r10
-nand r12, r9, r8
-nand r12, sp, sp
-nand r7, r4, flags
-nand flags, r2, r5
-nand zr, sp, r5
-nand r12, r7, sp
-nand r7, r2, flags
-nand r3, sp, sp
-nand r12, r8, r10
-nand r3, flags, r11
-nand r4, r5, r5
-nand zr, flags, r5
-nand r1, flags, r8
-nand r10, r5, flags
-nand zr, r10, r11
-nand r1, r6, sp
-nand r4, r2, r2
-nand r1, r6, sp
-nand r6, r10, r1
-nand r12, r13, r9
-nand r12, flags, flags
-nand r11, r9, r7
-nand r4, r6, r1
-nand r8, r3, flags
-nand r3, r3, sp
-nand r4, r1, r6
-nand r10, r8, r2
-nand r12, zr, r8
-nand r1, r13, r9
-nand r12, r9, r11
-nand sp, r10, r2
-nand r1, r4, r12
-nand r2, r8, r11
-nand flags, r1, flags
-nand flags, r1, r11
-nand r9, r2, r8
-nand zr, flags, r4
-nand sp, flags, r2
-nand r6, r6, r2
-nand r11, r7, r9
-nand r7, r6, flags
-nand r5, flags, r12
-nand r4, r7, r8
-nand r6, r8, r5
-nand r5, r10, zr
-nand r13, r10, r12
-nand r5, r6, r1
-nand r8, sp, r11
-nand r6, r2, r3
-nand r3, r2, r5
-nand r13, r11, r13
-nand r8, flags, r12
-nand r11, flags, r6
-nand r10, r6, r3
-nand sp, r3, r3
-nand r9, r3, r13
-nand r12, r11, flags
-nand r3, r13, r6
-nand zr, r13, zr
-nand r12, r9, r4
-nand r1, r9, r8
-nand r4, r11, r2
-nand sp, r9, r9
-nand r1, r2, sp
-nand r4, r3, sp
-nand zr, r1, r11
-nand r7, zr, r10
-nand r5, r6, r12
-nand r12, r3, r7
-nand r7, flags, sp
-nand sp, r12, r9
-nand r9, r3, r3
-nand sp, r8, flags
-nand r9, r12, r10
-nand r10, r8, r12
-nand r10, r5, r8
+nand r5, flags, r7
+nand r6, r3, zr
+nand flags, flags, r13
+nand r3, r9, sp
+nand r12, r5, r8
+nand r8, r4, r12
+nand r7, r10, zr
+nand r5, sp, r13
+nand r3, r4, r13
+nand r12, r12, r8
+out r6
+in r1
+in r3
 nand r5, r2, r2
-nand r6, r4, r2
-nand r12, r2, r6
-nand r6, flags, r6
-nand r2, r13, r13
-nand r4, zr, r9
-nand r9, r11, r2
-nand r4, r1, r3
-nand r8, zr, r7
-nand r3, sp, r1
-nand r12, r3, r1
-nand r8, flags, r5
-nand r1, r8, r11
-nand r12, r2, r7
-nand r11, sp, r11
-nand sp, r13, r10
-nand r4, r1, r5
-nand r7, r6, r2
-nand r5, r5, r1
-nand r11, r9, r8
-nand r3, r7, r5
-nand r8, zr, r9
-nand r2, r6, flags
-nand flags, r8, r12
-nand r8, r2, r12
-nand r12, r11, r13
-nand r8, r7, r3
-nand r3, r4, sp
-nand r11, r11, r1
-nand r7, r1, r8
-nand r11, r1, r1
-nand r2, r3, r6
-nand r4, sp, r10
-nand r4, r11, r11
-nand r5, r10, r11
-nand sp, r3, r13
-nand flags, r1, r2
-nand r5, r4, r10
-nand r9, r3, r11
-nand r12, r11, r12
-nand r6, r3, r9
-nand r13, r13, r12
-nand sp, r10, r12
-nand r3, r11, r3
-nand r8, r7, r5
-nand r8, sp, r8
-nand sp, r11, r8
-nand r13, r10, r4
-nand r13, sp, r8
-nand zr, zr, r12
-nand r8, r8, r12
-nand r13, r3, r3
-nand r12, r4, r9
-nand r3, r11, r7
-nand r6, r10, r6
-nand r1, r1, r4
-nand zr, r13, r9
-nand r10, r9, r13
-nand r10, r4, r10
-nand r2, sp, r11
-nand r8, r2, r7
-nand zr, r6, r7
-nand r5, r4, r8
-nand sp, zr, r2
-nand r1, r4, sp
-nand r6, sp, flags
-nand r9, zr, r11
-nand r12, r5, r7
-nand r11, r12, r8
-nand r2, r9, r1
-nand r12, r3, r3
-nand r1, zr, r12
-nand r13, r8, r5
-nand r2, r5, r6
-nand r1, r3, r11
-nand r8, r3, r4
-nand sp, r4, sp
-nand sp, r12, flags
-nand zr, r13, r7
-nand r5, r3, zr
-nand r9, r7, r12
-nand r5, r2, sp
-nand r8, r9, zr
-nand r5, r13, r6
-nand r3, r9, r11
-nand r7, r13, r11
-nand r5, r7, r11
-nand flags, r5, zr
-nand r7, r12, r8
-nand r12, sp, r1
-nand r9, r7, r5
-nand r13, zr, r6
-nand r11, r11, r2
-nand r7, r2, r6
-nand r10, r4, r2
-nand r9, r13, r10
-nand r11, flags, r1
-nand r6, r2, r8
-nand r4, r4, r2
-nand r13, r1, r11
-nand r11, r3, r12
-nand r6, r5, flags
-nand r13, r10, r6
-nand r11, r9, r9
-nand r12, r7, flags
-nand r6, r5, r11
-nand r6, r12, r8
-nand r1, r4, r11
-nand sp, r6, r5
-nand r8, r3, r9
-nand r6, r4, r7
-nand r10, r9, r5
-nand flags, r5, r3
-nand r4, r7, r10
-nand r6, flags, r1
-nand r9, sp, r12
-nand r2, r8, r1
-nand r3, r5, sp
-nand r4, r10, r11
-nand r4, r1, r7
-nand r4, r7, r11
-nand r2, r10, r5
-nand r7, r13, r5
-nand r12, r13, r5
-nand r3, r12, r4
-nand flags, r11, r2
-nand r3, zr, r12
-nand r10, r3, r8
-nand r1, zr, r13
-nand r7, zr, r4
-nand r11, sp, r3
-nand r3, zr, r3
-nand r2, r2, r7
-nand r4, r2, r5
-nand r1, r1, r7
-nand r13, r12, sp
-nand r7, r10, r2
-nand r7, r13, r13
-nand r10, r13, r3
-nand r12, sp, r6
-nand sp, r3, r8
-nand r12, zr, r1
-nand r3, r11, r4
-nand r2, r3, r1
-nand r12, r3, r2
-nand r8, zr, r12
-nand r1, r8, r10
-nand sp, r6, r11
-nand r8, r4, r10
-nand r10, r11, r7
-nand r12, r7, r12
-nand r2, r3, r13
-nand r11, sp, r8
-nand r1, r4, flags
-nand r6, sp, sp
-nand r13, zr, r1
-nand r2, r12, r2
-nand r4, r6, r7
-nand r3, r13, r4
-nand r9, r8, r13
-nand zr, r5, r8
-nand zr, r1, r11
-nand r5, r5, r13
-nand r7, r9, r3
-nand r8, r5, r5
-nand r13, r4, r12
-nand r10, r5, r6
-nand r4, r3, r2
-nand r2, r6, r3
+nand r9, r9, r13
+nand r4, r12, r1
+nand r1, r9, flags
+nand r5, r12, r8
+nand r6, r13, r13
+nand r1, r6, flags
+nand r8, r8, r8
+in r13
+nand r9, r2, r9
+nand r7, r4, flags
+nand r13, r7, r4
+nand r12, r9, r7
+nand r3, flags, r4
+nand r7, r7, r4
+nand r7, r8, r8
+nand r1, r5, sp
+nand zr, r6, r2
+nand r12, zr, r7
+nand r7, r13, r9
+nand r7, r12, r1
+nand r9, r13, sp
+nand r4, zr, r8
+nand flags, r10, r2
+out r6
+in r12
+nand r12, flags, r3
+nand r2, sp, r4
+in r10
+nand sp, r7, r11
+nand r7, r7, r10
+nand flags, r5, r9
+nand r13, flags, r2
+nand r2, r10, r8
+nand zr, r3, r13
+in r12
+nand r5, r10, r3
+in r2
+nand r7, r13, flags
+out r13
+nand r11, r3, sp
+nand r8, r9, r1
+nand r1, r9, r9
+nand r4, zr, r1
+nand r11, r2, r9
+nand r12, r10, r9
+out r5
+nand r11, r12, r1
+nand r12, r6, flags
+nand r9, sp, r8
+nand r2, sp, r10
+nand r6, r10, r13
+nand r1, r6, r11
+in r5
+nand r7, r11, flags
 nand flags, r12, r1
-nand r7, r9, sp
-nand r5, r1, r4
-nand r5, r6, r1
-nand sp, r13, r8
-nand r6, r8, r9
-nand r5, r7, r3
-nand r3, r2, flags
-nand r2, r5, r4
-nand zr, sp, r13
-nand r5, flags, flags
+nand r1, r3, zr
+nand r1, r9, r9
+nand r1, r1, r2
+out r9
+nand r13, r6, r13
+nand r1, r9, flags
+out r13
+out r9
+out r11
+nand zr, r4, r12
+nand r4, r13, r10
+nand r11, r9, r6
+nand r8, sp, r9
+nand r4, r13, r1
+nand r8, r4, sp
+in flags
+nand zr, r7, r1
+nand zr, zr, r11
+nand r4, r13, r12
+nand r1, r2, r13
+nand r8, r11, r4
+nand sp, zr, r9
+nand r6, zr, r12
+nand r12, r7, r11
+in r2
+nand r2, r7, r1
+nand r13, r9, r4
+nand r4, r2, r10
+nand r1, r3, r3
+nand r7, r7, r10
+nand r1, r9, r1
+nand r9, r8, r13
+nand r10, r6, r6
+nand r2, r5, sp
+in r8
+nand r12, r3, r3
+nand r4, r10, r4
+nand r11, r1, r3
+out r2
+in r3
+in r13
+nand r3, sp, r9
+nand r10, r4, r1
+nand r3, flags, sp
+in r2
+nand r12, r11, r2
+nand r8, r11, r2
+nand r3, r7, r6
+nand r13, r9, sp
+nand r6, r4, sp
+nand r13, r10, r2
+nand flags, r8, r6
+nand r5, r2, r6
+nand r12, r13, r5
+nand r1, r1, sp
+nand r1, r2, r12
+nand r7, r13, r11
+nand r11, sp, r4
+nand r9, r6, r10
+nand r9, r7, r1
+out sp
+nand r5, r9, r9
+nand zr, zr, r1
+in r4
+nand r9, r6, r3
+nand r10, zr, r4
+nand r9, r13, r3
+nand r13, r3, flags
+nand r11, sp, r12
+out r2
+in r5
+nand r2, r4, r5
+nand r8, r11, r8
+nand zr, r8, r2
+out r1
+nand r5, r3, r6
+nand r4, r1, r11
+nand r5, r11, r6
+nand r5, r1, r9
+nand r3, r13, r8
+nand flags, r1, r2
+nand zr, r2, r10
+nand flags, r1, zr
+nand r9, r8, r7
+nand r8, r6, r3
+nand r8, r9, r6
+nand r1, r12, r13
+nand r8, r4, zr
+nand r3, r1, r12
+in r3
+nand r4, r11, r2
+nand r5, flags, r2
+nand r9, r11, r8
+nand r4, r3, r10
+out r5
+nand r8, r4, zr
+nand r4, r6, r5
+nand r1, r11, r11
+nand r2, r10, flags
+nand flags, r5, r2
+nand r10, sp, r8
+nand r4, r10, r5
+nand r9, r6, r3
+nand r2, r1, r4
+nand r9, flags, sp
+nand r6, r9, r13
+nand flags, sp, zr
+nand r9, r12, r10
+nand r10, r7, r13
+nand r3, r4, r7
+in r13
+nand r13, r13, r1
+nand r4, r6, r12
+nand r2, r13, zr
+nand r13, r6, r12
+nand r8, r9, r2
+out r8
+nand sp, r2, r12
+nand r4, r4, r2
+nand r2, r13, r2
+nand r2, zr, r3
+nand r12, r9, zr
+out flags
+nand sp, r8, r12
+nand zr, r11, r5
+nand r1, r7, zr
+nand r6, r5, zr
+nand r5, r10, r13
+nand sp, r8, r12
+in r10
+nand r2, sp, r2
+nand r4, r3, r6
+out r5
+nand r3, flags, r2
+nand r8, r6, r1
+nand r5, r3, r11
+nand r9, sp, r9
+nand r10, r9, r2
+nand r10, r12, r13
+out r2
+nand r8, r9, zr
+in r12
+nand r1, flags, r11
+nand r9, r1, r4
+nand r10, r7, r3
+nand r2, r2, r6
+nand r8, r8, r3
+in r8
+nand r3, r10, r9
+nand flags, r8, r3
+nand r7, zr, r4
+nand r11, r7, r10
+nand flags, r2, r10
+nand r5, r11, r12
+nand r10, zr, flags
+nand r5, r6, r10
+nand r7, sp, r3
+nand zr, r11, r9
+nand r1, r10, r9
+nand r1, r11, r13
+nand r7, zr, r7
+nand r9, r8, r13
+nand r11, r12, r2
+nand flags, zr, r4
+out zr
+nand r12, r5, r12
+nand r4, r13, r6
+nand r9, r11, flags
+nand sp, r4, r7
+nand r3, r10, r6
+nand r1, r2, zr
+nand r1, r12, r12
+nand r13, r8, r5
+nand r8, sp, r10
+nand flags, sp, r6
+nand r3, flags, r9
+nand r7, r2, r6
+nand sp, r10, r9
+nand flags, flags, r13
+nand r4, r6, r13
+out r2
+nand sp, r10, r1
+nand r10, r13, r6
+nand r12, flags, r5
+nand r10, r6, r5
+out r3
+nand r1, r5, r12
+nand r5, r2, r5
+nand r1, r12, r7
+nand r12, r4, r12
+nand r4, flags, r8
+nand zr, r3, r7
+nand r3, r11, zr
+in r2
+nand zr, flags, r3
+nand r3, r1, sp
+nand r11, zr, zr
+nand r11, r13, r13
+nand r6, sp, r8
+nand r9, sp, r13
+in r6
+nand r11, zr, r3
+nand r12, r11, r4
+nand r11, r13, flags
+nand r6, r11, r12
+nand r8, r8, r2
+nand sp, sp, r5
+nand r4, r9, r7
+nand r3, r9, zr
+nand r10, r11, r9
+nand sp, zr, r12
+nand zr, r12, r3
+nand r4, r12, r1
+nand r2, r1, r6
+nand r5, r11, r9
+nand r11, flags, r4
+nand r2, r3, r6
+out r13
+nand r13, r2, r7
+nand r9, zr, r5
+nand r1, r4, zr
+in r1
+nand r4, zr, r11
+nand sp, r7, zr
+nand r11, r7, sp
+nand zr, r12, sp
+nand r9, zr, r4
+nand r3, r3, r2
+nand r7, r7, r9
+nand r5, r4, r11
+nand r1, r13, r7
+nand r11, r12, r3
+out r7
+in r12
+nand r5, r6, zr
+nand r13, r6, r3
+nand r1, r9, r8
+nand r13, r7, zr
+nand zr, r8, r13
+nand r6, r7, r10
+nand r11, r13, r12
+nand r6, r6, r3
+nand r8, r12, flags
+nand flags, sp, r12
+nand r1, r6, r12
+nand r8, r10, r9
+nand r5, r5, flags
+nand sp, r1, r1
+nand r10, r9, r1
+nand r1, flags, r4
+nand flags, r12, r5
+nand r12, r6, r10
+out r5
+nand r9, r7, r7
+nand r6, r10, r3
+nand sp, zr, r5
+nand r13, r8, r6
+out r8
+nand r12, r5, r1
+nand flags, r13, r4
+nand r1, r2, r4
+nand r10, r10, r2
+nand r12, r7, sp
+out r11
+nand sp, zr, r6
+nand r6, r4, r9
+nand r6, r12, r12
+nand r1, r13, r1
+out r10
+nand r2, r2, r8
+out r1
+nand sp, r10, r9
+nand r3, r2, r1
+out r3
+nand r7, r2, r2
+nand flags, r7, r2
+nand r7, r5, r6
+nand sp, r11, r5
+nand r6, r12, sp
+nand r2, r10, r2
+nand r1, r13, r13
+out r1
+nand r7, r5, r11
+out r9
+nand r4, r4, zr
+nand r4, r4, r7
+nand sp, r7, flags
+nand zr, r2, r12
+nand r4, r3, r3
+in r2
+nand zr, r12, zr
+nand r7, r9, flags
+nand r6, zr, r6
+out r11
+nand sp, sp, r2
+nand r5, flags, r11
+nand r12, r13, flags
+nand r3, r11, r9
+nand r1, r12, sp
+nand r6, r10, r10
+out r3
+nand r4, sp, r6
+nand r12, r5, r9
+nand r7, r9, r12
+nand r7, r5, r6
+nand sp, r2, zr
+nand r11, sp, flags
+nand r13, r3, r8
+nand r5, r10, r10
+nand r2, r1, r9
+nand r3, r4, r12
+nand r1, flags, zr
+nand flags, sp, r12
+nand r9, r3, r5
+nand r9, r10, r8
+nand r4, r13, r6
+nand r11, r10, r1
+nand r12, r1, r12
+in r10
+nand r1, flags, r9
+nand r4, r5, r11
+nand r5, flags, r13
+nand r1, r3, r11
+nand r8, r7, flags
+nand r4, flags, r6
+nand r13, r2, r9
+out r4
+nand sp, r11, flags
+nand flags, r4, r3
+nand sp, r2, r7
+nand r4, r7, r8
+nand r10, zr, r4
+nand r5, r2, r13
+nand r4, r13, r8
+nand r8, r11, r4
+nand r11, r2, flags
+in r10
+nand r10, flags, zr
+in r13
+out r7
+in r10
+out r1
+out r11
+nand zr, r8, r8
+nand r4, r7, r7
+nand sp, r9, r1
+nand r10, r3, r7
+nand r13, r9, sp
+nand r7, r6, r9
+in r4
+nand r7, r6, sp
+in flags
+nand r10, r9, r2
+nand sp, r11, zr
+nand zr, r1, r2
+nand r4, r5, r5
+out r11
+nand r9, r2, r6
+nand r8, r9, r10
+nand flags, r7, sp
+nand r5, r13, r12
+nand flags, zr, r13
+nand r4, r13, r5
+in r10
+nand r13, r1, r11
+nand r13, r3, r8
+in r11
+nand r13, flags, r10
+nand r11, r10, r9
+nand r1, r4, r8
+nand r8, r8, r11
+nand r13, r6, zr
+in r6
+nand flags, r5, r9
+nand r13, r13, r12
+nand zr, r2, r7
+nand r4, r12, r5
+nand r4, r7, flags
+nand flags, r5, r5
+nand r10, r11, r10
+nand flags, r1, r10
+nand r7, r9, r5
+nand r8, r11, r2
 nand r11, r12, r4
-nand zr, r9, flags
-nand zr, r13, r6
+nand r11, r12, r2
+nand r9, r9, r12
+out r11
+nand sp, r12, flags
+in flags
+nand r9, r10, r12
+nand r5, sp, r10
+nand r3, sp, r3
+nand r8, sp, sp
+nand r2, sp, r9
+out r7
+nand r10, r11, r12
+nand r4, r1, sp
+nand r13, r9, zr
+nand r12, r8, flags
+in r9
+nand r9, r5, r7
+nand r9, r2, zr
+nand r7, r4, sp
+nand r10, sp, r8
+nand r13, r3, r12
+nand r6, r12, r8
+nand r10, r13, r5
+nand r12, r8, r7
+nand r4, r4, r10
+nand r12, r4, r10
+nand r6, sp, sp
+nand r12, r6, zr
+nand r11, r12, r13
+nand zr, r1, r1
+nand r12, r2, r5
+nand r9, r8, r8
+nand r13, r8, zr
+nand r3, zr, r11
+nand r13, r6, r5
+nand r12, r11, r13
+nand r13, r9, r1
+nand r2, zr, r7
+nand r2, r12, r2
+nand r12, r1, r1
+nand r12, r6, r7
+nand r10, r7, r12
+nand sp, r3, r7
+nand r7, r2, r10
+nand r10, zr, r11
+nand r12, r4, zr
+nand flags, r5, sp
+nand r7, zr, r1
+nand r8, r1, r8
+nand r7, r12, sp
+nand r13, flags, zr
+nand r7, zr, r2
+nand r9, r6, zr
+nand r1, r3, zr
+nand r4, flags, sp
+out r9
+nand r1, r1, r12
+nand r12, zr, r5
+nand r12, r8, r10
+nand r12, r6, sp
+nand r7, sp, r6
+nand r2, sp, r3
+nand r3, r13, r13
+nand r13, r2, r12
+out flags
+nand sp, r12, r6
+in zr
+nand r5, sp, r5
+nand r10, r1, sp
+nand r2, r11, r1
+nand r3, r7, r1
+nand r1, r5, r11
+nand flags, r10, r13
+nand r13, r4, r1
+out r10
+nand r12, r8, r1
+nand r2, r12, r9
+nand r7, r4, r6
+nand r5, r8, r12
+nand r6, r6, sp
+nand r9, r6, r10
+nand r5, r13, r1
+nand r1, r11, r10
+nand r11, r9, r4
+out r5
+nand r7, r13, r3
+nand r8, r13, r1
+out zr
+in flags
+nand r11, zr, zr
+nand r1, r9, r7
+nand r9, r2, r13
+nand r3, r3, r8
+nand r2, r13, r9
+nand sp, r6, r4
+nand r5, flags, r10
+nand flags, r7, r9
+nand r1, sp, r10
+out r8
+in sp
+nand r4, flags, flags
+out zr
+nand r5, r12, r7
+out r2
+nand r3, sp, sp
+nand r8, r10, r3
+nand r11, r4, r5
+nand zr, flags, r5
+nand flags, r8, r10
+nand flags, zr, r10
+nand r1, r6, sp
+nand r2, r2, r1
+nand sp, r6, r10
+nand r12, r13, r9
+out flags
+nand r9, r7, r4
+nand r1, r8, r3
+nand r3, r3, sp
+out r6
+nand r8, r2, r12
+nand r8, r1, r13
+nand r12, r9, r11
+nand r10, r2, r1
+nand r12, r2, r8
+nand flags, r1, flags
+nand r1, r11, r9
+in zr
+nand r4, sp, flags
+nand r6, r6, r2
+nand r7, r9, r7
+out r5
+nand r12, r4, r7
+nand r6, r8, r5
+nand r10, zr, r13
+nand r12, r5, r6
+nand r8, sp, r11
+nand r2, r3, r3
+out r13
+nand r13, r8, flags
+out flags
+nand r10, r6, r3
+out r3
+nand r3, r13, r12
+nand flags, r3, r13
+nand zr, r13, zr
+out r4
+nand r9, r8, r4
+nand r2, sp, r9
+nand r1, r2, sp
+nand r3, sp, zr
+nand r11, r7, zr
+nand r5, r6, r12
+out r7
+nand flags, sp, sp
+nand r9, r9, r3
+nand sp, r8, flags
+nand r12, r10, r10
+nand r12, r10, r5
+nand r5, r2, r2
+in r2
+in r6
+out r6
+nand r13, r13, r4
+nand r9, r9, r11
+nand r4, r1, r3
+nand zr, r7, r3
+nand r1, r12, r3
+nand r8, flags, r5
+nand r8, r11, r12
+nand r7, r11, sp
+nand sp, r13, r10
+nand r1, r5, r7
+nand r2, r5, r5
+nand r11, r9, r8
+nand r7, r5, r8
+out r2
+nand flags, flags, r8
+nand r8, r2, r12
+nand r11, r13, r8
+nand r3, r3, r4
+nand r11, r11, r1
+nand r1, r8, r11
+nand r1, r2, r3
+nand r4, sp, r10
+out r11
+nand r10, r11, sp
+nand r13, flags, r1
+nand r5, r4, r10
+nand r3, r11, r12
+nand r12, r6, r3
+nand r13, r13, r12
+nand r10, r12, r3
+nand r3, r8, r7
+nand r8, sp, r8
+nand r11, r8, r13
+in r13
+in zr
+nand r12, r8, r8
+out r3
+nand r12, r4, r9
+nand r11, r7, r6
+nand r6, r1, r1
+in r13
+nand r10, r9, r13
+nand r4, r10, r2
+out r8
+nand r7, zr, r6
+nand r5, r4, r8
+nand zr, r2, r1
+in r6
+nand flags, r9, zr
+nand r12, r5, r7
+nand r12, r8, r2
+nand r1, r12, r3
+nand r1, zr, r12
+nand r8, r5, r2
+nand r6, r1, r3
+nand r8, r3, r4
+in sp
+nand r12, flags, zr
+nand r7, r5, r3
+nand r9, r7, r12
+nand r2, sp, r8
+nand zr, r5, r13
+nand r3, r9, r11
+nand r13, r11, r5
+nand r11, flags, r5
+out r12
+in sp
+nand r9, r7, r5
+nand zr, r6, r11
+nand r2, r7, r2
+in r4
+nand r9, r13, r10
+nand flags, r1, r6
+nand r8, r4, r4
+nand r13, r1, r11
+nand r3, r12, r6
+nand flags, r13, r10
+nand r11, r9, r9
+out flags
+nand r5, r11, r6
+nand r8, r1, r4
+nand sp, r6, r5
+nand r3, r9, r6
+out r10
+nand r5, flags, r5
+nand r4, r7, r10
+out r1
+nand sp, r12, r2
+nand r1, r3, r5
+in r10
+nand r4, r1, r7
+nand r7, r11, r2
+nand r5, r7, r13
+nand r12, r13, r5
+nand r12, r4, flags
+nand r2, r3, zr
+nand r10, r3, r8
+nand zr, r13, r7
+in r11
+out r3
+out r2
+out r4
+nand r5, r1, r1
+nand r13, r12, sp
+nand r10, r2, r7
+nand r13, r10, r13
+nand r12, sp, r6
+nand r3, r8, r12
+nand r1, r3, r11
+nand r2, r3, r1
+out r2
+in r12
+nand r8, r10, sp
+nand r11, r8, r4
+in r11
+nand r12, r7, r12
+nand r3, r13, r11
+nand r8, r1, r4
+nand r6, sp, sp
+nand zr, r1, r2
+nand r2, r4, r6
+nand r3, r13, r4
+nand r8, r13, zr
+nand r8, zr, r1
+nand r5, r5, r13
+nand r9, r3, r8
+nand r5, r13, r4
+nand r10, r5, r6
+nand r3, r2, r2
+nand r3, flags, r12
+nand r7, r9, sp
+nand r1, r4, r5
+nand r1, sp, r13
+in r8
+nand r5, r7, r3
+nand r2, flags, r2
+nand r4, zr, sp
+nand r5, flags, flags
+nand r12, r4, zr
+nand flags, zr, r13
 nand r13, flags, r7
-nand r4, r3, r2
+out r2
+nand r6, r11, zr
+nand r2, r13, r8
+nand r3, r11, r13
+nand r10, r12, sp
+nand r2, zr, r6
+nand r5, r12, r4
+nand r3, r5, r8
+nand r7, r2, r1
+nand sp, r3, r8
+nand r3, r9, r5
+nand r6, r1, r8
+nand r13, r10, r9
+in r4
+nand r12, r5, r1
+nand r2, r2, r4
+nand r3, r13, sp
+nand r10, r9, r7
+nand flags, zr, r5
+nand r13, flags, r1
+nand r3, zr, r1
+nand r4, r6, r11
+nand r4, r11, r1
+nand r5, r12, r9
+nand r11, flags, r3
+nand r1, r10, r5
+out r4
+nand r6, r6, r10
+out zr
+nand r9, r10, r12
+out r6
+nand r11, r8, r6
+nand r6, r5, r1
+nand r10, r8, zr
+nand r4, flags, r12
+nand r12, r13, zr
+nand r1, r2, r9
+out flags
+nand r7, sp, r5
+nand r7, r7, r11
+nand r13, r5, r12
+nand r11, r8, r4
+nand r3, r13, r6
+nand r3, r10, r5
+nand r8, r2, r3
+in r11
+in r11
+in r5
+nand sp, r9, r9
+nand r1, r4, r8
+nand r6, r9, r13
+in r8
+in r11
+nand r3, r13, sp
+nand sp, r2, r8
+nand r5, r5, r5
+out r12
+out r4
+out flags
+nand r3, r11, sp
+nand r4, zr, r4
+nand r9, r8, r3
+nand r3, r5, r1
+in r12
+nand r3, r7, r11
+nand r12, r13, r11
+nand flags, zr, r12
+nand r9, r8, r6
+nand r11, r13, r9
+nand r13, zr, r12
+nand r3, r6, r12
+nand r13, r13, flags
+nand r10, r1, r2
+nand r4, r9, r4
+nand r1, r13, sp
+nand r8, r5, flags
+nand r13, r13, r7
+in r4
+nand r1, sp, flags
+nand sp, zr, r12
+nand sp, r1, r12
+nand zr, r12, r10
+nand r2, r11, flags
+nand r4, r9, r2
+nand r9, r1, r1
+in zr
+nand r1, r9, r9
+nand r6, sp, r3
+nand r11, r2, zr
+nand r7, r10, r4
+nand r2, r6, flags
+nand r13, r13, r3
+out r7
+nand r13, r5, r13
+out r3
+nand r12, r12, r9
+nand zr, r1, r6
+nand zr, r10, r8
+nand r12, r9, r3
+nand r6, r8, r13
+in r12
+nand r1, r4, r7
+nand r12, r7, flags
+in r3
+nand r3, r3, r5
+nand r5, r11, r2
+nand r9, r13, zr
+nand r9, r5, r8
+out r8
+nand r12, zr, r6
+out r2
+nand r12, flags, r4
+nand r13, r1, r10
+nand r13, r6, r10
+nand r6, r3, r1
+out r5
+out r8
+nand r1, r9, r4
+out r7
+nand r4, r12, r2
+nand r8, r10, r7
+nand r4, r8, r10
+nand r5, r8, r4
+nand r4, r7, r10
+nand r9, r2, r10
+nand r10, r13, flags
+nand r7, r10, r1
+nand flags, r6, r12
+nand r7, r2, r2
+in sp
+out flags
+nand r7, flags, r4
+nand r7, r12, r7
+nand r1, r12, r11
+nand flags, r12, sp
+nand r8, r8, r6
+nand r1, r11, r12
+nand r9, flags, r4
+nand sp, sp, r6
+nand r9, r4, r13
+nand r5, r7, r7
+nand r9, r7, r11
+nand r4, r5, r1
+nand r11, r13, sp
+nand r8, sp, r9
+nand r12, r12, r1
+nand r13, r11, r11
+nand r10, r1, r1
+nand r7, r5, r3
+in r6
+nand r1, r11, r5
+nand r7, r12, sp
+nand sp, r11, sp
+in flags
+nand r8, r4, r13
+nand r5, r7, r11
+in r10
+out r3
+nand r10, r10, r10
+nand r5, r9, r9
+nand sp, r8, r4
+nand sp, zr, flags
+nand r7, r12, r7
+nand r5, r3, r8
+nand r8, r8, r13
+nand r1, r12, r8
+nand sp, r13, r4
+nand r11, r5, zr
+nand r4, r2, r2
+nand r4, sp, zr
+nand r6, r1, sp
+nand r3, sp, flags
+nand sp, r6, r4
+out r10
+in flags
+in r10
+in r11
+nand flags, r11, r3
+nand r8, r10, r12
+out zr
+nand r10, r9, r2
+nand flags, flags, r8
+nand r7, r3, zr
+nand r8, r1, r9
+nand r1, r10, r7
+nand r12, r3, sp
+nand r13, zr, r5
+nand r1, flags, r7
+in r10
+in zr
+nand r11, flags, r8
+nand r6, r7, r2
+in r2
+nand r7, r1, r1
+nand r11, r2, r3
+nand r13, r2, r5
+nand r10, r11, r10
+nand r1, r5, r2
+nand r3, r7, r5
+nand r4, r6, r10
+nand r11, r8, r11
+nand r3, r6, r7
+nand r13, r10, r10
+nand r8, r8, zr
+nand r9, r4, r9
+out r5
+nand r5, r8, r6
+nand r6, zr, zr
+nand r3, r2, r1
+nand r4, r1, r5
+nand r9, zr, r13
+nand r11, r7, r7
+nand r8, r9, r13
+nand r1, r5, r4
+nand r8, r4, r9
+nand r8, r8, r9
+nand r5, r9, r8
 `
