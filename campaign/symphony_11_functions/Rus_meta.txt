@@ -8,7 +8,7 @@ copy_solution_to_architecture = "Symphony"
 no_score = true
 size = [-256, -256, 255, 255]
 unlocks_pages = ["ASCII encoding"]
-(dialogue = [
+dialogue = [
   (info, `Иногда бывает полезно повторно использовать участок кода. Мы называем эти участки functions(функциями). Чтобы повторно использовать код, нужно перейти к началу функции и вернуться обратно в конце. Мы называем переход к функции call(вызовом) функции, а возвращение из функции return(возвращением).
 
 Но для того чтобы этот участок кода действительно был переиспользуемым, возврат должен уметь возвращаться в разные места, в зависимости от того, откуда мы вызвали функцию.
@@ -91,9 +91,6 @@ cmp %a(register), %b(register)
 01001001 1111aaaa 0000bbbb 00000000
 Compares %a and %b and store the resulting flags in r6.
 
-mul %a(register), %b(register), %c(register)
-01001010 aaaabbbb 0000cccc 00000000
-MUL %b and %c and store the result in %a.
 
 or %a(register), %b(register), %c(immediate)
 01010001 aaaabbbb cccccccc cccccccc
@@ -131,20 +128,9 @@ lsr %a(register), %b(register), %c(immediate)
 01011000 aaaabbbb cccccccc cccccccc
 LSR %b and %c and store the result in %a.
 
-cmp %a(register), %b(register)
-01001001 1111aaaa 0000bbbb 00000000
-Compares %a and %b and store the resulting flags in r6.
-
-mul %a(register), %b(register), %c(register)
-01001010 aaaabbbb 0000cccc 00000000
-MUL %b and %c and store the result in %a.
 cmp %a(register), %b(immediate)
 01011001 1111aaaa bbbbbbbb bbbbbbbb
 Compares %a and %b and store the resulting flags in r6.
-
-mul %a(register), %b(register), %c(immediate)
-01011010 aaaabbbb cccccccc cccccccc
-MUL %b and %c and store the result in %a.
 
 
 jmp %a(register)
@@ -230,98 +216,36 @@ counter %a(register)
 00001000 aaaa0000 00000000 00000000
 Loads the counter value and stores it to %a
 
-load_8 %dest(register), [%address(register)]
+load %dest(register), [%address(register)]
 11000000 dddd0000 0000aaaa 00000000
 Loads %address from RAM and stores it to %dest
 
-store_8 [%address(register)], %value(register)
+store [%address(register)], %value(register)
 11000001 0000vvvv 0000aaaa 00000000
 Store %value to %address in RAM
 
-load_8 %dest(register), [%address(immediate)]
+load %dest(register), [%address(immediate)]
 11010000 dddd0000 aaaaaaaa aaaaaaaa
 Loads %address from RAM and stores it to %dest
 
-store_8 [%address(immediate)], %value(register)
+store [%address(immediate)], %value(register)
 11010001 0000vvvv aaaaaaaa aaaaaaaa
 Store %value to %address in RAM
 
-load_16 %dest(register), [%address(register)]
+pload %dest(register), [%address(register)]
 11000010 dddd0000 0000aaaa 00000000
-Loads %address from RAM and stores it to %dest
+Loads %address from SSD and stores it to %dest
 
-store_16 [%address(register)], %value(register)
+pstore [%address(register)], %value(register)
 11000011 0000vvvv 0000aaaa 00000000
-Store %value to %address in RAM
+Store %value to %address in SSD
 
-load_16 %dest(register), [%address(immediate)]
+pload %dest(register), [%address(immediate)]
 11010010 dddd0000 aaaaaaaa aaaaaaaa
-Loads %address from RAM and stores it to %dest
+Loads %address from SSD and stores it to %dest
 
-store_16 [%address(immediate)], %value(register)
+pstore [%address(immediate)], %value(register)
 11010011 0000vvvv aaaaaaaa aaaaaaaa
-Store %value to %address in RAM
-load_8 %dest(register), [%address(register)]
-11000000 dddd0000 0000aaaa 00000000
-Loads %address from RAM and stores it to %dest
-
-store_8 [%address(register)], %value(register)
-11000001 0000vvvv 0000aaaa 00000000
-Store %value to %address in RAM
-
-load_8 %dest(register), [%address(immediate)]
-11010000 dddd0000 aaaaaaaa aaaaaaaa
-Loads %address from RAM and stores it to %dest
-
-store_8 [%address(immediate)], %value(register)
-11010001 0000vvvv aaaaaaaa aaaaaaaa
-Store %value to %address in RAM
-
-load_16 %dest(register), [%address(register)]
-11000010 dddd0000 0000aaaa 00000000
-Loads %address from RAM and stores it to %dest
-
-store_16 [%address(register)], %value(register)
-11000011 0000vvvv 0000aaaa 00000000
-Store %value to %address in RAM
-
-load_16 %dest(register), [%address(immediate)]
-11010010 dddd0000 aaaaaaaa aaaaaaaa
-Loads %address from RAM and stores it to %dest
-
-store_16 [%address(immediate)], %value(register)
-11010011 0000vvvv aaaaaaaa aaaaaaaa
-Store %value to %address in RAM
-pload_8 %dest(register), [%address(register)]
-11000100 dddd0000 0000aaaa 00000000
-Loads %address from SSD and stores it to %dest
-
-pstore_8 [%address(register)], %value(register)
-11000101 0000vvvv 0000aaaa 00000000
-Store %value to %address in SSD
-
-pload_8 %dest(register), [%address(immediate)]
-11010100 dddd0000 aaaaaaaa aaaaaaaa
-Loads %address from SSD and stores it to %dest
-
-pstore_8 [%address(immediate)], %value(register)
-11010101 0000vvvv aaaaaaaa aaaaaaaa
-Store %value to %address in SSD
-
-pload_16 %dest(register), [%address(register)]
-11000110 dddd0000 0000aaaa 00000000
-Loads %address from SSD and stores it to %dest
-
-pstore_16 [%address(register)], %value(register)
-11000111 0000vvvv 0000aaaa 00000000
-Store %value to %address in SSD
-
-pload_16 %dest(register), [%address(immediate)]
-11010110 dddd0000 aaaaaaaa aaaaaaaa
-Loads %address from SSD and stores it to %dest
-
-pstore_16 [%address(immediate)], %value(register)
-11010111 0000vvvv aaaaaaaa aaaaaaaa
 Store %value to %address in SSD
 
 nop
@@ -353,20 +277,20 @@ not %a(register), %b(immediate)
 Not %b and store the result in %a.
 
 push %a(register)
-01010101 11101110 00000000 00000010   11000011 0000aaaa 00001110 00000000
-Pushes %a on to the stack. This instruction is a synonym for:   sub sp, sp, 2   store_16 [sp], %a
+01010101 11101110 00000000 00000010   11000001 0000aaaa 00001110 00000000
+Pushes %a on to the stack. This instruction is a synonym for:   sub sp, sp, 2   store [sp], %a
 
 pop %a(register)
-11000010 aaaa0000 00001110 00000000   01010100 11101110 00000000 00000010
-Pops %a off the stack. This instruction is a synonym for:   load_16 %a, [sp]   add sp, sp, 2
+11000000 aaaa0000 00001110 00000000   01010100 11101110 00000000 00000010
+Pops %a off the stack. This instruction is a synonym for:   load %a, [sp]   add sp, sp, 2
 
 call %a(label)
-00001000 11110000 00000000 00000000   01010100 11111111 00000000 00010100   01010101 11101110 00000000 00000010   11000011 00001111 00001110 00000000   10011000 00001111 aaaaaaaa aaaaaaaa
-Calls %a. Overwrites the flag register. This instruction is a synonym for:   counter flags   add flags, flags, 20   sub sp, sp, 2   store_16 [sp], flags   jmp %a
+00001000 11110000 00000000 00000000   01010100 11111111 00000000 00010100   01010101 11101110 00000000 00000010   11000001 00001111 00001110 00000000   10011000 00001111 aaaaaaaa aaaaaaaa
+Calls %a. Overwrites the flag register. This instruction is a synonym for:   counter flags   add flags, flags, 20   sub sp, sp, 2   store [sp], flags   jmp %a
 
 ret
-11000010 11110000 00001110 00000000   01010100 11101110 00000000 00000010   10001000 00001111 00001111 00000000
-Returns from the last function call. Overwrites the flag register. This instruction is a synonym for:   load_16 flags, [sp]   add sp, sp, 2   jmp flags
+11000000 11110000 00001110 00000000   01010100 11101110 00000000 00000010   10001000 00001111 00001111 00000000
+Returns from the last function call. Overwrites the flag register. This instruction is a synonym for:   load flags, [sp]   add sp, sp, 2   jmp flags
 
 in %a(register)
 00000001 aaaa0000 00000000 00000000

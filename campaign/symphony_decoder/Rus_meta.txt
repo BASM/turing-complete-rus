@@ -8,7 +8,8 @@ background = 6
 components_available = [com_static_indexer: 7]
 unlocks_components = [com_static_indexer, com_static_indexer_config]
 dialogue = [
-  (info, `Создайте схему, которая разделяет инструкции Symphony на различные части. Это будет очень полезно позже.
+  (info, `
+Создайте схему, которая разделяет инструкции Symphony на различные части. Это будет очень полезно позже.
 
 Существует два кодирования для инструкций Symphony, в зависимости от того, используем ли мы явные числа или нет:
 

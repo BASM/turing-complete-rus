@@ -97,9 +97,6 @@ cmp %a(register), %b(register)
 01001001 1111aaaa 0000bbbb 00000000
 Compares %a and %b and store the resulting flags in r6.
 
-mul %a(register), %b(register), %c(register)
-01001010 aaaabbbb 0000cccc 00000000
-MUL %b and %c and store the result in %a.
 
 or %a(register), %b(register), %c(immediate)
 01010001 aaaabbbb cccccccc cccccccc
@@ -137,20 +134,9 @@ lsr %a(register), %b(register), %c(immediate)
 01011000 aaaabbbb cccccccc cccccccc
 LSR %b and %c and store the result in %a.
 
-cmp %a(register), %b(register)
-01001001 1111aaaa 0000bbbb 00000000
-Compares %a and %b and store the resulting flags in r6.
-
-mul %a(register), %b(register), %c(register)
-01001010 aaaabbbb 0000cccc 00000000
-MUL %b and %c and store the result in %a.
 cmp %a(register), %b(immediate)
 01011001 1111aaaa bbbbbbbb bbbbbbbb
 Compares %a and %b and store the resulting flags in r6.
-
-mul %a(register), %b(register), %c(immediate)
-01011010 aaaabbbb cccccccc cccccccc
-MUL %b and %c and store the result in %a.
 
 
 jmp %a(register)
@@ -244,99 +230,38 @@ counter %a(register)
 00001000 aaaa0000 00000000 00000000
 Loads the counter value and stores it to %a
 
-load_8 %dest(register), [%address(register)]
+load %dest(register), [%address(register)]
 11000000 dddd0000 0000aaaa 00000000
 Loads %address from RAM and stores it to %dest
 
-store_8 [%address(register)], %value(register)
+store [%address(register)], %value(register)
 11000001 0000vvvv 0000aaaa 00000000
 Store %value to %address in RAM
 
-load_8 %dest(register), [%address(immediate)]
+load %dest(register), [%address(immediate)]
 11010000 dddd0000 aaaaaaaa aaaaaaaa
 Loads %address from RAM and stores it to %dest
 
-store_8 [%address(immediate)], %value(register)
+store [%address(immediate)], %value(register)
 11010001 0000vvvv aaaaaaaa aaaaaaaa
 Store %value to %address in RAM
 
-load_16 %dest(register), [%address(register)]
+pload %dest(register), [%address(register)]
 11000010 dddd0000 0000aaaa 00000000
-Loads %address from RAM and stores it to %dest
+Loads %address from SSD and stores it to %dest
 
-store_16 [%address(register)], %value(register)
+pstore [%address(register)], %value(register)
 11000011 0000vvvv 0000aaaa 00000000
-Store %value to %address in RAM
+Store %value to %address in SSD
 
-load_16 %dest(register), [%address(immediate)]
+pload %dest(register), [%address(immediate)]
 11010010 dddd0000 aaaaaaaa aaaaaaaa
-Loads %address from RAM and stores it to %dest
+Loads %address from SSD and stores it to %dest
 
-store_16 [%address(immediate)], %value(register)
+pstore [%address(immediate)], %value(register)
 11010011 0000vvvv aaaaaaaa aaaaaaaa
-Store %value to %address in RAM
-load_8 %dest(register), [%address(register)]
-11000000 dddd0000 0000aaaa 00000000
-Loads %address from RAM and stores it to %dest
-
-store_8 [%address(register)], %value(register)
-11000001 0000vvvv 0000aaaa 00000000
-Store %value to %address in RAM
-
-load_8 %dest(register), [%address(immediate)]
-11010000 dddd0000 aaaaaaaa aaaaaaaa
-Loads %address from RAM and stores it to %dest
-
-store_8 [%address(immediate)], %value(register)
-11010001 0000vvvv aaaaaaaa aaaaaaaa
-Store %value to %address in RAM
-
-load_16 %dest(register), [%address(register)]
-11000010 dddd0000 0000aaaa 00000000
-Loads %address from RAM and stores it to %dest
-
-store_16 [%address(register)], %value(register)
-11000011 0000vvvv 0000aaaa 00000000
-Store %value to %address in RAM
-
-load_16 %dest(register), [%address(immediate)]
-11010010 dddd0000 aaaaaaaa aaaaaaaa
-Loads %address from RAM and stores it to %dest
-
-store_16 [%address(immediate)], %value(register)
-11010011 0000vvvv aaaaaaaa aaaaaaaa
-Store %value to %address in RAM
-pload_8 %dest(register), [%address(register)]
-11000100 dddd0000 0000aaaa 00000000
-Loads %address from SSD and stores it to %dest
-
-pstore_8 [%address(register)], %value(register)
-11000101 0000vvvv 0000aaaa 00000000
 Store %value to %address in SSD
 
-pload_8 %dest(register), [%address(immediate)]
-11010100 dddd0000 aaaaaaaa aaaaaaaa
-Loads %address from SSD and stores it to %dest
-
-pstore_8 [%address(immediate)], %value(register)
-11010101 0000vvvv aaaaaaaa aaaaaaaa
-Store %value to %address in SSD
-
-pload_16 %dest(register), [%address(register)]
-11000110 dddd0000 0000aaaa 00000000
-Loads %address from SSD and stores it to %dest
-
-pstore_16 [%address(register)], %value(register)
-11000111 0000vvvv 0000aaaa 00000000
-Store %value to %address in SSD
-
-pload_16 %dest(register), [%address(immediate)]
-11010110 dddd0000 aaaaaaaa aaaaaaaa
-Loads %address from SSD and stores it to %dest
-
-pstore_16 [%address(immediate)], %value(register)
-11010111 0000vvvv aaaaaaaa aaaaaaaa
-Store %value to %address in SSD
 
 nop
 00000000 00000000 00000000 00000000

@@ -84,9 +84,6 @@ cmp %a(register), %b(register)
 01001001 1111aaaa 0000bbbb 00000000
 Compares %a and %b and store the resulting flags in r6.
 
-mul %a(register), %b(register), %c(register)
-01001010 aaaabbbb 0000cccc 00000000
-MUL %b and %c and store the result in %a.
 in %a(register)
 00000001 aaaa0000 00000000 00000000
 Loads an input and stores it in %a
@@ -98,1021 +95,1008 @@ Sends %a to output
 nop
 00000000 00000000 00000000 00000000
 Does nothing
-`
-default_assembly = `in r1
-in r2
-in r3
-in r4
-in r5
-in r6
-in r7
-in r8
-in r9
-in r10
-in r11
-in r12
-in r13
-in sp
-in flags
 
-add r5, r5, zr
+
+`
+default_assembly = `xor r5, r5, zr
 lsr flags, r2, r10
-xor r10, sp, sp
-nor r2, r4, r13
-add r3, zr, r3
-mul r11, r6, r7
+or r10, sp, sp
+add r2, r4, r13
+and r3, zr, r3
+and r11, r6, r7
 cmp r2, r10
-xor r10, r12, r12
+or r10, r12, r12
 cmp r6, r3
 or zr, r2, r13
-mul zr, zr, r4
-xor r8, flags, sp
-and r9, r8, r5
-sub r5, r10, r9
-mul r3, sp, r2
-out r4
-nand r2, r8, r7
-or r13, sp, flags
-lsl r7, r5, r11
-nand r10, zr, r13
-nand r1, sp, zr
-mul flags, r7, sp
-out zr
-mul flags, r13, r3
-and sp, r9, r12
-lsr r11, r8, r4
-nand r7, r10, zr
-nand sp, r13, r1
-xor r13, r3, r12
-or r2, r3, r6
-lsr r1, r12, r6
-sub r5, r2, r2
-sub r9, r13, flags
-or r1, r11, r1
-sub r7, r5, r12
-and r6, r13, r13
-and r6, flags, r9
-xor r8, zr, zr
-cmp flags, r9
-nand zr, r7, r4
-out r13
-add r8, r12, r9
-cmp sp, r3
-lsr r8, r7, r7
-nand r7, r8, r8
-lsl r5, sp, r5
-lsr r2, r6, r12
-sub r6, r7, r13
-nand r7, r12, r1
-out r13
-nand r4, zr, r8
-sub r10, r2, r2
-or r2, zr, r12
-or flags, r3, r5
-or r4, r10, r4
-or sp, r7, r11
-out r7
-cmp sp, flags
-lsl r13, r13, flags
-and r2, r10, r8
-cmp zr, r3
-xor r4, r12, r11
-nor r3, sp, r12
-nand r7, r13, flags
-nand r13, r11, r11
-nor sp, r8, r9
-nand r1, r9, r9
-lsr zr, r1, r3
-cmp r2, r9
-cmp r12, r10
-add r13, r5, zr
-or r1, r6, r12
-mul r6, r9, sp
-lsl r2, sp, r10
-lsr r10, r13, r3
-add r11, r8, r10
-mul r7, r11, flags
-and r12, r1, flags
-out zr
-nand r9, r9, zr
-cmp r1, r2
-sub r9, r13, r13
-lsl r3, r1, r9
-lsr r5, r13, r4
+and zr, zr, r4
+or r8, flags, sp
+lsr r9, r8, r5
+add r5, r10, r9
+nand r3, sp, r2
+xor r4, r9, r9
+add r7, zr, r10
+add flags, zr, r5
+xor r11, r13, r3
+lsl r13, r13, r7
+or zr, r6, r5
+or sp, r6, r3
+nor flags, flags, r13
+nor r9, sp, r9
+nor r8, r11, r8
+lsr r13, r7, r10
+sub r5, sp, r13
+or r4, r13, r3
+cmp r12, r8
+xor r6, r10, r12
+and r6, r3, r3
+lsl r2, r12, r9
+or flags, r4, r12
+xor r1, r9, flags
+lsr r12, r8, r13
+lsr r13, r2, r1
+and r9, r8, r8
+and zr, r13, flags
+xor r9, zr, r7
+xor r3, r13, r7
+add r12, r9, r7
+and flags, r4, r8
+nand r4, r11, r7
+nand r8, r1, r5
+add zr, r6, r2
+add zr, r7, r6
+sub r9, r5, r7
+or flags, r9, r13
+xor r4, zr, r8
+lsl r10, r2, r2
+add r2, zr, r12
+lsl flags, r3, r5
+lsr r4, r10, r4
+add sp, r7, r11
+lsr r7, r10, sp
+lsr r9, r13, r13
+nor r9, r2, r10
+or zr, r3, r13
+and r12, r11, r5
+nor sp, r12, r2
+cmp r7, r13
+xor r5, r13, r11
+lsl sp, sp, r8
+lsr r1, r1, r9
+nand r4, zr, r1
+xor r2, r9, sp
+or r9, r10, r13
+lsl r11, r12, r1
+lsr r6, flags, r6
+cmp sp, r8
+xor sp, r10, r3
+sub r13, r3, r1
+nand r8, r10, r5
+nor r11, flags, r11
+add r1, flags, r1
+sub r13, r1, r9
+lsl r1, r1, r2
+nor r9, r13, r13
+and r3, r1, r9
+and r5, r13, r4
 cmp r9, r2
-sub r8, zr, r4
-xor r4, r13, r10
-nand r9, r6, r10
-lsr r9, r3, r4
+or r8, zr, r4
+lsl r4, r13, r10
+lsr r9, r6, r10
+nor r9, r3, r4
 lsl r11, r8, r4
-nor zr, flags, r9
-out r1
-lsr zr, r11, r8
-sub r12, r7, r1
-mul r13, r8, r11
-sub sp, zr, r9
-lsr zr, r12, r6
-mul r11, r4, r8
-or r2, r7, r1
-nand r9, r4, r11
-lsr r10, r13, r1
-sub r10, r7, r7
-and r1, r9, r1
-out r8
-and r10, r6, r6
-or r5, sp, zr
-add r4, r12, r3
-out r4
-in r11
-nand r3, r8, flags
-xor r10, r3, r12
-cmp r13, r7
-nor r9, r5, r10
-and zr, r3, flags
-lsr r2, r2, r9
-nand r2, r11, r8
-lsr r5, r3, r7
-add r13, r9, sp
-lsr r4, sp, r13
-cmp r10, r2
-lsl r8, r6, r11
-in r6
-add r13, r5, r7
-cmp r1, sp
-and r2, r12, r2
-lsl r11, r4, r11
-xor r12, r9, r6
-mul r9, r7, r1
-and sp, sp, r5
-mul r1, zr, zr
-or r12, r4, r11
-or r3, r2, r10
-xor r9, r9, r13
-add r13, r3, flags
+xor zr, flags, r9
+lsr r1, flags, zr
+add r8, r4, r13
+and r1, r2, r13
+lsr r11, r4, r9
+nor r9, r1, r6
+nand r6, r12, r7
+and r8, r2, sp
+add r1, r11, r13
+nor r11, r4, r2
+lsr r1, r3, r3
+lsr r7, r10, flags
+sub r1, sp, r9
+add r7, r10, r6
+nand r2, r5, sp
+lsl r8, r4, r12
+add flags, r4, r10
+lsl r11, r1, r3
+nand r2, sp, r10
+cmp r12, r2
+add r3, sp, r9
+lsr r4, r1, zr
+lsl sp, r6, r2
+lsl r12, r11, r2
+sub r11, r2, r5
+or r6, sp, r13
+and r2, r6, r4
+sub r13, r10, r2
+lsr r8, r6, r11
+nor r6, r6, r12
+sub r7, r1, r1
+xor r1, r2, r12
+cmp r7, r13
+cmp r4, r11
+add r12, r9, r6
+lsr r9, r7, r1
+or sp, sp, r5
+xor r1, zr, zr
+and r12, r4, r11
+add r3, r2, r10
+lsr r9, r9, r13
+sub r13, r3, flags
 cmp r11, sp
 xor r9, r2, r4
-nand r9, r2, r4
-xor r8, r11, r8
-nor r8, r2, r12
+xor r9, r2, r4
+nor r8, r11, r8
+lsr r8, r2, r12
 cmp r1, r8
-mul r6, r5, r4
-sub r3, r5, r11
+lsl r6, r5, r4
+nor r3, r5, r11
 cmp flags, r5
-and r9, r3, r13
-mul flags, r1, r2
+sub r9, r3, r13
+and flags, r1, r2
 cmp zr, r2
-nor flags, r1, zr
+add flags, r1, zr
 cmp r9, r8
-out r8
-cmp r3, r6
-and r6, r13, r1
-mul r9, r8, r4
-nor r3, r1, r12
-cmp sp, r3
-xor r11, r2, r1
-cmp flags, r2
-and r11, r8, r2
-and r10, r10, r9
-or r8, r4, zr
-add r6, r5, r3
-and r11, r4, r2
-and r12, flags, r5
-mul r10, sp, r8
-xor r10, r5, r10
-add r3, r8, r2
-add r2, r9, flags
-mul r6, r9, r13
-lsl sp, zr, sp
-add r10, r13, r10
-mul flags, r3, r4
-cmp r12, r8
-mul r13, r13, r1
-lsr r6, r12, r12
-mul zr, r10, r13
-xor flags, r8, r9
-in r3
-lsr sp, r2, r12
-lsr r4, r2, r9
-nand r2, r4, r2
-and r3, r12, r9
-nor r5, flags, r7
-nor r12, r4, zr
-mul r12, r1, r7
-xor r6, r5, zr
-lsl r10, r13, r7
-in r12
-xor r10, r1, r2
-nor r3, r4, r3
-nor r1, r5, r7
-sub r2, r13, r8
-out r2
-out r11
-mul sp, r9, r3
-out r2
-cmp r10, r12
-xor r11, r2, flags
-mul zr, r4, sp
-and r1, flags, r11
-mul r1, r4, r3
-nand r3, r11, r2
-or zr, r8, r8
-xor zr, r8, r3
-nor r9, r4, flags
-sub r9, r7, zr
-or r11, r7, r10
-sub r2, r10, r9
-and r12, r8, r10
-mul sp, r5, r6
-lsr r7, sp, r3
-lsr r11, r9, r7
-xor r9, r9, r1
-lsl zr, r7, zr
-nand r9, r8, r13
-mul r12, r2, r6
-add r4, r10, r1
-add r12, r5, r12
-or r13, r6, r9
-lsl flags, r4, sp
-and r2, r3, r10
-nand r1, r2, zr
-and r12, r12, r11
+nor r8, r6, r3
+nor r9, r6, r13
+or r13, r9, r8
+xor r12, r3, r1
+and sp, r3, r9
+or r2, r1, r5
+nand r13, r9, r11
+nor r4, r3, r10
+nand r5, r12, r8
+lsr r9, r4, r6
+and r1, r11, r11
+lsl r10, flags, r12
+and r2, r7, r10
+cmp r8, r1
+add r5, r10, r9
+lsr r8, r2, r1
+lsl r9, flags, sp
+xor r9, r13, r7
+lsl zr, sp, r9
+sub r13, r10, r7
+sub r3, r4, r7
+lsr r13, r1, r13
+sub r11, r4, r6
+nor r2, r13, zr
+lsl r6, r12, flags
+sub r2, r12, r3
+sub sp, r2, r12
+xor r4, r2, r9
+and r2, r4, r2
+add r3, r12, r9
+or r5, flags, r7
+sub r12, r4, zr
+nand r12, r1, r7
+lsl r6, r5, zr
+or r10, r13, r7
+nor r12, r10, r12
+add r2, sp, r2
+lsl r3, r6, zr
+sub r7, r3, flags
+nand r8, r6, r1
+or r3, r11, r1
+nor r9, r3, r10
+and r9, r10, r12
+and r11, r2, flags
+xor zr, r4, sp
+nand r1, flags, r11
+or r1, r4, r3
+add r3, r11, r2
+add zr, r8, r8
+and zr, r8, r3
+sub r9, r4, flags
+and r9, r7, zr
+nand r11, r7, r10
+lsl r2, r10, r9
+nor r12, r8, r10
+or sp, r5, r6
+sub r7, sp, r3
+xor r11, r9, r7
+lsr r9, r9, r1
+sub zr, r7, zr
+add r9, r8, r13
+nand r12, r2, r6
+xor r4, r10, r1
+nand r12, r5, r12
+add r13, r6, r9
+xor flags, r4, sp
+nor r2, r3, r10
+and r1, r2, zr
+lsr r12, r12, r11
 cmp r8, r5
-nor sp, r10, r11
-or r6, r1, r3
-nand r12, r7, r2
-lsl sp, r10, r9
+lsl sp, r10, r11
+add r6, r1, r3
+nor r12, r7, r2
+nand sp, r10, r9
 cmp flags, flags
-sub r4, r6, r13
-mul r2, sp, sp
-lsl flags, r10, r13
+add r4, r6, r13
+lsr r2, sp, sp
+and flags, r10, r13
 cmp r4, r12
-sub r10, r10, r6
+and r10, r10, r6
 cmp r4, r5
 cmp r11, r1
 add flags, r5, r2
 cmp sp, r1
 cmp r7, r13
-add r12, r6, r4
-nor r11, zr, r3
-lsl r3, r11, zr
-xor r2, r1, zr
-sub r9, r3, r1
-lsl r11, zr, zr
+nor r12, r6, r4
+lsr r11, zr, r3
+nand r3, r11, zr
+lsr r2, r1, zr
+add r9, r3, r1
+lsr r11, zr, zr
 cmp r11, r13
-nand r6, sp, r8
-nand sp, r13, r4
+nor r6, sp, r8
+lsr sp, r13, r4
 cmp r6, r7
-add r3, sp, r12
-or r5, r11, r13
-xor r6, r11, r12
-add r8, r2, r10
-xor r5, flags, r4
+nand r3, sp, r12
+nand r5, r11, r13
+nand r6, r11, r12
+and r8, r2, r10
+nor r5, flags, r4
 cmp r7, r9
-out zr
-add r11, r9, r4
-xor r12, r4, zr
-mul flags, r4, r12
-lsl r2, r1, r6
-nand r11, r9, r8
-cmp flags, r4
-or r3, r6, r2
-mul r9, r13, r2
-nor r9, zr, r5
-and r4, zr, r8
-sub r2, r4, zr
-add sp, r7, zr
-and r7, sp, r5
-xor sp, zr, r9
-xor r12, r3, r3
-xor r7, r7, r9
-mul r4, r11, r1
-sub r7, r1, r11
-out r12
-sub zr, r12, r12
-and r6, zr, r5
-add r3, r4, r1
-nor r9, r13, r7
-in zr
-lsl r11, r6, r7
-and r11, r13, r12
-nor r6, r3, r9
-xor flags, r11, flags
-cmp r12, r9
-add r12, r12, r8
-mul r8, r5, r5
-lsl sp, r1, r1
-lsr r9, r1, r5
-nand r4, r12, flags
-nand r5, r12, r6
-xor flags, r5, r3
-and r7, r11, r6
-sub r8, sp, zr
-nand r13, r8, r6
-nand r8, r10, r12
-and zr, flags, r13
-mul r1, r2, r4
-cmp r10, r10
-cmp r9, r12
-nor r2, r1, r11
-lsr zr, r6, r4
-xor r9, r7, r6
-nor r13, r1, r13
-xor r9, r10, r4
-xor r8, r8, r9
-mul sp, r10, r9
-out r2
-lsr r11, r3, r8
-lsr r2, r2, flags
-xor r4, r7, r5
-lsl sp, r11, r5
-lsr r12, sp, r12
-or r2, sp, r1
-and r4, r9, r1
-cmp r7, r5
-xor r3, r9, r1
-nor zr, zr, r4
-and r7, sp, r7
-out zr
+lsr zr, flags, r10
+sub r4, sp, zr
+lsl zr, r12, r3
+nor r12, r1, r1
+nor r6, r8, r5
+or r8, r11, flags
+nor r2, r3, r6
+xor r13, r9, r13
+lsr r2, r9, zr
+lsr r1, r4, zr
+nor r1, r2, r4
+sub r6, sp, r7
+lsr r11, r7, sp
+lsr r12, sp, zr
+or r4, r12, r3
+xor r6, r7, r7
+cmp sp, r5
+and r1, r1, r13
+nand r11, r12, r3
+lsr r7, zr, r12
+lsr r5, r6, zr
+xor r6, r3, r4
+lsr r8, r9, r13
+nand r10, zr, r8
+and r6, r7, r10
+lsl r13, r12, flags
+nor r3, r9, r8
+or r11, flags, sp
+lsr r1, r6, r12
+and r10, r9, r8
+xor flags, r5, sp
+sub r9, r10, r9
+lsr r1, flags, r4
+cmp flags, r12
+add r12, r6, r10
+and r5, r3, r9
+xor r11, r6, r10
+nand sp, zr, r5
+cmp r13, r8
+or r5, r8, r10
+cmp r5, r1
+xor r13, r4, flags
+lsl r4, r10, r10
+or r9, r12, r7
+xor r1, r11, r12
+lsr r6, r4, r6
+lsl r7, r6, r12
+add r1, r13, r1
+xor r10, r4, r2
+lsl r8, r9, r1
+lsr r10, r9, flags
+nand r1, r10, r11
+sub r7, r2, r2
+and r7, r2, r4
+nand r6, r11, sp
+cmp r5, r10
+xor sp, r12, r2
+sub sp, r1, r13
+or r9, r1, r1
+nand r11, r4, r3
+and r4, r4, zr
+lsr r4, r7, r7
+nor flags, r1, zr
 lsr r4, r4, r3
-nor sp, r2, r9
-add zr, r3, r7
-nand sp, r6, zr
+and sp, r2, r9
+lsr zr, r3, r7
+nor sp, r6, zr
 xor r3, r11, r3
-nor r2, r3, r5
-and r13, r12, r13
-add r3, r11, r9
-nand r12, sp, r7
-nor r10, r4, r5
-in r4
-lsr r7, r12, r5
-nand r7, r9, r12
-sub r5, r6, flags
-xor zr, r2, r11
-nand r9, r13, r3
-out r5
-nor zr, r2, r1
-in r3
-lsr r11, r1, flags
-add flags, sp, r12
-sub r3, r5, r10
-in r8
-xor r13, r6, flags
-nor r1, r2, r12
-nor sp, sp, r10
-out flags
-mul r4, r5, r11
-and flags, r13, r11
-out r11
-nor r7, flags, r11
-and r6, r12, r13
-mul r8, r7, r4
-add r11, flags, r5
-xor r3, r10, sp
-nand r7, r4, r7
+nand r2, r3, r5
+lsl r13, r12, r13
+nor r3, r11, r9
+and r12, sp, r7
+sub r10, r4, r5
+nand r4, sp, r6
+xor r5, r9, r11
+xor r12, r11, r7
+add flags, sp, r2
+lsl r11, sp, flags
+and r3, r8, r13
+lsr r10, zr, r2
+xor r2, r3, r4
+lsl r1, flags, zr
+nand sp, r12, r4
+sub r5, r10, r9
+sub r11, r4, r13
+xor r11, r10, r1
+and r1, r12, sp
+nor r7, r1, flags
+or r4, r5, r11
+lsl flags, r13, r11
+or r11, r5, r8
+lsr r11, r4, flags
+cmp r12, r13
+xor r8, r7, r4
+lsl r11, flags, r5
+add r3, r10, sp
+and r7, r4, r7
 cmp r1, r10
-nor r3, r5, r2
-nand r4, r13, r8
-add r11, r4, r7
-in flags
-xor r10, zr, r10
-xor r10, r2, r13
-mul r7, r4, sp
-or r7, r1, r6
-lsl r3, zr, r8
-nand r4, r7, r7
-lsr r9, r1, r4
-sub r7, r2, r13
-add r2, r7, r6
-or r12, r4, r2
-nor sp, sp, r10
-or r10, r9, r2
-add r11, zr, r7
-nand r2, r1, r4
-sub r6, r9, r11
+add r3, r5, r2
+lsr r4, r13, r8
+and r11, r4, r7
+nor flags, r6, sp
+nand r10, flags, zr
+add r13, r10, r13
+cmp r4, sp
+xor r7, r1, r6
+and r3, zr, r8
+add r4, r7, r7
+nand r9, r1, r4
+or r7, r2, r13
+nor r2, r7, r6
+xor r12, r4, r2
+xor sp, sp, r10
+lsr r10, r9, r2
+sub r11, zr, r7
+and r2, r1, r4
+nand r6, r9, r11
 nand r2, r6, r5
 sub r10, r11, flags
-xor r10, r5, r13
-mul flags, zr, r13
-nor r13, r5, r8
-in r11
-lsl r11, r7, r13
-nor r12, r6, r11
-lsl flags, r10, r1
-xor r9, r9, r1
-xor r7, r8, r8
-lsr r13, r6, zr
-in r6
-out r5
-lsr r13, r13, r12
-cmp zr, r2
-nand r4, r12, r5
-or r7, flags, r11
-cmp r5, r5
-xor r11, r10, r12
-lsl r10, r2, r7
-lsl r10, r8, r11
-lsr r11, r12, r4
-mul r12, r2, r4
-and r12, sp, r5
-out sp
-lsl r6, r10, flags
-lsl r10, r12, r9
-xor r10, r13, r3
-nand r1, r8, sp
-in r2
-lsl sp, flags, r7
-in r11
-mul r4, r1, sp
-sub r9, zr, r11
-add flags, zr, r8
-and r9, r5, r7
-and r2, zr, r3
+nor r10, r5, r13
+lsl flags, zr, r13
+sub r13, r5, r8
+lsr r11, r13, r1
+lsl r13, r3, r8
+lsr r11, r12, r13
+sub r1, r11, r10
+cmp r9, r1
+nor r7, r8, r8
+nor r13, r6, zr
+add r6, r11, flags
+add r6, r13, r13
+nor zr, r2, r7
+sub r12, r5, r9
+lsr flags, r11, flags
+sub r9, r10, r11
+sub flags, r1, r10
+and r9, r5, r10
+cmp r11, r2
+sub r12, r4, r1
+xor r2, r4, r9
+nand sp, r5, r11
+xor r12, flags, r6
+lsr r7, r9, r10
+xor r5, sp, r10
+lsl sp, r3, r1
+or sp, r8, r2
+sub sp, flags, r7
+and r11, r12, r1
+sub sp, r9, r13
+nor r11, r12, r8
+or r8, r9, r1
+or r7, r6, r9
+cmp zr, r3
 nor sp, r8, r10
-lsr r3, r13, r3
-lsr r6, r12, r8
-lsr r13, r5, r12
-in r7
-lsr r4, r10, zr
-lsr r10, r9, r6
-or r13, r12, r6
+nor r3, r13, r3
+nor r6, r12, r8
+nor r13, r5, r12
+nand r7, r7, r4
+lsr zr, r12, r4
+cmp r9, r6
+lsl r13, r12, r6
 cmp r10, r11
 cmp r13, r9
-sub r1, r1, r12
-mul r3, r9, r8
-or r13, r8, zr
-nand zr, r11, r5
-nor r5, r13, r12
-nand r11, r13, r9
-out r2
-and r2, r2, r12
-mul r12, r1, r1
-add r6, r7, flags
-nand r12, zr, sp
-and r9, r7, r2
-nand r10, zr, r11
-or r4, zr, r7
-mul sp, sp, r7
-nand sp, r8, r1
-nor r7, r12, sp
-and flags, zr, r13
-nor r2, sp, r9
-xor r12, r1, r3
-add r4, flags, sp
+add r1, r1, r12
+and r3, r9, r8
+nor r13, r8, zr
+lsr zr, r11, r5
+nand r5, r13, r12
+sub r11, r13, r9
+lsl r2, zr, r7
+sub r12, r2, r3
+xor r1, r2, r12
+and flags, r10, r7
+lsl sp, r3, r7
+and r2, r10, r5
+xor r11, r3, r12
+lsl r7, flags, r5
+lsl r7, zr, r1
+or r1, r8, r4
+cmp r12, sp
+sub flags, zr, r13
+and r2, sp, r9
+add r12, r1, r3
+sub r4, flags, sp
 and r9, r5, r1
-xor r13, r12, zr
+nor r13, r12, zr
 cmp r13, r12
-add r3, r12, r6
-or r7, sp, r6
-nor sp, r3, r6
-and r13, flags, r13
-xor r2, r11, flags
-xor r12, r6, zr
-or r11, r5, sp
-nor r10, r1, sp
-xor r11, r1, r5
-and r1, r1, r1
-nand r2, flags, r10
-or r13, r4, r1
+nand r3, r12, r6
+add r7, sp, r6
+xor sp, r3, r6
+lsr r13, flags, r13
+or r2, r11, flags
+nand r12, r6, zr
+sub r11, r5, sp
+lsl r10, r1, sp
+and r11, r1, r5
+nor r1, r1, r1
+nor r2, flags, r10
+add r13, r4, r1
 nand r10, sp, r12
-and zr, r2, r12
-or r7, r4, r6
-and r8, r12, r11
-nor sp, r4, r9
-nor r5, r5, r13
-out r1
-xor flags, r11, r9
-lsr r7, r5, r13
-lsl r3, flags, r8
-cmp r1, r2
-nor r4, r4, flags
-sub zr, zr, r12
-mul r7, r1, r9
-lsl r13, r3, r3
-out r2
-sub r9, sp, r6
-lsr r5, flags, r10
-mul r7, r9, r6
-nor r10, r12, r9
-add sp, sp, r7
-mul flags, r2, r5
-or r5, r12, r7
-lsl r2, flags, r3
-xor r12, r8, r10
-lsl r11, r4, r5
-cmp zr, flags
-out flags
-lsr r5, flags, zr
-nand r1, r6, sp
-cmp r2, r2
-or sp, r6, r10
-nor r13, r9, r12
-lsl r11, r9, r7
-nor r1, r8, r3
-sub r3, sp, r4
-add r10, r8, r2
-lsr r8, r1, r13
-or r9, r11, sp
-lsr r1, r4, r12
-xor r11, flags, r1
-mul r1, r11, r9
-in zr
-lsr sp, flags, r2
-xor r2, r11, r7
-lsl r6, flags, r5
-xor r4, r7, r8
-add r5, r5, r10
-and r10, r12, r5
-lsl r8, sp, r11
-or r3, r3, r2
-nand r11, r13, r8
-nor r11, flags, r6
-nor r3, sp, r3
-nand r3, r13, r12
-cmp flags, r3
-in zr
-nor r12, r9, r4
-sub r8, r4, r11
-xor r9, r9, r1
-nor r4, r3, sp
-and r11, r7, zr
-mul r6, r12, r12
-mul r7, flags, sp
-lsr r9, r9, r3
-or r8, flags, r9
-add r10, r8, r12
-sub r8, r5, r2
-nor r4, r2, r12
-add r6, flags, r6
-sub r13, r4, zr
+lsl zr, r2, r12
+nor r7, r4, r6
+lsr r8, r12, r11
+xor sp, r4, r9
+and r5, r5, r13
+lsl r1, r11, r10
+nor r9, r4, r12
+and r13, r7, r13
+lsr r8, r13, r1
+or zr, r4, r4
+add r11, zr, zr
+and r9, r7, r1
+xor r13, r13, r3
+xor r9, r2, r13
+add sp, r6, r4
+lsl flags, r10, r10
+nand r9, r6, r1
+xor r12, r9, r8
+lsl sp, r7, r4
+nand r2, r5, zr
+xor r12, r7, sp
+and flags, r3, sp
+lsr r8, r10, r3
+cmp r11, r4
+cmp r5, zr
+and r1, flags, r8
+and flags, zr, r10
+or r6, sp, r4
+sub r1, r6, sp
+add r1, r12, r13
+and flags, flags, r11
+and r4, r6, r1
+sub flags, r3, r3
+cmp r4, r1
+lsl r8, r2, r12
+lsr r1, r13, r9
+lsr r11, sp, r10
+add r4, r12, r2
+or flags, r1, flags
+and r11, r9, r2
+sub flags, r4, sp
+lsl r6, r6, r2
+lsl r9, r7, r6
+add flags, r12, r4
+cmp r8, r6
+and r5, r10, zr
+nor r12, r5, r6
+lsr sp, r11, r6
+or r3, r2, r5
+lsl r13, r8, flags
+nand flags, r6, r10
+and sp, r3, r3
+xor r13, r12, r11
+add r13, r6, zr
+add r12, r9, r4
+add r8, r4, r11
+lsr r9, r9, r1
+or r4, r3, sp
+nand r11, r7, zr
+lsl r6, r12, r12
+xor r7, flags, sp
+nor r9, r9, r3
+xor r8, flags, r9
+and r10, r8, r12
+lsr r8, r5, r2
+xor r4, r2, r12
+sub r6, flags, r6
+lsl r13, r4, zr
 lsl r11, r2, r4
-lsl r8, zr, r7
+lsr r8, zr, r7
 cmp sp, r1
-lsl r1, r8, flags
-nand r8, r11, r12
-nand r11, sp, r11
-nand r10, r4, r1
-nand r6, r2, r5
-and r11, r9, r8
-nand r5, r8, zr
+nand r1, r8, flags
+add r8, r11, r12
+and r11, sp, r11
+xor r10, r4, r1
+lsr r6, r2, r5
+nand r11, r9, r8
+sub r5, r8, zr
 cmp r2, r6
-sub r8, r12, r8
-lsr r12, r11, r13
+xor r8, r12, r8
+add r12, r11, r13
 lsl r3, r3, r4
-out r11
-lsl r1, r8, r11
-lsl r2, r3, r6
-xor r10, r4, r11
-sub r10, r11, sp
-sub flags, r1, r2
-in r10
-and r11, r12, r11
-xor r3, r9, r13
-add sp, r10, r12
-and r3, r8, r7
-xor sp, r8, sp
-or r13, r10, r4
-lsr r8, zr, zr
-or r8, r12, r13
-and r12, r4, r9
-sub r7, r6, r10
-and r1, r4, zr
-sub r10, r9, r13
-add r10, r2, sp
-in r2
-add r6, r7, r5
-or sp, zr, r2
-or sp, r6, sp
-out zr
-lsr r5, r7, r11
-cmp r8, r2
-sub r12, r3, r3
-xor r12, r13, r8
-lsr r5, r6, r1
-cmp r11, r8
-lsr sp, r4, sp
-xor flags, zr, r13
-cmp r5, r3
-and r7, r12, r5
-nor r8, r9, zr
-and r6, r3, r9
-sub r13, r11, r5
-nand flags, r5, zr
-or r8, r12, sp
-and r7, r5, r13
-xor r11, r11, r2
-lsr r6, r10, r4
-cmp r9, r13
-out flags
-xor r2, r8, r4
-xor r13, r1, r11
-lsl r12, r6, r5
-mul r10, r6, r11
-cmp r9, r12
-nand r6, r5, r11
-or r8, r1, r4
-or r6, r5, r8
+add r11, r1, r7
+and r11, r1, r1
+or r6, r4, sp
+cmp r4, r11
+lsr r10, r11, sp
+nor flags, r1, r2
+nor r10, r9, r3
+or r11, r12, r6
+xor r13, r13, r12
+and r12, r3, r11
+nand r7, r5, r8
+lsl sp, r11, r8
+and r4, r13, sp
+nor zr, r12, r8
+xor r13, r3, r3
+xor r9, r3, r11
+sub r10, r6, r1
+or zr, r13, r9
+lsl r13, r10, r4
+add sp, r11, r8
+and zr, r6, r7
+add r8, sp, zr
+nand r4, sp, r6
+cmp flags, r9
+or r12, r5, r7
+or r8, r2, r9
+and r3, r3, r1
+or r13, r8, r5
+cmp r5, r6
+nor r11, r8, r3
+cmp sp, r4
+sub r12, flags, zr
+or r5, r3, zr
+and r12, r5, r2
+lsr r9, zr, r5
+sub r3, r9, r11
+add r11, r5, r7
+cmp flags, r5
+xor r12, r8, r12
+nand r9, r7, r5
+nand r6, r11, r11
+lsl r2, r6, r10
+lsl r9, r13, r10
+or r1, r6, r2
+lsr r4, r2, r13
+lsl r11, r3, r12
+nor flags, r13, r10
+nand r9, r9, r12
+lsr r6, r5, r11
+sub r8, r1, r4
+xor r6, r5, r8
 sub r6, r4, r7
-mul r5, flags, r5
-nor r7, r10, r6
-and r9, sp, r12
-lsr r1, r3, r5
-or r10, r11, r4
-sub r4, r7, r11
-in r5
-and r5, r12, r13
-nand r12, r4, flags
-nor r3, zr, r12
-and r8, r1, zr
-lsl zr, r4, r11
-sub r3, zr, r3
-in r7
-cmp r2, r5
-nand r7, r13, r12
-and r10, r2, r7
-cmp r13, r10
-nand r12, sp, r6
-mul r8, r12, zr
-sub r11, r4, r2
-mul r12, r3, r2
-lsr r12, r1, r8
-nor r6, r11, r8
-xor r10, r11, r7
-mul r12, r2, r3
-mul sp, r8, r1
-lsl r6, sp, sp
+nor r5, flags, r5
+nand r7, r10, r6
+nor r9, sp, r12
+nor r1, r3, r5
+and r10, r11, r4
+lsl r4, r7, r11
+lsr r5, r7, r13
+nand r13, r5, r3
+lsl flags, r11, r2
+or r12, r10, r3
+and zr, r13, r7
+lsr r11, sp, r3
+cmp zr, r3
+or r7, r4, r2
+xor r1, r7, r13
+cmp sp, r7
+and r7, r13, r13
+xor r3, r12, sp
+nor r3, r8, r12
+lsr r3, r11, r4
+and r1, r12, r3
+or zr, r12, r1
+and sp, r6, r11
+cmp r4, r10
+and r7, r12, r7
+sub r3, r13, r11
+nand r1, r4, flags
+cmp sp, sp
 cmp zr, r1
-lsr r2, r4, r6
+add r2, r4, r6
 cmp r3, r13
 cmp r9, r8
 nor r5, r8, zr
 cmp r11, r5
-nand r7, r9, r3
-nand r5, r13, r4
+xor r7, r9, r3
+sub r5, r13, r4
 or r5, r6, r4
-nor r2, r6, r3
-add r1, r7, r9
-nand r1, r4, r5
-sub sp, r13, r8
-xor r9, r5, r7
-lsl r2, flags, r2
+lsr r2, r6, r3
+and r1, r7, r9
+add r1, r4, r5
+and sp, r13, r8
+add r9, r5, r7
+add r2, flags, r2
 cmp r4, zr
-lsl r5, flags, flags
-nor r4, zr, r9
-xor r13, r6, r13
+add r5, flags, flags
+and r4, zr, r9
+add r13, r6, r13
 cmp r7, r4
-xor r9, r6, r11
-sub r2, r13, r8
-mul r11, r13, r2
-or sp, r2, r2
-in r10
-xor r4, r5, r3
-or r10, r7, r2
-lsl sp, r3, r8
-cmp r3, r9
-mul r6, r1, r8
-nand r10, r9, r2
-or r12, r12, r5
-nor r2, r2, r4
-sub r13, sp, sp
-nand r7, r10, flags
-nand r1, r13, flags
-sub r3, zr, r1
-add r6, r11, r6
-mul r1, r12, r5
-sub r6, r11, flags
-cmp r11, r1
-mul r12, r5, r4
-or r6, r10, r12
-nor r3, r9, r10
-xor r1, r6, r13
-cmp r8, r6
-nor r5, r1, zr
-in zr
-lsr flags, r12, r13
-nand zr, r10, r1
-sub r2, r9, flags
-lsl sp, r5, sp
-and r11, r12, r13
-or r10, r11, r8
-lsl r3, r13, r6
-and r10, r5, r12
-or r3, r2, sp
-or r4, r11, zr
-mul sp, sp, r9
-nand r1, r4, r8
-in r9
-add r6, r8, r4
-mul r1, r3, r13
-lsl sp, r2, r8
-cmp r5, r5
-nor r1, r12, r4
-add r12, r13, flags
-nand r11, sp, r5
-or r4, r7, r9
-lsl r3, r3, r5
-in r8
-out r3
-out r12
-lsl r11, sp, flags
-xor r10, r9, r8
-add r11, r13, r9
-out zr
-add r3, r6, r12
-sub r13, flags, r5
-out r2
-xor r9, r4, r7
-cmp r13, sp
-or r5, flags, r2
-out r7
-lsr r4, r11, r1
-and sp, sp, zr
-cmp r1, sp
-nor r9, zr, r12
-sub r2, r11, flags
-nor r9, r2, r10
-and r1, r6, sp
-mul r1, r9, r9
-lsr sp, r3, r11
-or zr, r3, r7
-add r4, r2, r6
-nor r13, r13, r3
-sub r7, r4, r13
-and zr, r5, r3
-add r12, r9, flags
-mul r6, r13, zr
-nor r3, r12, r9
-nand r6, r8, r13
-in r12
-nand r4, r7, r6
-lsl flags, sp, sp
-xor r3, r3, r5
-lsl r11, r2, r2
-mul zr, r8, r9
-xor zr, r7, r8
-lsr zr, r6, r2
-nor r9, r12, flags
-nand r13, r1, r10
-nand r6, r10, zr
-sub r1, r8, r3
-in r5
-out r1
-lsr r10, r9, r7
-in r12
-out r8
-mul r3, r4, r8
-mul r5, r8, r4
-or r7, r10, r8
-or r10, r7, r10
-sub r4, r7, r10
-sub flags, r6, r12
-nand r2, r2, r6
-add sp, r5, flags
-mul flags, r4, zr
-xor r7, zr, r1
-and r7, flags, r12
-and r8, r8, r6
-mul r11, r12, r8
-nand r4, sp, sp
-add r9, r9, r4
-lsl r5, r7, r7
-nand r7, r11, r11
+or r9, r6, r11
+lsr r2, r13, r8
+lsr r11, r13, r2
+lsl sp, r2, r2
+xor r10, r5, r12
+nand r3, r5, r8
+add r2, r1, r7
+lsr r8, r13, r3
+or r11, r6, r1
+lsr r13, r10, r9
+and r4, r12, r12
+xor r8, r2, r2
+lsl r3, r13, sp
+sub r9, r7, r10
+lsr r5, r1, r13
+cmp r1, r3
+add r1, flags, r4
+add r6, r4, r11
+nor r5, r12, r9
+lsr flags, r3, r11
+xor r5, r12, r5
+or r6, r6, r10
+lsr zr, r3, r9
+nand r12, r1, r6
+cmp r11, r8
+nand r6, r5, r1
+lsr r8, zr, r9
+sub r12, r13, r12
+lsr r10, r1, r2
+cmp r2, r9
+nand r7, sp, r5
+cmp r7, r7
+sub r13, r5, r12
+lsr r8, r4, r3
+add r6, r7, r3
+nor r12, r8, r2
+xor sp, r11, r12
+nand zr, sp, r5
+cmp sp, r9
+lsr r1, r4, r8
+or r9, r13, r10
+nor r4, r6, r11
+lsr r13, sp, r13
+nand r8, r2, r5
+nor r4, r1, r12
+lsl r4, r12, r13
+lsr r3, r11, sp
+xor zr, r4, r7
+xor r3, r3, r3
+lsr sp, r8, r12
+nor r7, r11, r12
+lsr r11, sp, flags
+lsr r10, r9, r8
+nor r11, r13, r9
+lsr zr, r12, r4
+lsl r12, r13, r13
+cmp flags, r5
+nand r2, r4, r4
+or r7, r1, r13
+nor r8, r5, flags
+lsl r13, r7, r10
+cmp r4, r11
+cmp sp, flags
+lsl zr, r12, r1
+sub r12, r9, zr
+and r3, r2, r11
+xor r4, r9, r2
+nor r1, r1, r6
+cmp zr, flags
+sub r9, r5, r6
+add r11, r11, r2
+add r7, r10, r4
+add r6, flags, zr
+lsl r3, r8, r9
+lsl r13, r5, r13
+nand r3, r4, r12
+nand flags, zr, r1
+sub zr, r10, r8
+and r9, r3, flags
+nor r13, r4, r4
+lsr r1, r4, r7
+lsl r7, flags, sp
+sub r8, r3, r3
+lsl r5, r11, r2
+nand r13, zr, r8
+xor r8, zr, r7
+nand r12, zr, r6
+or r2, r9, r12
+nand r11, r13, r1
+nor r13, r6, r10
+or r3, r1, r8
+lsl r6, r5, r8
+nor r9, r4, r10
+sub r4, r4, r12
+lsr r8, r10, r7
+sub r8, r10, r1
+lsl r4, flags, r4
+and r8, r9, r2
+cmp r7, r10
+lsl r4, r7, r10
+or flags, r6, r12
+or r2, r2, r6
+and sp, r5, flags
+nor flags, r4, zr
+lsr r7, zr, r1
+or r7, flags, r12
+lsr r8, r8, r6
+and r11, r12, r8
+nor r4, sp, sp
+nor r9, r9, r4
+lsr r5, r7, r7
+nor r7, r11, r11
 cmp r5, r1
-sub r13, sp, r2
-xor r9, r7, r12
-mul r6, r13, r11
-lsr r10, r1, r1
-sub r5, r3, r2
-nor flags, r1, r11
+add r13, sp, r2
+add r9, r7, r12
+add r6, r13, r11
+add r10, r1, r1
+add r5, r3, r2
+sub flags, r1, r11
 cmp r9, r7
-or r9, sp, r11
-nor r4, flags, r8
-lsr r13, r1, r5
-lsl r2, r4, r10
-sub r3, r13, r10
-add r9, r5, r9
-lsr sp, r8, r4
-nor zr, flags, r3
-in r7
-mul r3, r8, sp
-lsr r13, r13, r1
-xor r5, sp, r13
-lsl r11, r5, zr
-in r2
-sub r4, sp, zr
-nor r1, sp, r1
-or flags, flags, sp
-xor zr, r13, r10
-or flags, zr, r12
-cmp zr, r6
-out flags
-lsl r8, r8, r10
-nor r7, zr, flags
-out r2
-cmp flags, flags
-add r7, r3, zr
-nor r1, r9, zr
-add r7, r9, r12
-xor flags, r13, zr
-lsr r1, flags, r7
-add r10, r4, r12
-out r11
-in flags
-lsl r2, r6, r8
-sub r7, r1, r1
-lsl r2, r3, r2
-or r5, flags, r10
-nor r8, r1, r5
-and r3, r7, r5
-lsr r6, r10, r9
-xor r11, r4, r3
-sub r7, r13, r10
-lsl r8, r8, zr
-out r4
-lsr r11, r5, r6
-add r6, r6, r6
-in r13
-or r1, r8, r4
-nand r7, r9, zr
-and r11, r7, r7
-lsr r9, r13, r8
-sub r4, r4, r8
-nand r5, r8, r8
-or r5, r9, r8
-lsl flags, r13, r9
-lsr r8, r8, r12
-add r11, r3, zr
-out r7
-lsl r11, r8, r13
-lsr r6, r5, r13
-and r6, r4, r1
-lsr r8, r9, r3
-nand r11, r11, r5
-nor r6, r1, r9
-sub sp, r12, zr
-in r2
-lsr r8, r12, r7
-out r8
-nand r7, r8, r11
+sub r9, sp, r11
+or r4, flags, r8
+nor r13, r1, r5
+add r2, r4, r10
+or r3, r13, r10
+lsr r9, r5, r9
+nand sp, r8, r4
+xor zr, flags, r3
+sub r7, flags, r5
+and sp, r8, r8
+add r1, r12, r8
+and r13, r4, r13
+and zr, r3, r4
+and r11, r4, sp
+nand r6, r1, sp
+nor sp, flags, flags
+lsl r4, zr, r13
+xor sp, flags, zr
+cmp r10, zr
+or r1, flags, r11
+add r8, r10, r12
+cmp r7, zr
+nand r9, r2, zr
+or r8, r6, r7
+lsl r2, r8, r1
+nor r1, r10, r7
+sub r3, sp, flags
+and r5, zr, r1
+or r12, r12, r10
+lsl zr, r13, r11
+xor flags, r6, r7
+and r8, r2, r7
+sub r1, r5, r11
+nand r2, r13, r2
+nor r10, r11, r10
+cmp r1, r5
+xor r3, r7, r5
+or r6, r10, r9
+sub r11, r4, r3
+nor r7, r13, r10
+lsr r8, r8, zr
+or r4, r9, r12
+lsr r6, r5, r8
+sub r6, zr, zr
+sub r2, r1, r8
+or r5, r7, r9
+xor r11, r11, r7
+sub r8, r9, r13
+cmp r1, r5
+add r8, r4, r9
+nand r8, r9, r6
+xor r8, r12, flags
+nor r9, r10, r4
+nor r12, r3, r6
+nand zr, r1, r11
+nand r13, r11, r8
+lsr sp, r6, r5
+and r5, r6, r4
+and r10, r8, r9
+cmp r12, r11
+and r5, r5, r4
+nand r9, r3, r7
+and zr, r12, r6
+nor sp, r8, r12
+and r11, r8, r5
+or r8, r11, sp
+lsl r10, r2, r5
 cmp r7, r11
-lsr r5, r6, r7
-nor r10, r4, r6
-sub r5, r3, r10
-lsr r11, r8, r9
-sub r5, r2, flags
-lsl r7, zr, r5
-nor sp, r4, r8
-in r12
-lsl r4, r4, zr
-mul r3, r7, r5
-out r3
-nand r1, r10, r4
-add sp, flags, flags
-add r11, r6, sp
-in r3
-add r7, r12, r12
-nand r6, r13, r11
-mul r2, r3, sp
-or r3, r5, r4
-nor r5, r1, zr
-nor r9, r10, r9
-sub zr, r8, r8
-and r5, zr, r7
-nand r13, r13, r9
-nor r8, zr, r9
-in r4
-lsl flags, r5, r6
-lsl r3, r6, zr
-xor r3, r9, r12
-lsr r4, r4, flags
-mul zr, r4, r10
-or r2, r10, r8
-and r8, r13, r2
-out r7
+cmp r10, r4
+and r11, r5, r3
+cmp r6, r4
+nor r9, r7, r11
+nand flags, r11, r3
+lsl r5, r13, r6
+sub r8, zr, sp
+xor r3, r4, r4
+sub r13, r3, r7
+or r1, r3, r12
+sub r10, r4, r2
+cmp sp, flags
+and sp, r11, r6
+lsr zr, r3, zr
+add r12, r12, r11
+nand r13, r11, flags
+nor r3, sp, r8
+lsr r5, r4, r3
+lsl r1, zr, r10
+lsr r10, r9, r13
+lsl r8, r8, r2
+or zr, r7, r2
+or r13, r9, r13
+nor zr, r9, r10
+sub r1, r1, flags
+lsr r9, r7, r3
+add sp, r4, r3
+nand r2, r4, r4
+nand r5, r5, zr
+and r5, r4, r2
+lsl zr, r11, r8
+nor zr, flags, r7
 cmp r4, r10
 cmp r13, r1
-sub r2, r12, r5
-nor r4, r7, r13
-add zr, zr, r10
-or r12, r9, r7
-nor r12, r8, r4
-sub r13, r9, flags
-sub r12, sp, r1
-or r3, r10, zr
-lsr r6, r4, r12
-lsr r1, r4, r12
-add r8, r6, zr
-xor r10, r7, r5
-or r8, r13, r11
-nor r6, r5, r5
-add zr, r8, r1
-nor r9, r11, flags
-in r4
-lsl flags, r6, r13
-add r3, zr, r9
-lsl r6, zr, r7
-sub zr, r5, r11
-add flags, r8, r8
-nand r1, sp, r12
-nor r7, r11, r1
-out sp
-add r1, sp, r11
-nor r6, r1, r13
-sub r9, r11, sp
-in r12
-xor r6, r4, r3
-sub sp, r4, flags
-lsl flags, r10, r9
-in r6
-or r4, flags, r9
-sub r13, flags, r11
-nand r3, zr, r10
-lsr r11, r7, flags
-nand sp, zr, flags
-cmp r9, flags
-and r12, r5, r1
-mul r7, r5, r6
-lsl flags, r5, zr
-in r10
-add zr, r5, sp
-cmp zr, r8
-mul r7, zr, r6
-nor r9, r5, r10
-lsl r4, r13, r1
-or sp, r6, r10
-cmp r5, r4
-and r5, r1, r12
-lsr r10, r10, r4
-cmp r1, r12
-lsr r10, r3, zr
-or r5, r5, r12
-mul r6, sp, r9
-and r9, r11, r5
-mul r9, r5, r9
-sub r3, r1, r13
-sub r4, r11, r13
+xor r2, r12, r5
+add r4, r7, r13
+lsl zr, zr, r10
+and r12, r9, r7
+add r12, r8, r4
+lsr r13, r9, flags
+or r12, sp, r1
+add r3, r10, zr
+sub r6, r4, r12
+or r1, r4, r12
+xor r8, r6, zr
+nand r10, r7, r5
+and r8, r13, r11
+lsr r6, r5, r5
+nand zr, r8, r1
+nand r9, r11, flags
+lsl r4, sp, r7
+sub r13, r3, r12
+lsr r9, r5, r3
+add r7, r5, flags
+xor r11, r9, r12
+or r8, r9, r13
+sub r12, r1, sp
+add r1, sp, r5
+lsr r4, r1, sp
+sub sp, r6, r1
+xor flags, r9, r11
+nor sp, r12, r12
+or r4, r3, zr
+cmp sp, r4
+nand r3, flags, r10
+add r12, r6, sp
+lsl flags, r9, r4
+nor flags, r11, r8
+nand zr, r10, r9
+or r7, flags, r8
+and zr, flags, zr
+cmp flags, flags
+add r5, r1, r10
+or r5, r6, r5
+cmp flags, r5
+or r10, r10, flags
+and r5, sp, sp
+xor r6, r5, r7
+lsr r3, r4, r9
+cmp r10, r6
+sub r13, r1, flags
+sub r6, r10, r5
+sub r10, r1, r5
+lsr r1, zr, r10
+xor r4, r1, r12
+nand r10, r3, zr
+and r5, r5, r12
+sub r6, sp, r9
+add r9, r11, r5
+nor r9, r5, r9
+lsl r3, r1, r13
+nand r4, r11, r13
 cmp r2, r2
-out r11
-nor flags, r9, r5
-out r3
-xor r9, r5, r2
-or r10, r12, r7
-lsr r9, r1, r4
-lsl r6, zr, r2
-nor r12, zr, r1
-out r7
-sub r7, zr, r4
-mul flags, r8, r8
-mul r3, r13, r1
-add r12, r8, r9
-and r12, zr, r8
-cmp r3, flags
-nand r6, sp, r8
-nand r13, r8, r3
-cmp r6, r13
-sub r10, r1, r6
-and r3, r12, r10
-and r8, r6, r7
-nand flags, r1, r3
-mul r1, r11, r8
-and flags, r2, r7
-lsl r5, r12, zr
-or zr, r13, flags
-nand r13, r5, r9
-nand zr, r11, r5
-lsl flags, r6, r11
-lsr r10, r8, zr
-cmp r6, r10
-lsr flags, r8, flags
-and r3, r9, r11
+or r11, r11, r2
+or r5, r12, r11
+lsl r4, r9, r5
+nor r2, r10, r12
+nand zr, r9, r1
+lsl r9, r6, zr
+lsl zr, r12, zr
+cmp r13, r3
+lsr r13, r7, zr
+sub r5, flags, r8
+or r13, r3, r13
+and r8, r12, r8
+lsl r7, r12, zr
+xor r3, flags, r4
+and sp, r8, flags
+sub r8, r3, r11
+xor r10, r11, r10
+nand r11, r1, r3
+lsr r10, r9, r8
+sub r7, r9, flags
+sub r2, r1, r1
+or r1, r1, flags
+and r7, r7, r5
+sub r7, r2, zr
+xor r7, r1, r13
+nand r1, r7, zr
+lsl r9, r13, flags
+lsl r3, sp, r10
+nand r3, r6, r10
+xor flags, r8, flags
+nand r3, r9, r11
 nor sp, r9, flags
-in r7
-add r5, flags, r12
-add r9, r7, r7
-lsl zr, r4, r3
-nor r11, r1, r6
-nor sp, r11, r1
-sub r10, sp, zr
-and r8, r2, r12
-xor flags, flags, r3
-lsr r1, r1, r5
-xor r11, r2, r10
-mul r6, r1, r11
-nor r4, flags, r10
-sub zr, r9, zr
-lsr r9, r13, r13
-add r8, r7, r1
-nand sp, r2, r7
-and r13, r8, r13
-lsl r12, r4, r10
-sub r3, r10, r2
-lsr r2, r4, r6
-or r8, flags, r11
-mul r4, r1, r6
+lsr r7, r7, sp
+lsr r12, r12, r6
+sub r7, flags, r7
+lsl r3, zr, sp
+and r6, r5, r10
+lsl r1, r5, flags
+lsl zr, r11, flags
+nor r12, sp, r6
+lsl r3, r11, r2
+nand r5, r10, r2
+sub r10, zr, r9
+sub r11, sp, r2
+sub r10, r3, r9
+sub zr, r7, r8
+cmp r13, r13
+sub r8, r7, r1
+or sp, r2, r7
+nand r13, r8, r13
+lsr r12, r4, r10
+xor r3, r10, r2
+nand r2, r4, r6
+sub r8, flags, r11
+nor r4, r1, r6
 cmp r9, r2
-or r10, r11, r1
-sub r10, zr, r11
+lsr r10, r11, r1
+xor r10, zr, r11
 xor r5, r8, r11
-add r4, r6, r10
-nor sp, r2, zr
-and r10, r9, r7
+nor r4, r6, r10
+or sp, r2, zr
+lsr r10, r9, r7
+lsl zr, sp, r9
+add r9, r12, r2
+cmp r4, r13
+xor sp, r7, r11
+or r4, r4, r6
+xor flags, r7, r10
+nand r3, r9, r2
+cmp r13, r7
+nand r3, r6, flags
+and r7, r9, r9
+cmp r8, r11
+cmp r2, flags
+nand flags, sp, r7
+xor r4, r12, r1
+xor r9, r2, r8
+sub r7, r1, r11
+lsl r7, r12, r8
+and r3, r4, r6
+nor r10, r12, r13
+nand r9, r9, r4
+sub r3, r2, r8
+and r3, r2, r10
+and r6, r4, r11
+or r3, zr, sp
+add r9, r3, r3
+or r4, r11, r13
+and sp, r4, r3
+or r8, r3, r10
+and r13, r3, r12
+xor r4, r7, r10
+lsl r8, r13, r7
+add r1, zr, r8
+nand r7, r7, r11
 `

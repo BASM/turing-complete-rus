@@ -5,8 +5,6 @@ size = [-256, -256, 255, 255]
 copy_solution_to_level = ["symphony_2_io"]
 immutable_program = true
 immutable_spec = true
-unlocks_components = [com_store_port]
-add_components = [com_store_port: -1]
 dialogue = [
   (alien_centered, `Наконец, пришло время начать строить архитектуру [color=#e49f44]Symphony[/color]!`),
   (info, `
