@@ -1,0 +1,7 @@
+[image id="0" y=8 file="0.png"]
+[image id="1" y=8 file="1.png"]
+[image id="2" y=8 file="2.png"]
+[image id="3" y=8 file="3.png"]
+[image id="4" y=8 file="4.png"]
+[image id="magnet" file="magnet.png"]
+[text id="error_text" text="Ой, вы положили бОльший диск на меньший!" size=24 y=90 hidden=true]

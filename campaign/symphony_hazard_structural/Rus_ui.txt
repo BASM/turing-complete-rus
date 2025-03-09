@@ -1,0 +1,2 @@
+[text id="description" text="Выводите 0, если нужно ждать RAM, иначе 1" size=24 y=100]
+

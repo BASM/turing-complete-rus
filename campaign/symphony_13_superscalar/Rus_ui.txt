@@ -1,0 +1,12 @@
+[text id="description_0" text="Конвейер 1" size=24 x=-50 y=30]
+[text id="description_1" text="Конвейер 2" size=24 x=200 y=30]
+
+[text id="description_3" text="Этап 1:" align=right size=24 x=-170 y=80]
+[text id="description_4" text="Этап 2:" align=right size=24 x=-170 y=120]
+[text id="description_5" text="Этап 3:" align=right size=24 x=-170 y=160]
+[text id="instruction_a_0" text="nop (ничего не делать)" size=24 x=-150 y=80 align=left]
+[text id="instruction_a_1" text="nop (ничего не делать)" size=24 x=-150 y=120 align=left]
+[text id="instruction_a_2" text="nop (ничего не делать)" size=24 x=-150 y=160 align=left]
+[text id="instruction_b_0" text="nop (ничего не делать)" size=24 x=100 y=80 align=left]
+[text id="instruction_b_1" text="nop (ничего не делать)" size=24 x=100 y=120 align=left]
+[text id="instruction_b_2" text="nop (ничего не делать)" size=24 x=100 y=160 align=left]

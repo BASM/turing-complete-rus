@@ -1,0 +1,2 @@
+[text id="description_a" text="Проверьте, можем ли мы выполнить обе инструкции одновременно" size=24 y=80]
+[text id="description_b" text="" size=24 y=110]

@@ -1,0 +1,1 @@
+[text id="description" text="Реализуйте декодер Symphony" size=24 y=90]

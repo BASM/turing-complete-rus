@@ -1,0 +1,3 @@
+[text id="line_1" text="Постройте основу архитектуры Symphony" size=24 y=70]
+[text id="line_2" text="Постройте основу архитектуры Symphony" size=24 y=100]
+[text id="line_3" text="Постройте основу архитектуры Symphony" size=24 y=130]

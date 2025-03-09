@@ -1,0 +1,1 @@
+[text id="description" text="Постройте основу архитектуры Symphony" size=24 y=90]

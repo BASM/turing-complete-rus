@@ -1,0 +1,2 @@
+[text id="address" text="Создать запись кэша" size=24 y=90]
+[text id="value" text="" size=24 y=110]
