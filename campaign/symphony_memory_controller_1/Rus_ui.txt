@@ -1,0 +1,1 @@
+[text id="description" text="Постройте контроллер памяти" size=24 y=90]

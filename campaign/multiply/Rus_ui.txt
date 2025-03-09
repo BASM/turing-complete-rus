@@ -1,0 +1,1 @@
+[text id="description" text="Умножьте два числа" size=24 y=90]

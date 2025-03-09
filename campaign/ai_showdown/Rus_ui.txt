@@ -1,0 +1,24 @@
+
+[text id="nak_text" text="NAK 02" size=22 y=20 x=-444]
+[image id="nak02" file="nak02.png" y=60 x=-450]
+[image id="nak02_win" file="nak02_win.png" y=60 x=-450 hidden=true]
+[image id="nak02_lose" file="nak02_lose.png" y=60 x=-450 hidden=true]
+
+[image id="0" file="0.png" y=90 x=-330]
+[image id="1" file="1.png" y=90 x=-270]
+[image id="2" file="2.png" y=90 x=-210]
+[image id="3" file="3.png" y=90 x=-150]
+[image id="4" file="4.png" y=90 x=-90]
+[image id="5" file="5.png" y=90 x=-30]
+[image id="6" file="6.png" y=90 x=30]
+[image id="7" file="7.png" y=90 x=90]
+[image id="8" file="8.png" y=90 x=150]
+[image id="9" file="9.png" y=90 x=210]
+[image id="10" file="10.png" y=90 x=270]
+[image id="11" file="11.png" y=90 x=330]
+
+[text id="robot_text" text="РОБОТРОН" size=22 y=40 x=440]
+[image id="robot" file="robot.png" y=80 x=440]
+[image id="robot_win" file="robot_win.png" y=80 x=440 hidden=true]
+
+[text id="description" text="Используйте клавиши со стрелками, чтобы выбрать карты" size=20 y=190]

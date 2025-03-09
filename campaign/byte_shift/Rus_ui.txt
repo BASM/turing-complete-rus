@@ -1,0 +1,1 @@
+[text id="description" text="Реализуйте сдвиг влево" size=24 y=90]

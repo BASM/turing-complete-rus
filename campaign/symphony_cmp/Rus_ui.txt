@@ -1,0 +1,1 @@
+[text id="description" text="Реализуйте флаги Symphony" size=24 y=90]

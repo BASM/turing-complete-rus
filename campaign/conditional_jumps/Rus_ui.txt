@@ -1,0 +1,2 @@
+[text id="goal" y=90 text="Прочитайте вход" size=30]
+[text id="note" y=140 text="*Предположим π ≈ 3" size=15 hidden=true]
