@@ -2,17 +2,20 @@ kind = combinational
 title = "Сдвиг"
 size = [-45, -45, 45, 45]
 unlocks_components = [com_lsl, com_lsr, com_asr, com_rol, com_ror]
-input_labels = [["ЗНАЧЕНИЕ"], ["СДВИГ НА"]]
+input_labels = [[ЗНАЧЕНИЕ], [СДВИГ НА]]
 dialogue = [
-  (info_centered, `Сделать [color=#e49f44]shift[/color](сдвиг) значения на 1 означает перемещение всех бит в байте на одну позицию влево.
-Например: [color=#e49f44]90 lsl 1[/color](Logic Shift Left - Логический Сдвиг Влево)
+  (info, `Сделать [color=#e49f44]shift[/color](сдвиг) значения на 1 означает перемещение всех бит в байте на одну позицию влево.
+Например:
 
+Сдвиг на 1: [color=#e49f44]90 lsl 1[/color]
 [OFF] [ON] [OFF] [ON] [ON] [OFF] [ON] [OFF] станет:
 [ON] [OFF] [ON] [ON] [OFF] [ON] [OFF] [OFF]
 
 Сдвиг на 3: [color=#e49f44]90 lsl 3[/color]
 [OFF] [ON] [OFF] [ON] [ON] [OFF] [ON] [OFF] станет:
 [ON] [ON] [OFF] [ON] [OFF] [OFF] [OFF] [OFF]
+
+Инструкция lsl расшифровывается как Logic Shift Left или Логический Сдвиг Влево
 
 `),
   (info_centered, `Задача в этом уровне сдвинуть первый вход влево на значение, указанное во втором входе. Второе значение никогда не превысит 7.
