@@ -1,7 +1,7 @@
 kind = combinational
 title = "Одноразовое кодирование"
 size = [-55, -55, 55, 55]
-input_labels = [["Выбор выхода"]]
+input_labels = [[Выбор выхода]]
 output_labels = ["Выход 0", "Выход 1", "Выход 2", "Выход 3", "Выход 4", "Выход 5", "Выход 6", "Выход 7", "Выход 8", "Выход 9", "Выход 10", "Выход 11", "Выход 12", "Выход 13", "Выход 14", "Выход 15"]
 remove_components = [com_decoder_1, com_decoder_2, com_decoder_3]
 unlocks_components = [com_splitter_word_2, com_splitter_word_4, com_splitter_word_8, com_maker_word_2, com_maker_word_4, com_maker_word_8, com_concatenator_2, com_concatenator_4, com_concatenator_8]
