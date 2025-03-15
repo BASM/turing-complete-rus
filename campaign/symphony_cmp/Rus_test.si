@@ -1,0 +1,33 @@
+def get_input($scratch_space: [Int], tick: Int, $inputs: [Int]) {
+
+    inputs[0] = random(0x10000)
+    
+    if random(2) == 0 {
+        inputs[1] = inputs[0]
+    } else {
+        inputs[1] = random(0x10000)
+    }
+
+}
+
+def check_output($scratch_space: [Int], tick: Int, inputs: [Int], outputs: [Int]) TestResult {
+
+    let equal = <Int> (inputs[0] == inputs[1])
+    let uless = <Int> (<U16> inputs[0] < <U16> inputs[1]) & 1
+    let sless = <Int> (<S16> inputs[0] < <S16> inputs[1]) & 1
+
+    let result = (sless << 2) | (uless << 1) | equal
+
+    if outputs[0] != result {
+        set_error(`Ожидается выход: {<U1> sless}{<U1> uless}{<U1> equal}.`)
+        return fail
+
+    }
+
+    if tick == 0xffff {
+
+        return win
+
+    }
+
+}
