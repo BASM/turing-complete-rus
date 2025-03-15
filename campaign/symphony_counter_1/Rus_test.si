@@ -1,0 +1,61 @@
+
+const MEMORY = 0
+const NEXT_MEMORY = 1
+
+def get_input($scratch_space: [Int], tick: Int, $inputs: [Int]) {
+
+    scratch_space[MEMORY] = scratch_space[NEXT_MEMORY]
+
+    let store = random(2)
+    let value = random(0xffff + 1)
+
+    if store == 1 {
+        scratch_space[NEXT_MEMORY] = value
+    } else {
+        scratch_space[NEXT_MEMORY] += 4
+    }
+
+    inputs[0] = store
+    inputs[1] = value
+
+}
+
+def check_output($scratch_space: [Int], tick: Int, inputs: [Int], outputs: [Int]) TestResult {
+
+    if get_level_memory("count") != scratch_space[NEXT_MEMORY] {
+
+        let memory_value = get_level_memory("count")
+
+        if memory_value == Z_STATE {
+
+            set_error(`Свяжите пробу(зонд) памяти с компонентом`)
+            return fail
+
+        }
+
+        set_error(`Память ожидается {scratch_space[NEXT_MEMORY]}, а не {get_probe_value()}`)
+        return fail
+
+    }
+
+    if outputs[0] == Z_STATE {
+
+        set_error(`Вывод никогда не должен быть в Z (3-ем состоянии)`)
+        return fail
+
+    }
+
+    if outputs[0] != scratch_space[MEMORY] {
+
+        set_error(`Вывод должен быть {scratch_space[MEMORY]}`)
+        return fail
+
+    }
+
+    if tick == 0xffff {
+
+        return win
+
+    }
+
+}

@@ -1,0 +1,81 @@
+def get_input($scratch_space: [Int], tick: Int, $inputs: [Int]) {
+
+    inputs[0] = random(0xffffffff)
+
+}
+
+
+def check_output($scratch_space: [Int], tick: Int, inputs: [Int], outputs: [Int]) TestResult {
+
+    let instruction     =  inputs[0]
+    let mode            = (instruction >> 30)
+    let opcode          = (instruction >> 24) & 0b1111
+    let dest            = (instruction >> 20) & 0b1111
+    let a               = (instruction >> 16) & 0b1111
+    let b               = (instruction >>  8) & 0b1111
+    let immediate       = (instruction >> 28) & 1
+    let immediate_value =  instruction & 0xffff
+
+    if get_gate_score() > 0 || get_delay_score() > 0 {
+
+        set_error(`Решение этого уровня не должно иметь никаких затрат на вентили и задержки (используйте статические индексаторы для решения уровня)`)
+        return fail
+
+    }
+
+    if outputs[0] != mode {
+
+        set_error(`Режим(mode) должен быть {mode}.`)
+        return fail
+
+    }
+
+    if outputs[1] != opcode {
+
+        set_error(`Опкод(opcode) должен быть {opcode}.`)
+        return fail
+
+    }
+
+    if outputs[2] != dest {
+
+        set_error(`Назначение(destination) должно быть {dest}.`)
+        return fail
+
+    }
+
+    if outputs[3] != a {
+
+        set_error(`Арг 1 должен быть {a}.`)
+        return fail
+
+    }
+
+    if outputs[4] != b {
+
+        set_error(`Арг 2 должен быть {b}.`)
+        return fail
+
+    }
+
+    if outputs[5] != immediate {
+
+        set_error(`Бит явного числа должен быть {immediate}.`)
+        return fail
+
+    }
+
+    if outputs[6] != immediate_value {
+
+        set_error(`Явное число (immediate) должно быть {immediate_value}.`)
+        return fail
+
+    }
+
+    if tick == 0xffff {
+
+        return win
+
+    }
+
+}
