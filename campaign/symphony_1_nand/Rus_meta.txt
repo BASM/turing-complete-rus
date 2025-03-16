@@ -44,9 +44,9 @@ dialogue = [
 
 Инструкции кодируются так:
 
-[code][color=#ff9800]M[/color] = Режим
-[color=#ff6680]O[/color] = Код операции
-[color=#ffe666]D[/color] = Регистр назначения
+[code][color=#ff9800]M[/color] = Режим(mode)
+[color=#ff6680]O[/color] = Опкод(opcode)
+[color=#ffe666]D[/color] = Регистр назначения(destination)
 [color=#66ff99]A[/color] = Аргумент А
 [color=#66ccff]B[/color] = Аргумент B
 [color=#bbbbbb]0[/color] = Не используется / ноль[/code]
