@@ -1,7 +1,7 @@
 kind = combinational
 title = "Половинный Сумматор"
 size = [-30, -30, 30, 30]
-input_labels = [["0", "1"],["0","1"]]
+input_values = [("0", "1"),("0","1")]
 output_labels = ["SUM", "CARRY"]
 tick_past_fail = 4
 output_history_pins = 2
