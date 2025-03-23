@@ -1,9 +1,9 @@
 kind = sequential
 title = "Контроллер кэша"
 size = [-256, -256, 255, 255]
-save_solution_as_custom = "Symphony/Allegro/cache_ctrl"
-input_labels = [["Загрузка"], ["Запись"], ["Адрес"], ["Значение"], ["RAM готов"], ["Назначение"], ["Результат значения"]]
-output_labels = ["Загрузка", "Запись", "Адрес", "Значение", "RAM готов", "Назначение", "Результат значения"]
+copy_solution_to_factory = "Symphony/Allegro/cache_ctrl"
+input_labels = ["Load", "Store", "Address", "Value", "Ram ready", "Destination", "Result Value"]
+output_labels = ["Load", "Store", "Address", "Value", "Ram ready", "Destination", "Result value"]
 background = 6
 dialogue = [
   (info, `

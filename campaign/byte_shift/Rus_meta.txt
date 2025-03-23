@@ -2,7 +2,7 @@ kind = combinational
 title = "Сдвиг"
 size = [-45, -45, 45, 45]
 unlocks_components = [com_lsl, com_lsr, com_asr, com_rol, com_ror]
-input_labels = [[ЗНАЧЕНИЕ], [СДВИГ НА]]
+input_values = [("ЗНАЧЕНИЕ", "СДВИГ НА")]
 dialogue = [
   (info, `Сделать [color=#e49f44]shift[/color](сдвиг) значения на 1 означает перемещение всех бит в байте на одну позицию влево.
 Например:

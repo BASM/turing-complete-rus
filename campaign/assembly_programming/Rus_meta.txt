@@ -2,7 +2,6 @@ kind = sequential
 title = "Снова прибавьте 5"
 tests = 32
 size = [-80, -50, 43, 45]
-remove_components = [com_punch_card]
 copy_solution_to_architecture = "Overture"
 dialogue = [
   (alien_centered, "Программирование с установкой битов вручную является утомительным. Нам нужно, чтобы вы научились ассемблерному программированию."),

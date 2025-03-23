@@ -1,7 +1,8 @@
 kind = sequential
 title = "Битовый Инвертор"
 size = [-30, -30, 30, 30]
-input_labels = [["0","1","Значение"],["Нет","Да","Инвертировать"]]
+input_labels = ["Значение","Инвертировать"]
+input_values = [("0","1"),("Нет","Да")]
 tick_past_fail = 4
 output_history_pins = 1
 background = 2

@@ -1,8 +1,8 @@
 kind = sequential
 title = "Предсказатель прыжка"
-input_labels = [["Instruction"], ["Counter"], ["Jump taken"], ["Jump address"]]
+input_labels = ["Инструкция", "Счётчик", "Будет переход", "Адрес перехода"]
 output_labels = ["Jump", "Jump address", "Store registers", "Restore registers"]
 size = [-256, -256, 255, 255]
 background = 6
-save_solution_as_custom = "Symphony/Allegro/branch"
+copy_solution_to_factory = "Symphony/Allegro/branch"
 dialogue = []

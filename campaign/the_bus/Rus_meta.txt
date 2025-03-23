@@ -3,8 +3,9 @@ no_score = true
 title = "Шина данных"
 size = [-30, -30, 30, 30]
 components_available = [com_switch_word: 4, com_not_bit: 2]
-input_labels = [["ВХОД 0", "ВХОД 1", "ОТКУДА"], ["ВХОД 0"], ["ВХОД 1"], ["ВЫХ 0", "ВЫХ 1", "КУДА"]]
-output_labels = ["ВЫХ 0", "ВЫХ 1"]
+input_labels = ["FROM", "IN 0", "IN 1", "TO"]
+input_values = [("IN 0", "IN 1"), ("",""), ("",""), ("OUT 0", "OUT 1")]
+output_labels = ["OUT 0", "OUT 1"]
 background = 5
 dialogue = [
   (info, "Этот уровень имеет 2 входных байта и 2 выходных байта. Ваша цель скопировать один из входов в один из выходов.

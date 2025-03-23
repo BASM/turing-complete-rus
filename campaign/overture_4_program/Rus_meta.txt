@@ -5,9 +5,12 @@ no_score = true
 title = "Программа"
 size = [-75, -50, 43, 45]
 copy_solution_to_level = ["overture_5_conditionals"]
+unlocks_components = [com_load_port]
+add_components = [com_load_port: -1]
 dialogue = [
   (info, "Вход [INSTRUCTION] был удален и заменен компонентом Программа. Используйте счётчик, чтобы каждый такт загружать следующую инструкцию из памяти программы.
 
 Вам следует использовать компонент счетчика, который вы разблокировали ранее."),
   (overture),
 ]
+

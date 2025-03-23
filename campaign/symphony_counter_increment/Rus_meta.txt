@@ -1,10 +1,10 @@
 kind = sequential
-title = "Инкремент счётчика"
+title = "Прибавление счётчика"
 size = [-48, -48, 49, 49]
 background = 6
-save_solution_as_custom = "Symphony/Allegro/cnt_inc"
-input_labels = [["Выполнение A"], ["Выполнение B"], ["Значение счётчика"]]
-output_labels = ["Инкремент"]
+copy_solution_to_factory = "Symphony/Allegro/cnt_inc"
+input_labels = ["Запустить A", "Запустить B", "Значение счётчика"]
+output_labels = ["Прибавление"]
 add_components = [com_probe_memory_word: -1]
 dialogue = [
     (alien, `Когда мы выполняем две инструкции, наш счётчик должен увеличиваться на 8. Однако, если мы не выполняем вторую инструкцию, мы должны увеличивать только на 4. И, наконец, в определённых ситуациях ни одна из инструкций не выполняется, и мы не должны увеличивать значение вообще.

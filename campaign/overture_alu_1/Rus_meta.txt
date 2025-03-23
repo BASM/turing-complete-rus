@@ -3,7 +3,7 @@ title = "Арифметико-Логическое Устройство (ALU) 1"
 size = [-48, -48, 49, 49]
 unlocks_components = [com_or_word, com_and_word, com_nor_word]
 copy_solution_to_level = ["alu_2"]
-input_labels = [["КОД"], ["ВХОД 1"], ["ВХОД 2"]]
+input_labels = ["КОД", "ВХОД 1", "ВХОД 2"]
 background = 6
 dialogue = [
 (info, "Создайте устройство, которое может выполнять операции ИЛИ(OR), И-НЕ(NAND), ИЛИ-НЕ(NOR) или И(AND) над двумя входами. Третий вход будет [INSTRUCTION]. [INSTRUCTION] это просто число которое определяет, что вычислять.
@@ -12,7 +12,5 @@ dialogue = [
 [code][color=#87a8c8]0 И-НЕ(NAND)
 1 ИЛИ(OR)
 2 И(AND)
-3 ИЛИ-НЕ(NOR)[/color][/code]
-
-Кроме того, вы не можете перемещать красные компоненты в этом уровне, по причинам, которые будут раскрыты позже."),
+3 ИЛИ-НЕ(NOR)[/color][/code]"),
 ]

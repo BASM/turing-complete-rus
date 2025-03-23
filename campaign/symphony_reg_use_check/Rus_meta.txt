@@ -1,9 +1,10 @@
 kind = combinational
 title = "Проверка использования регистра"
 size = [-48, -48, 49, 49]
-save_solution_as_custom = "Symphony/Allegro/reg_use"
-input_labels = [["Инструкция", "Регистр"]]
-output_labels = ["Назначение IO", "Аргумент IO"]
+copy_solution_to_factory = "Symphony/Allegro/reg_use"
+copy_solution_to_level = ["symphony_reg_use_check_2"]
+input_labels = ["Instruction", "Register"]
+output_labels = ["In use"]
 background = 6
 dialogue = [
   (info, `Этот уровень дает вам инструкцию и регистр. Выведите 1, если инструкция зависит от регистра для аргумента A или аргумента B.
@@ -19,6 +20,7 @@ dialogue = [
 [color=#66ccff]B[/color] = Аргумент B
 [color=#bbbbbb]0[/color] = Не используется / ноль[/code]
 
-[code][color=#ff9800]MM[/color][color=#bbbbbb]O[/color][color=#9966ff]I[/color][color=#ff6680]OOOO[/color] [color=#ffe666]DDDD[/color][color=#66ff99]AAAA[/color] [color=#bbbbbb]0000[/color][color=#66ccff]BBBB[/color] [color=#bbbbbb]00000000[/color][/code]
+[code][color=#bbbbbb]O[/color][color=#ff9800]MM[/color][color=#9966ff]I[/color][color=#ff6680]OOOO[/color] [color=#ffe666]DDDD[/color][color=#66ff99]AAAA[/color] [color=#bbbbbb]0000[/color][color=#66ccff]BBBB[/color] [color=#bbbbbb]00000000[/color][/code]
+
   `),
 ]

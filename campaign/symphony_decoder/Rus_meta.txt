@@ -1,14 +1,16 @@
 kind = combinational
 title = "Декодер Инструкций"
 size = [-48, -48, 49, 49]
-save_solution_as_custom = "Symphony/DEC"
-input_labels = [[Инструкция]]
-output_labels = ["Режим", "Опкод", "Назначение", "Арг 1", "Арг 2", "Бит явного числа", "Явное число"]
+copy_solution_to_factory = "Symphony/DEC"
+copy_solution_to_level = ["symphony_decoder_2"]
+input_labels = ["Инструкция"]
+output_labels = ["Режим", "Опкод", "Назначение", "Арг A", "Арг B", "Бит явного числа", "Значение явного числа"]
 background = 6
 components_available = [com_static_indexer: 7]
 unlocks_components = [com_static_indexer, com_static_indexer_config]
 dialogue = [
-  (info, `Создайте схему, которая разделяет инструкции Symphony на различные части. Это будет очень полезно позже.
+  (info, `
+Создайте схему, которая разделяет инструкции Symphony на различные части. Это будет очень полезно позже.
 
 Существует два кодирования для инструкций Symphony, в зависимости от того, используем мы явные числа или нет:
 
@@ -20,9 +22,9 @@ dialogue = [
 [color=#66ccff]B[/color] = Аргумент 2, может быть явным числом
 [color=#bbbbbb]0[/color] = Не используется / ноль[/code]
 
-[code][color=#ff9800]MM[/color][color=#bbbbbb]00[/color][color=#ff6680]OOOO[/color] [color=#ffe666]DDDD[/color][color=#66ff99]AAAA[/color] [color=#bbbbbb]0000[/color][color=#66ccff]BBBB[/color] [color=#bbbbbb]00000000[/color][/code]
+[code][color=#bbbbbb]0[/color][color=#ff9800]MM[/color][color=#bbbbbb]0[/color][color=#ff6680]OOOO[/color] [color=#ffe666]DDDD[/color][color=#66ff99]AAAA[/color] [color=#bbbbbb]0000[/color][color=#66ccff]BBBB[/color] [color=#bbbbbb]00000000[/color][/code]
 
-[code][color=#bbbbbb]OOO[/color][color=#9966ff]I[/color][color=#ff6680]OOOO[/color] [color=#bbbbbb]0[/color][color=#ffe666]DDD[/color][color=#bbbbbb]0[/color][color=#66ff99]AAA[/color] [color=#66ccff]BBBBBBBB BBBBBBBB[/color][/code]
+[code][color=#bbbbbb]000[/color][color=#9966ff]I[/color][color=#ff6680]OOOO[/color] [color=#bbbbbb]0[/color][color=#ffe666]DDD[/color][color=#bbbbbb]0[/color][color=#66ff99]AAA[/color] [color=#66ccff]BBBBBBBB BBBBBBBB[/color][/code]
   `),
   (info, `Используйте компонент Статический Сдвиг, чтобы решить этот уровень.
 

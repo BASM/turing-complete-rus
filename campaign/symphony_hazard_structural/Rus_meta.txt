@@ -2,9 +2,9 @@ kind = sequential
 title = "Структурный конфликт"
 size = [-48, -48, 49, 49]
 background = 6
-input_labels = [["Инструкция"], ["RAM готов"]]
-output_labels = ["Выполнение"]
-save_solution_as_custom = "Symphony/Allegro/hazard/haz_struct"
+input_labels = ["Instruction", "RAM ready"]
+output_labels = ["Execute"]
+copy_solution_to_factory = "Symphony/Allegro/hazard/haz_struct"
 dialogue = [
   (alien, `Пора убрать компонент Быстрой RAM из вашей схемы, его характеристики по количеству вентилей слишком высоки.
 

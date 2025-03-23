@@ -2,11 +2,12 @@ kind = sequential
 title = "Контроллер памяти"
 size = [-48, -48, 49, 49]
 copy_solution_to_level = ["symphony_memory_controller_2"]
-save_solution_as_custom = "Symphony/Allegro/mem_ctrl"
-input_labels = [["Загрузка"], ["Запись"], ["Адрес"], ["Значение"], ["RAM готов"], ["Назначение"], ["Результат значения"]]
-output_labels = ["Загрузка", "Запись", "Адрес", "Значение", "RAM готов", "Назначение", "Результат значения"]
+copy_solution_to_factory = "Symphony/Allegro/mem_ctrl"
+input_labels = ["Load", "Store", "Address", "Value", "Ram ready", "Destination", "Result Value"]
+output_labels = ["Load", "Store", "Address", "Value", "Ram ready", "Destination", "Result value"]
 background = 6
 dialogue = [
-  (alien, `В этом уровне вам предстоит создать компонент, который будет перехватывать значения, поступающие и исходящие из компонента RAM. Этот компонент будет модернизирован позже, но эта первая версия будет в основном работать так.`),
-]
+  (alien, `В этом уровне вам предстоит создать компонент, который будет перехватывать значения, поступающие и исходящие из компонента RAM. Этот компонент будет модернизирован позже, но эта первая версия будет в основном работать так.
 
+  `),
+]

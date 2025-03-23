@@ -45,48 +45,49 @@ flags 1111
 [instructions]
 
 or %a(register), %b(register), %c(register)
-01000001 aaaabbbb 0000cccc 00000000
+00100001 aaaabbbb 0000cccc 00000000
 OR %b and %c and store the result in %a.
 
 nand %a(register), %b(register), %c(register)
-01000000 aaaabbbb 0000cccc 00000000
+00100000 aaaabbbb 0000cccc 00000000
 NAND %b and %c and store the result in %a.
 
 nor %a(register), %b(register), %c(register)
-01000011 aaaabbbb 0000cccc 00000000
+00100011 aaaabbbb 0000cccc 00000000
 NOR %b and %c and store the result in %a.
 
 and %a(register), %b(register), %c(register)
-01000010 aaaabbbb 0000cccc 00000000
+00100010 aaaabbbb 0000cccc 00000000
 AND %b and %c and store the result in %a.
 
 add %a(register), %b(register), %c(register)
-01000100 aaaabbbb 0000cccc 00000000
+00100100 aaaabbbb 0000cccc 00000000
 ADD %b and %c and store the result in %a.
 
 sub %a(register), %b(register), %c(register)
-01000101 aaaabbbb 0000cccc 00000000
+00100101 aaaabbbb 0000cccc 00000000
 SUB %b and %c and store the result in %a.
 
 xor %a(register), %b(register), %c(register)
-01000110 aaaabbbb 0000cccc 00000000
+00100110 aaaabbbb 0000cccc 00000000
 XOR %b and %c and store the result in %a.
 
 lsl %a(register), %b(register), %c(register)
-01000111 aaaabbbb 0000cccc 00000000
+00100111 aaaabbbb 0000cccc 00000000
 LSL %b and %c and store the result in %a.
 
 lsr %a(register), %b(register), %c(register)
-01001000 aaaabbbb 0000cccc 00000000
+00101000 aaaabbbb 0000cccc 00000000
 LSR %b and %c and store the result in %a.
 
 cmp %a(register), %b(register)
-01001001 1111aaaa 0000bbbb 00000000
+00101001 1111aaaa 0000bbbb 00000000
 Compares %a and %b and store the resulting flags in r6.
 
 mul %a(register), %b(register), %c(register)
-01001010 aaaabbbb 0000cccc 00000000
+00101010 aaaabbbb 0000cccc 00000000
 MUL %b and %c and store the result in %a.
+
 in %a(register)
 00000001 aaaa0000 00000000 00000000
 Loads an input and stores it in %a

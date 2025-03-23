@@ -64,7 +64,7 @@ flags 1111
 [instructions]
 
 nand %a(register), %b(register), %c(register)
-01000000 aaaabbbb 0000cccc 00000000
+00100000 aaaabbbb 0000cccc 00000000
 NAND %b and %c and store the result in %a.
 
 in %a(register)

@@ -3,7 +3,7 @@ immutable_program = true
 immutable_spec = true
 title = "Условия"
 size = [-48, -48, 49, 49]
-save_solution_as_custom = "Overture/Cond"
+copy_solution_to_factory = "Overture/Cond"
 background = 6
 dialogue = [
   (info, "Этот уровень имеет входное значение и 3 входных бита условий.

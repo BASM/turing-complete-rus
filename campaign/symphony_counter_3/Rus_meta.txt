@@ -2,9 +2,9 @@ kind = sequential
 title = "Суперскалярный счётчик"
 size = [-48, -48, 49, 49]
 background = 6
-save_solution_as_custom = "Symphony/Allegro/superscalar/count"
-input_labels = [["Запись"], ["Значение для записи"], ["A включен"], ["B включен"]]
-output_labels = ["ВЫХОД"]
+copy_solution_to_factory = "Symphony/Allegro/superscalar/count"
+input_labels = ["Запись", "Значение записи", "A включено", "B включено"]
+output_labels = ["ВЫВОД"]
 add_components = [com_probe_memory_word: -1]
 dialogue = [
     (info, `Постройте счётчик, который может увеличиваться на 0, 4 или 8, в зависимости от того, сколько инструкций выполняется. Вы можете использовать компонент "cnt_inc", который вы уже создали.`),
