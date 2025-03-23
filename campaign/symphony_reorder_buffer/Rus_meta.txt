@@ -1,0 +1,10 @@
+kind = sequential
+title = "Очерёдность буфера"
+size = [-55, -55, 56, 56]
+background = 6
+//copy_solution_to_factory = "Symphony/Allegro/out_of_order/reorder"
+//input_labels = ["Загрузить счётчик", "Инструкция A", "Инструкция B", "Инструкция C", "Счётчик"]
+//output_labels = ["Переименован A", "Переименован B", "Переименован C"]
+dialogue = [
+    (alien, `alfa: текст будет в релизе`),
+]

@@ -1,0 +1,10 @@
+kind = sequential
+title = "Конфликт данных 2"
+size = [-48, -48, 49, 49]
+background = 6
+copy_solution_to_factory = "Symphony/Allegro/hazard/haz_data"
+input_labels = ["Инструкция A", "Инструкция B", "Занят рег 1", "Занят рег 2"]
+output_labels = ["Выполнение B"]
+dialogue = [
+    (alien, `Тут будет текст`),
+]

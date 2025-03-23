@@ -1,0 +1,31 @@
+kind = combinational
+title = "Переименование декодера"
+size = [-48, -48, 49, 49] 
+copy_solution_to_factory = "Symphony/Allegro/out_of_order/dec"
+input_labels = ["Инструкция"]
+output_labels = ["Режим", "Опкод", "Назначение", "Арг A", "Арг B", "Бит явног числа", "Значение явного числа"]
+background = 6
+unlocks_components = [com_static_indexer, com_static_indexer_config]
+dialogue = [
+  (info, `
+Постройте схему, которая разделяет инструкции Symphony на разные части. Это будет очень полезно позже.
+
+Существует два кодирования для инструкций Symphony, в зависимости от того, используем ли мы непосредственные значения или нет:
+
+[code][color=#ff9800]M[/color] = Режим (Mode)
+[color=#ff6680]O[/color] = Опкод (Opcode)
+[color=#9966ff]I[/color] = Бит явного числа (Immediate bit )
+[color=#ffe666]D[/color] = Регистр назначения (Destination register)
+[color=#66ff99]A[/color] = Аргумент A
+[color=#66ccff]B[/color] = Аргумент B (возможно, явное число)
+[color=#bbbbbb]0[/color] = Не используется / ноль[/code]
+
+[code][color=#bbbbbb]0[/color][color=#ff9800]MM[/color][color=#bbbbbb]0[/color][color=#ff6680]OOOO[/color] [color=#ffe666]DDDD[/color][color=#66ff99]AAAA[/color] [color=#bbbbbb]0000[/color][color=#66ccff]BBBB[/color] [color=#bbbbbb]00000000[/color][/code]
+
+[code][color=#bbbbbb]000[/color][color=#9966ff]I[/color][color=#ff6680]OOOO[/color] [color=#bbbbbb]0[/color][color=#ffe666]DDD[/color][color=#bbbbbb]0[/color][color=#66ff99]AAA[/color] [color=#66ccff]BBBBBBBB BBBBBBBB[/color][/code]
+  `),
+  (info, `Используйте компонент статического индексатора, чтобы решить этот уровень.
+
+Компонент статического индексатора является специальным компонентом, который позволяет смещать определенные биты из провода без задержки или затрат на логические элементы. Изменение числа на компоненте сместит биты (положительное число смещает вправо). Затем нажмите на компонент, чтобы установить ширину выхода.`),
+]
+

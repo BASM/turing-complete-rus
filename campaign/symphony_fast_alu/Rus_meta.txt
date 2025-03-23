@@ -1,8 +1,8 @@
 kind = combinational
 title = "Symphony Быстрое АЛУ"
 size = [-48, -48, 49, 49]
-save_solution_as_custom = "Symphony/FAST_ALU"
-input_labels = [["Операнд"], ["Вход 1"], ["Вход 2"]]
+copy_solution_to_factory = "Symphony/FAST_ALU"
+input_labels = ["Операнд", "Вход 1", "Вход 2"]
 output_labels = ["Выход"]
 background = 6
 dialogue = [

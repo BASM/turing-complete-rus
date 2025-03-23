@@ -1,0 +1,10 @@
+kind = sequential
+title = "Подсчёт ведущих нулей"
+size = [-55, -55, 56, 56]
+background = 6
+unlocks_components = [com_clz, com_ctz]
+input_labels = ["Вход"]
+output_labels = ["Ведущих нулей"]
+dialogue = [
+    (alien, ``),
+]

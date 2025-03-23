@@ -1,0 +1,10 @@
+kind = sequential
+title = "Выбор Инструкции"
+input_labels = [["Consumed A"], ["Consumed B"], ["New instruction 0"], ["New instruction 1"], ["New instruction 2"], ["Reset"]]
+output_labels = ["Jump", "Jump address", "Store registers", "Restore registers"]
+size = [-256, -256, 255, 255]
+background = 6
+dialogue = [(alien_centered, "
+Диалог ещё не написан.
+"),
+]

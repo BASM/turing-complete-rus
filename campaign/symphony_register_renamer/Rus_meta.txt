@@ -1,0 +1,10 @@
+kind = sequential
+title = "Переименование регистров"
+size = [-55, -55, 56, 56]
+background = 6
+copy_solution_to_factory = "Symphony/Allegro/out_of_order/renamer"
+input_labels = ["Загрузка счётчика", "Инструкция A", "Инструкция B", "Инструкция C", "Счётчик"]
+output_labels = ["Переименован A", "Переименован B", "Переименован C"]
+dialogue = [
+    (alien, `alfa: тут будет текст`),
+]
